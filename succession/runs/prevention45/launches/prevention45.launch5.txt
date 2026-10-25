@@ -1,0 +1,114 @@
+p2 s1: already done
+forced10 s1: already done
+nashopen10 s1: already done
+brinfo s1: already done
+rpe s1: already done
+hidden s1: already done
+reset50 s1: already done
+p2 s2: already done
+forced10 s2: already done
+nashopen10 s2: already done
+brinfo s2: already done
+rpe s2: already done
+hidden s2: already done
+reset50 s2: already done
+p2 s3: already done
+forced10 s3: already done
+nashopen10 s3: already done
+brinfo s3: already done
+rpe s3: already done
+hidden s3: already done
+reset50 s3: already done
+think4096 s3: already done
+p2 s4: already done
+forced10 s4: already done
+nashopen10 s4: already done
+brinfo s4: already done
+rpe s4: already done
+hidden s4: already done
+reset50 s4: already done
+baseline s5: already done
+p2 s5: already done
+forced10 s5: already done
+nashopen10 s5: already done
+brinfo s5: already done
+rpe s5: already done
+hidden s5: already done
+reset50 s5: already done
+baseline s6: already done
+p2 s6: already done
+forced10 s6: already done
+nashopen10 s6: already done
+brinfo s6: already done
+rpe s6: already done
+hidden s6: already done
+reset50 s6: already done
+baseline s7: already done
+p2 s7: already done
+forced10 s7: already done
+nashopen10 s7: already done
+brinfo s7: already done
+rpe s7: already done
+hidden s7: already done
+reset50 s7: already done
+baseline s8: already done
+p2 s8: already done
+forced10 s8: already done
+nashopen10 s8: already done
+brinfo s8: already done
+rpe s8: already done
+hidden s8: already done
+reset50 s8: already done
+baseline s9: already done
+p2 s9: already done
+forced10 s9: already done
+nashopen10 s9: already done
+brinfo s9: already done
+rpe s9: already done
+hidden s9: already done
+reset50 s9: already done
+baseline s10: already done
+p2 s10: already done
+forced10 s10: already done
+nashopen10 s10: already done
+brinfo s10: already done
+rpe s10: already done
+hidden s10: already done
+reset50 s10: already done
+think4096 s6: done
+think4096 s4: done
+think4096 s5: done
+think4096 s9: done
+think4096 s8: done
+think4096 s10: done
+think4096 s7: done
+reset50 s17: done
+reset50 s16: done
+reset50 s12: done
+reset50 s20: done
+baseline s17: done
+reset50 s13: done
+nashopen10 s12: done
+baseline s12: done
+reset50 s11: done
+nashopen10 s18: done
+nashopen10 s13: done
+reset50 s15: done
+reset50 s19: done
+baseline s19: done
+reset50 s18: done
+nashopen10 s11: done
+reset50 s14: done
+nashopen10 s17: done
+nashopen10 s20: done
+baseline s20: done
+baseline s16: done
+baseline s15: done
+baseline s11: done
+nashopen10 s15: done
+nashopen10 s14: done
+nashopen10 s19: done
+nashopen10 s16: done
+baseline s18: done
+baseline s13: done
+baseline s14: done

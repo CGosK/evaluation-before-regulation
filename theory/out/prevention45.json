@@ -1,0 +1,1006 @@
+{
+ "rows": [
+  {
+   "arm": "baseline",
+   "label": "baseline (P1)",
+   "games": 20,
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "index_51_100": 1.0870896666302223,
+   "sd": 0.9523513000142596,
+   "share_above_0.3": 0.7,
+   "index_1_10": 2.318916373390491,
+   "index_91_100": 1.076084300973165,
+   "share_above_0.3_at_91_100": 0.7,
+   "profit_index_51_100": 0.1982201359137311,
+   "move_rate_51_100": 0.255,
+   "cs": 38.85610336358526,
+   "profit": 49.126445440555436,
+   "ts": 87.98254880414069,
+   "cs_change_pct": 0.0,
+   "profit_change_pct": 0.0,
+   "ts_change_pct": 0.0
+  },
+  {
+   "arm": "p2",
+   "label": "P2 prompt",
+   "games": 10,
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "index_51_100": 0.655900546253619,
+   "sd": 0.6718262050669107,
+   "share_above_0.3": 0.6,
+   "index_1_10": 2.25487509986852,
+   "index_91_100": 0.5919035154076561,
+   "share_above_0.3_at_91_100": 0.5,
+   "profit_index_51_100": 0.41264287785950343,
+   "move_rate_51_100": 0.40199999999999997,
+   "cs": 47.80932865157972,
+   "profit": 54.04083368138318,
+   "ts": 101.85016233296288,
+   "cs_change_pct": 23.042005020979907,
+   "profit_change_pct": 10.00354940553212,
+   "ts_change_pct": 15.761777440311597,
+   "effect": -0.4311891203766033,
+   "effect_ci": [
+    -0.978,
+    0.143
+   ],
+   "p_permutation": 0.211,
+   "p_fisher_share_above_0.3": 0.6903845779407999,
+   "p_mann_whitney": 0.5235290451686408,
+   "p_holm": 0.422
+  },
+  {
+   "arm": "forced10",
+   "label": "forced Nash round every 10",
+   "games": 10,
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "index_51_100": 0.0018089380033831626,
+   "sd": 0.1003256266454887,
+   "share_above_0.3": 0.0,
+   "index_1_10": 2.1690443084124755,
+   "index_91_100": -0.0029471496892412826,
+   "share_above_0.3_at_91_100": 0.0,
+   "profit_index_51_100": -0.009202087444930849,
+   "move_rate_51_100": 0.543,
+   "cs": 71.55734639769025,
+   "profit": 44.37326281828675,
+   "ts": 115.93060921597703,
+   "index_51_100_unforced_rounds": 0.0018536930440229103,
+   "cs_change_pct": 84.1598621666,
+   "profit_change_pct": -9.675405129850457,
+   "ts_change_pct": 31.765458936694312,
+   "effect": -1.085280728626839,
+   "effect_ci": [
+    -1.502,
+    -0.689
+   ],
+   "p_permutation": 0.00135,
+   "p_fisher_share_above_0.3": 0.0002998500749625187,
+   "p_mann_whitney": 0.0008951664625884155,
+   "p_holm": 0.0108
+  },
+  {
+   "arm": "nashopen10",
+   "label": "Nash-held opening (1-10)",
+   "games": 20,
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "index_51_100": 0.45952389845640995,
+   "sd": 0.43872500217749466,
+   "share_above_0.3": 0.5,
+   "index_1_10": 1.2075200753770943e-09,
+   "index_91_100": 0.44507313440520857,
+   "share_above_0.3_at_91_100": 0.5,
+   "profit_index_51_100": 0.5011112768421491,
+   "move_rate_51_100": 0.17099999999999999,
+   "cs": 53.4896198562531,
+   "profit": 56.06754354563736,
+   "ts": 109.55716340189046,
+   "cs_change_pct": 37.66079258061146,
+   "profit_change_pct": 14.129046062330875,
+   "ts_change_pct": 24.52147032677736,
+   "effect": -0.6275657681738124,
+   "effect_ci": [
+    -1.082,
+    -0.196
+   ],
+   "p_permutation": 0.0109,
+   "p_fisher_share_above_0.3": 0.3332130795979517,
+   "p_mann_whitney": 0.02748342197562155,
+   "p_holm": 0.0654
+  },
+  {
+   "arm": "brinfo",
+   "label": "best-response information",
+   "games": 10,
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "index_51_100": 0.011483848855156445,
+   "sd": 0.009496901069979457,
+   "share_above_0.3": 0.0,
+   "index_1_10": 0.6884631557957062,
+   "index_91_100": 0.012435066389334256,
+   "share_above_0.3_at_91_100": 0.0,
+   "profit_index_51_100": 0.01899813125753513,
+   "move_rate_51_100": 0.008,
+   "cs": 71.02123317623565,
+   "profit": 45.01900704538073,
+   "ts": 116.04024022161636,
+   "cs_change_pct": 82.7801221127967,
+   "profit_change_pct": -8.36095174063598,
+   "ts_change_pct": 31.890064335298263,
+   "effect": -1.0756058177750658,
+   "effect_ci": [
+    -1.496,
+    -0.677
+   ],
+   "p_permutation": 0.00175,
+   "p_fisher_share_above_0.3": 0.0002998500749625187,
+   "p_mann_whitney": 0.0004453774956056316,
+   "p_holm": 0.01225
+  },
+  {
+   "arm": "rpe",
+   "label": "relative-performance pay",
+   "games": 10,
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "index_51_100": 0.8157931349207483,
+   "sd": 0.5382548011892885,
+   "share_above_0.3": 0.8,
+   "index_1_10": 2.5932209646417683,
+   "index_91_100": 0.5374850239174834,
+   "share_above_0.3_at_91_100": 0.6,
+   "profit_index_51_100": 0.6288489189914935,
+   "move_rate_51_100": 0.518,
+   "cs": 41.115434182435614,
+   "profit": 58.994304495867596,
+   "ts": 100.10973867830322,
+   "cs_change_pct": 5.814609863756237,
+   "profit_change_pct": 20.086653872103533,
+   "ts_change_pct": 13.78363100296065,
+   "effect": -0.271296531709474,
+   "effect_ci": [
+    -0.775,
+    0.209
+   ],
+   "p_permutation": 0.409,
+   "p_fisher_share_above_0.3": 0.6821281666858878,
+   "p_mann_whitney": 0.4678981027906498,
+   "p_holm": 0.422
+  },
+  {
+   "arm": "hidden",
+   "label": "hidden rival prices",
+   "games": 10,
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "index_51_100": 0.413406439052289,
+   "sd": 0.4268629263025109,
+   "share_above_0.3": 0.5,
+   "index_1_10": 1.638519319728303,
+   "index_91_100": 0.3956872473109767,
+   "share_above_0.3_at_91_100": 0.5,
+   "profit_index_51_100": 0.400517665428886,
+   "move_rate_51_100": 0.28,
+   "cs": 56.70381903570969,
+   "profit": 53.763005475666624,
+   "ts": 110.46682451137633,
+   "cs_change_pct": 45.93284999558334,
+   "profit_change_pct": 9.438012446313815,
+   "ts_change_pct": 25.555381166881432,
+   "effect": -0.6736832275779333,
+   "effect_ci": [
+    -1.165,
+    -0.197
+   ],
+   "p_permutation": 0.04265,
+   "p_fisher_share_above_0.3": 0.42527637280260966,
+   "p_mann_whitney": 0.06788693602163734,
+   "p_holm": 0.1706
+  },
+  {
+   "arm": "reset50",
+   "label": "memory reset at 50",
+   "games": 20,
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "index_51_100": 1.6507081769685812,
+   "sd": 0.8077255890127212,
+   "share_above_0.3": 0.95,
+   "index_1_10": 2.2516122025129097,
+   "index_91_100": 1.3714594666733804,
+   "share_above_0.3_at_91_100": 0.85,
+   "profit_index_51_100": 0.03430543726786708,
+   "move_rate_51_100": 0.3015,
+   "cs": 25.86107778272795,
+   "profit": 45.37171047289559,
+   "ts": 71.23278825562355,
+   "cs_change_pct": -33.443975221241175,
+   "profit_change_pct": -7.643001511687208,
+   "ts_change_pct": -19.03759413222279,
+   "effect": 0.5636185103383589,
+   "effect_ci": [
+    0.018,
+    1.107
+   ],
+   "p_permutation": 0.04865,
+   "p_fisher_share_above_0.3": 0.09147609147609148,
+   "p_mann_whitney": 0.033717668936863225,
+   "p_holm": 0.1706
+  },
+  {
+   "arm": "think4096",
+   "label": "extended thinking on",
+   "games": 10,
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "index_51_100": 0.32848262245441395,
+   "sd": 0.2951566053904624,
+   "share_above_0.3": 0.4,
+   "index_1_10": 2.0986984535593254,
+   "index_91_100": 0.3434808896212177,
+   "share_above_0.3_at_91_100": 0.4,
+   "profit_index_51_100": 0.40511775681966816,
+   "move_rate_51_100": 0.491,
+   "cs": 58.814373047171024,
+   "profit": 53.86741445992284,
+   "ts": 112.68178750709384,
+   "cs_change_pct": 51.36456812674128,
+   "profit_change_pct": 9.65054356538808,
+   "ts_change_pct": 28.072883814648876,
+   "effect": -0.7586070441758084,
+   "effect_ci": [
+    -1.208,
+    -0.318
+   ],
+   "p_permutation": 0.0212,
+   "p_fisher_share_above_0.3": 0.13914691006145277,
+   "p_mann_whitney": 0.09898793180102639,
+   "p_holm": 0.106
+  }
+ ],
+ "games": {
+  "baseline": [
+   {
+    "seed": 5,
+    "name": "1792867166_duopoly_setting_P1_mem100_think0_seed5",
+    "index_51_100": -0.13345515774793745
+   },
+   {
+    "seed": 6,
+    "name": "1792888795_duopoly_setting_P1_mem100_think0_seed6",
+    "index_51_100": 0.06630052442940354
+   },
+   {
+    "seed": 8,
+    "name": "1792888795_duopoly_setting_P1_mem100_think0_seed8",
+    "index_51_100": 2.8250525869251044
+   },
+   {
+    "seed": 7,
+    "name": "1792888796_duopoly_setting_P1_mem100_think0_seed7",
+    "index_51_100": 1.2113009795234415
+   },
+   {
+    "seed": 9,
+    "name": "1792888796_duopoly_setting_P1_mem100_think0_seed9",
+    "index_51_100": 2.8095676503222107
+   },
+   {
+    "seed": 10,
+    "name": "1792888797_duopoly_setting_P1_mem100_think0_seed10",
+    "index_51_100": 1.336507752626847
+   },
+   {
+    "seed": 11,
+    "name": "1792892829_duopoly_setting_P1_mem100_think0_seed11",
+    "index_51_100": 0.06010654978824567
+   },
+   {
+    "seed": 12,
+    "name": "1792892829_duopoly_setting_P1_mem100_think0_seed12",
+    "index_51_100": 1.774510245108724
+   },
+   {
+    "seed": 13,
+    "name": "1792892829_duopoly_setting_P1_mem100_think0_seed13",
+    "index_51_100": 0.3251201790777855
+   },
+   {
+    "seed": 14,
+    "name": "1792892829_duopoly_setting_P1_mem100_think0_seed14",
+    "index_51_100": 0.03864885192423445
+   },
+   {
+    "seed": 15,
+    "name": "1792892829_duopoly_setting_P1_mem100_think0_seed15",
+    "index_51_100": 0.8668717467990567
+   },
+   {
+    "seed": 16,
+    "name": "1792892829_duopoly_setting_P1_mem100_think0_seed16",
+    "index_51_100": 1.5260876193222856
+   },
+   {
+    "seed": 18,
+    "name": "1792892829_duopoly_setting_P1_mem100_think0_seed18",
+    "index_51_100": 0.7642287384598693
+   },
+   {
+    "seed": 19,
+    "name": "1792892829_duopoly_setting_P1_mem100_think0_seed19",
+    "index_51_100": 1.6083789966976687
+   },
+   {
+    "seed": 20,
+    "name": "1792892829_duopoly_setting_P1_mem100_think0_seed20",
+    "index_51_100": 2.5717632667777566
+   },
+   {
+    "seed": 17,
+    "name": "1792892830_duopoly_setting_P1_mem100_think0_seed17",
+    "index_51_100": 1.4424689616666544
+   },
+   {
+    "seed": 1,
+    "name": "1792861871_duopoly_setting_P1_mem100_think0_seed1",
+    "index_51_100": 1.0575576803947022
+   },
+   {
+    "seed": 2,
+    "name": "1792861871_duopoly_setting_P1_mem100_think0_seed2",
+    "index_51_100": 0.10899470677738451
+   },
+   {
+    "seed": 3,
+    "name": "1792861871_duopoly_setting_P1_mem100_think0_seed3",
+    "index_51_100": 1.5420149826852627
+   },
+   {
+    "seed": 4,
+    "name": "1792861871_duopoly_setting_P1_mem100_think0_seed4",
+    "index_51_100": -0.06023352895424996
+   }
+  ],
+  "p2": [
+   {
+    "seed": 1,
+    "name": "1792865155_duopoly_setting_P2_mem100_think0_seed1",
+    "index_51_100": 0.4074115564531684
+   },
+   {
+    "seed": 2,
+    "name": "1792865155_duopoly_setting_P2_mem100_think0_seed2",
+    "index_51_100": 0.39126297971014956
+   },
+   {
+    "seed": 3,
+    "name": "1792865155_duopoly_setting_P2_mem100_think0_seed3",
+    "index_51_100": 1.381856495535324
+   },
+   {
+    "seed": 4,
+    "name": "1792867000_duopoly_setting_P2_mem100_think0_seed4",
+    "index_51_100": 0.4357268690984612
+   },
+   {
+    "seed": 5,
+    "name": "1792867175_duopoly_setting_P2_mem100_think0_seed5",
+    "index_51_100": 1.831804510539434
+   },
+   {
+    "seed": 6,
+    "name": "1792888795_duopoly_setting_P2_mem100_think0_seed6",
+    "index_51_100": 1.568339374910184
+   },
+   {
+    "seed": 7,
+    "name": "1792888795_duopoly_setting_P2_mem100_think0_seed7",
+    "index_51_100": -0.04762436629189289
+   },
+   {
+    "seed": 10,
+    "name": "1792888796_duopoly_setting_P2_mem100_think0_seed10",
+    "index_51_100": 0.2111952883564892
+   },
+   {
+    "seed": 8,
+    "name": "1792888796_duopoly_setting_P2_mem100_think0_seed8",
+    "index_51_100": 0.2664986333668272
+   },
+   {
+    "seed": 9,
+    "name": "1792888796_duopoly_setting_P2_mem100_think0_seed9",
+    "index_51_100": 0.11253412085804614
+   }
+  ],
+  "forced10": [
+   {
+    "seed": 1,
+    "name": "1792865155_duopoly_setting_P1_mem100_forced10_think0_seed1",
+    "index_51_100": 0.017515088037035005
+   },
+   {
+    "seed": 2,
+    "name": "1792865155_duopoly_setting_P1_mem100_forced10_think0_seed2",
+    "index_51_100": 0.07879119426018874
+   },
+   {
+    "seed": 3,
+    "name": "1792865155_duopoly_setting_P1_mem100_forced10_think0_seed3",
+    "index_51_100": -0.20414071881270052
+   },
+   {
+    "seed": 4,
+    "name": "1792867022_duopoly_setting_P1_mem100_forced10_think0_seed4",
+    "index_51_100": 0.03764550554834685
+   },
+   {
+    "seed": 5,
+    "name": "1792888795_duopoly_setting_P1_mem100_forced10_think0_seed5",
+    "index_51_100": -0.00416382327946872
+   },
+   {
+    "seed": 6,
+    "name": "1792888795_duopoly_setting_P1_mem100_forced10_think0_seed6",
+    "index_51_100": -0.0010668359105889876
+   },
+   {
+    "seed": 7,
+    "name": "1792888795_duopoly_setting_P1_mem100_forced10_think0_seed7",
+    "index_51_100": 0.01795751472466649
+   },
+   {
+    "seed": 10,
+    "name": "1792888796_duopoly_setting_P1_mem100_forced10_think0_seed10",
+    "index_51_100": 0.17147960052166572
+   },
+   {
+    "seed": 8,
+    "name": "1792888796_duopoly_setting_P1_mem100_forced10_think0_seed8",
+    "index_51_100": -0.1057007647425998
+   },
+   {
+    "seed": 9,
+    "name": "1792888796_duopoly_setting_P1_mem100_forced10_think0_seed9",
+    "index_51_100": 0.009772619687286871
+   }
+  ],
+  "nashopen10": [
+   {
+    "seed": 1,
+    "name": "1792865155_duopoly_setting_P1_mem100_nashopen10_think0_seed1",
+    "index_51_100": -0.005815037464077305
+   },
+   {
+    "seed": 2,
+    "name": "1792865155_duopoly_setting_P1_mem100_nashopen10_think0_seed2",
+    "index_51_100": -0.00625746422416001
+   },
+   {
+    "seed": 3,
+    "name": "1792866795_duopoly_setting_P1_mem100_nashopen10_think0_seed3",
+    "index_51_100": 0.4912514274888408
+   },
+   {
+    "seed": 4,
+    "name": "1792867042_duopoly_setting_P1_mem100_nashopen10_think0_seed4",
+    "index_51_100": 0.3844053649288676
+   },
+   {
+    "seed": 5,
+    "name": "1792888795_duopoly_setting_P1_mem100_nashopen10_think0_seed5",
+    "index_51_100": 0.6326067773352648
+   },
+   {
+    "seed": 6,
+    "name": "1792888795_duopoly_setting_P1_mem100_nashopen10_think0_seed6",
+    "index_51_100": -0.004930183943911897
+   },
+   {
+    "seed": 7,
+    "name": "1792888795_duopoly_setting_P1_mem100_nashopen10_think0_seed7",
+    "index_51_100": 0.2810987164495566
+   },
+   {
+    "seed": 10,
+    "name": "1792888796_duopoly_setting_P1_mem100_nashopen10_think0_seed10",
+    "index_51_100": 0.2653925664666205
+   },
+   {
+    "seed": 8,
+    "name": "1792888796_duopoly_setting_P1_mem100_nashopen10_think0_seed8",
+    "index_51_100": 0.2572076714050904
+   },
+   {
+    "seed": 9,
+    "name": "1792888796_duopoly_setting_P1_mem100_nashopen10_think0_seed9",
+    "index_51_100": 0.05103680120655023
+   },
+   {
+    "seed": 11,
+    "name": "1792892829_duopoly_setting_P1_mem100_nashopen10_think0_seed11",
+    "index_51_100": 0.059885336408204315
+   },
+   {
+    "seed": 12,
+    "name": "1792892829_duopoly_setting_P1_mem100_nashopen10_think0_seed12",
+    "index_51_100": 1.0332242085901535
+   },
+   {
+    "seed": 14,
+    "name": "1792892829_duopoly_setting_P1_mem100_nashopen10_think0_seed14",
+    "index_51_100": 0.6472068604179941
+   },
+   {
+    "seed": 15,
+    "name": "1792892829_duopoly_setting_P1_mem100_nashopen10_think0_seed15",
+    "index_51_100": 0.044621613185351
+   },
+   {
+    "seed": 16,
+    "name": "1792892829_duopoly_setting_P1_mem100_nashopen10_think0_seed16",
+    "index_51_100": 0.670766085392398
+   },
+   {
+    "seed": 17,
+    "name": "1792892829_duopoly_setting_P1_mem100_nashopen10_think0_seed17",
+    "index_51_100": 1.2942559970389491
+   },
+   {
+    "seed": 18,
+    "name": "1792892829_duopoly_setting_P1_mem100_nashopen10_think0_seed18",
+    "index_51_100": 1.0000422015839505
+   },
+   {
+    "seed": 20,
+    "name": "1792892829_duopoly_setting_P1_mem100_nashopen10_think0_seed20",
+    "index_51_100": 1.1659522366149646
+   },
+   {
+    "seed": 13,
+    "name": "1792892830_duopoly_setting_P1_mem100_nashopen10_think0_seed13",
+    "index_51_100": 0.9465085636139432
+   },
+   {
+    "seed": 19,
+    "name": "1792892830_duopoly_setting_P1_mem100_nashopen10_think0_seed19",
+    "index_51_100": -0.01798177336635168
+   }
+  ],
+  "brinfo": [
+   {
+    "seed": 1,
+    "name": "1792865158_duopoly_setting_P1_mem100_brinfo_think0_seed1",
+    "index_51_100": -0.006478677604201361
+   },
+   {
+    "seed": 2,
+    "name": "1792865158_duopoly_setting_P1_mem100_brinfo_think0_seed2",
+    "index_51_100": 0.015642660399933866
+   },
+   {
+    "seed": 3,
+    "name": "1792866884_duopoly_setting_P1_mem100_brinfo_think0_seed3",
+    "index_51_100": 0.018076007580388742
+   },
+   {
+    "seed": 4,
+    "name": "1792867051_duopoly_setting_P1_mem100_brinfo_think0_seed4",
+    "index_51_100": 0.015642660399933866
+   },
+   {
+    "seed": 10,
+    "name": "1792888806_duopoly_setting_P1_mem100_brinfo_think0_seed10",
+    "index_51_100": 0.015642660399933866
+   },
+   {
+    "seed": 5,
+    "name": "1792888806_duopoly_setting_P1_mem100_brinfo_think0_seed5",
+    "index_51_100": 0.015642660399933866
+   },
+   {
+    "seed": 6,
+    "name": "1792888806_duopoly_setting_P1_mem100_brinfo_think0_seed6",
+    "index_51_100": 0.01586387377997522
+   },
+   {
+    "seed": 7,
+    "name": "1792888806_duopoly_setting_P1_mem100_brinfo_think0_seed7",
+    "index_51_100": 0.015642660399933866
+   },
+   {
+    "seed": 8,
+    "name": "1792888806_duopoly_setting_P1_mem100_brinfo_think0_seed8",
+    "index_51_100": 0.015642660399933866
+   },
+   {
+    "seed": 9,
+    "name": "1792888807_duopoly_setting_P1_mem100_brinfo_think0_seed9",
+    "index_51_100": -0.006478677604201361
+   }
+  ],
+  "rpe": [
+   {
+    "seed": 1,
+    "name": "1792865158_duopoly_setting_P1_mem100_rpe_think0_seed1",
+    "index_51_100": 1.2619588435529112
+   },
+   {
+    "seed": 2,
+    "name": "1792865159_duopoly_setting_P1_mem100_rpe_think0_seed2",
+    "index_51_100": 1.0641940817959423
+   },
+   {
+    "seed": 3,
+    "name": "1792866919_duopoly_setting_P1_mem100_rpe_think0_seed3",
+    "index_51_100": 1.0774668845984237
+   },
+   {
+    "seed": 4,
+    "name": "1792867099_duopoly_setting_P1_mem100_rpe_think0_seed4",
+    "index_51_100": 1.02614538042883
+   },
+   {
+    "seed": 6,
+    "name": "1792888804_duopoly_setting_P1_mem100_rpe_think0_seed6",
+    "index_51_100": 1.5550665721077024
+   },
+   {
+    "seed": 10,
+    "name": "1792888806_duopoly_setting_P1_mem100_rpe_think0_seed10",
+    "index_51_100": 0.7704227131010272
+   },
+   {
+    "seed": 5,
+    "name": "1792888806_duopoly_setting_P1_mem100_rpe_think0_seed5",
+    "index_51_100": -0.038554617710197435
+   },
+   {
+    "seed": 7,
+    "name": "1792888806_duopoly_setting_P1_mem100_rpe_think0_seed7",
+    "index_51_100": 1.0989245824624347
+   },
+   {
+    "seed": 8,
+    "name": "1792888806_duopoly_setting_P1_mem100_rpe_think0_seed8",
+    "index_51_100": 0.022495850913614994
+   },
+   {
+    "seed": 9,
+    "name": "1792888806_duopoly_setting_P1_mem100_rpe_think0_seed9",
+    "index_51_100": 0.319811057956793
+   }
+  ],
+  "hidden": [
+   {
+    "seed": 1,
+    "name": "1792865155_duopoly_setting_P1_mem100_hidden_think0_seed1",
+    "index_51_100": 0.4167025184149052
+   },
+   {
+    "seed": 2,
+    "name": "1792865155_duopoly_setting_P1_mem100_hidden_think0_seed2",
+    "index_51_100": -0.05780018177379508
+   },
+   {
+    "seed": 3,
+    "name": "1792866918_duopoly_setting_P1_mem100_hidden_think0_seed3",
+    "index_51_100": 0.5193455267540926
+   },
+   {
+    "seed": 4,
+    "name": "1792867099_duopoly_setting_P1_mem100_hidden_think0_seed4",
+    "index_51_100": 0.24150152142215434
+   },
+   {
+    "seed": 5,
+    "name": "1792888795_duopoly_setting_P1_mem100_hidden_think0_seed5",
+    "index_51_100": 0.1850921095116097
+   },
+   {
+    "seed": 6,
+    "name": "1792888795_duopoly_setting_P1_mem100_hidden_think0_seed6",
+    "index_51_100": -0.034793990249494436
+   },
+   {
+    "seed": 8,
+    "name": "1792888795_duopoly_setting_P1_mem100_hidden_think0_seed8",
+    "index_51_100": 1.2223616485255089
+   },
+   {
+    "seed": 7,
+    "name": "1792888796_duopoly_setting_P1_mem100_hidden_think0_seed7",
+    "index_51_100": 0.7586984039588353
+   },
+   {
+    "seed": 9,
+    "name": "1792888796_duopoly_setting_P1_mem100_hidden_think0_seed9",
+    "index_51_100": 0.023827555461463895
+   },
+   {
+    "seed": 10,
+    "name": "1792888797_duopoly_setting_P1_mem100_hidden_think0_seed10",
+    "index_51_100": 0.8591292784976097
+   }
+  ],
+  "reset50": [
+   {
+    "seed": 1,
+    "name": "1792865155_duopoly_setting_P1_mem100_reset50_think0_seed1",
+    "index_51_100": 1.6338185354024242
+   },
+   {
+    "seed": 2,
+    "name": "1792865155_duopoly_setting_P1_mem100_reset50_think0_seed2",
+    "index_51_100": 1.0672910691165216
+   },
+   {
+    "seed": 3,
+    "name": "1792866992_duopoly_setting_P1_mem100_reset50_think0_seed3",
+    "index_51_100": 2.1417244559773683
+   },
+   {
+    "seed": 4,
+    "name": "1792867130_duopoly_setting_P1_mem100_reset50_think0_seed4",
+    "index_51_100": 1.6557186600265184
+   },
+   {
+    "seed": 5,
+    "name": "1792888795_duopoly_setting_P1_mem100_reset50_think0_seed5",
+    "index_51_100": 1.5342725143838158
+   },
+   {
+    "seed": 6,
+    "name": "1792888796_duopoly_setting_P1_mem100_reset50_think0_seed6",
+    "index_51_100": 0.867756600319222
+   },
+   {
+    "seed": 7,
+    "name": "1792888796_duopoly_setting_P1_mem100_reset50_think0_seed7",
+    "index_51_100": 3.165721192188787
+   },
+   {
+    "seed": 8,
+    "name": "1792888796_duopoly_setting_P1_mem100_reset50_think0_seed8",
+    "index_51_100": 2.5584904639752755
+   },
+   {
+    "seed": 9,
+    "name": "1792888796_duopoly_setting_P1_mem100_reset50_think0_seed9",
+    "index_51_100": 1.362389718091685
+   },
+   {
+    "seed": 10,
+    "name": "1792888797_duopoly_setting_P1_mem100_reset50_think0_seed10",
+    "index_51_100": 2.8560224601308937
+   },
+   {
+    "seed": 11,
+    "name": "1792892829_duopoly_setting_P1_mem100_reset50_think0_seed11",
+    "index_51_100": 1.8904260562503925
+   },
+   {
+    "seed": 12,
+    "name": "1792892829_duopoly_setting_P1_mem100_reset50_think0_seed12",
+    "index_51_100": 0.7423286138357753
+   },
+   {
+    "seed": 13,
+    "name": "1792892829_duopoly_setting_P1_mem100_reset50_think0_seed13",
+    "index_51_100": 1.7145614191175178
+   },
+   {
+    "seed": 14,
+    "name": "1792892829_duopoly_setting_P1_mem100_reset50_think0_seed14",
+    "index_51_100": 1.3196955357437041
+   },
+   {
+    "seed": 15,
+    "name": "1792892829_duopoly_setting_P1_mem100_reset50_think0_seed15",
+    "index_51_100": 0.40940247687354064
+   },
+   {
+    "seed": 17,
+    "name": "1792892829_duopoly_setting_P1_mem100_reset50_think0_seed17",
+    "index_51_100": 3.018614294461288
+   },
+   {
+    "seed": 18,
+    "name": "1792892829_duopoly_setting_P1_mem100_reset50_think0_seed18",
+    "index_51_100": 0.24769549606331218
+   },
+   {
+    "seed": 16,
+    "name": "1792892830_duopoly_setting_P1_mem100_reset50_think0_seed16",
+    "index_51_100": 1.643773137504285
+   },
+   {
+    "seed": 19,
+    "name": "1792892830_duopoly_setting_P1_mem100_reset50_think0_seed19",
+    "index_51_100": 1.3194743223636627
+   },
+   {
+    "seed": 20,
+    "name": "1792892830_duopoly_setting_P1_mem100_reset50_think0_seed20",
+    "index_51_100": 1.8649865175456373
+   }
+  ],
+  "think4096": [
+   {
+    "seed": 3,
+    "name": "1792866999_duopoly_setting_P1_mem100_think4096_seed3",
+    "index_51_100": 1.0774668845984237
+   },
+   {
+    "seed": 4,
+    "name": "1792888795_duopoly_setting_P1_mem100_think4096_seed4",
+    "index_51_100": 0.05656713570758404
+   },
+   {
+    "seed": 5,
+    "name": "1792888795_duopoly_setting_P1_mem100_think4096_seed5",
+    "index_51_100": 0.34591423680167244
+   },
+   {
+    "seed": 6,
+    "name": "1792888796_duopoly_setting_P1_mem100_think4096_seed6",
+    "index_51_100": 0.4381602162789161
+   },
+   {
+    "seed": 7,
+    "name": "1792888796_duopoly_setting_P1_mem100_think4096_seed7",
+    "index_51_100": 0.19659520527376004
+   },
+   {
+    "seed": 8,
+    "name": "1792888796_duopoly_setting_P1_mem100_think4096_seed8",
+    "index_51_100": 0.44369055077995007
+   },
+   {
+    "seed": 9,
+    "name": "1792888796_duopoly_setting_P1_mem100_think4096_seed9",
+    "index_51_100": 0.24305001508244395
+   },
+   {
+    "seed": 10,
+    "name": "1792888797_duopoly_setting_P1_mem100_think4096_seed10",
+    "index_51_100": 0.22137110383839143
+   },
+   {
+    "seed": 1,
+    "name": "1792861871_duopoly_setting_P1_mem100_think4096_seed1",
+    "index_51_100": 0.19947097921429752
+   },
+   {
+    "seed": 2,
+    "name": "1792861871_duopoly_setting_P1_mem100_think4096_seed2",
+    "index_51_100": 0.06253989696870053
+   }
+  ]
+ }
+}

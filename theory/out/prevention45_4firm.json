@@ -1,0 +1,274 @@
+{
+ "rows": [
+  {
+   "arm": "baseline",
+   "label": "baseline (P1)",
+   "games": 10,
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "index_51_100": 0.6282008210568212,
+   "sd": 0.3846280347784155,
+   "share_above_0.3": 0.9,
+   "index_1_10": 1.587542073781472,
+   "index_91_100": 0.6004413137845303,
+   "share_above_0.3_at_91_100": 0.9,
+   "profit_index_51_100": 0.538573062981346,
+   "move_rate_51_100": 0.251,
+   "cs": 64.5693094988405,
+   "profit": 58.35767469824229,
+   "ts": 122.92698419708279,
+   "cs_change_pct": 0.0,
+   "profit_change_pct": 0.0,
+   "ts_change_pct": 0.0
+  },
+  {
+   "arm": "forced10",
+   "label": "forced Nash round every 10",
+   "games": 10,
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "index_51_100": -0.0074854757904827375,
+   "sd": 0.06393218492381053,
+   "share_above_0.3": 0.0,
+   "index_1_10": 1.706741104074324,
+   "index_91_100": -0.024931344889044603,
+   "share_above_0.3_at_91_100": 0.0,
+   "profit_index_51_100": -0.026267748537553492,
+   "move_rate_51_100": 0.496,
+   "cs": 102.87660882774483,
+   "profit": 31.326639647205205,
+   "ts": 134.20324847495004,
+   "index_51_100_unforced_rounds": -0.007391900160220335,
+   "cs_change_pct": 59.32741053951063,
+   "profit_change_pct": -46.31958896719244,
+   "ts_change_pct": 9.173139934669328,
+   "effect": -0.6356862968473039,
+   "effect_ci": [
+    -0.885,
+    -0.43
+   ],
+   "p_permutation": 0.0,
+   "p_fisher_share_above_0.3": 0.00011907597046915932,
+   "p_mann_whitney": 0.00018267179110955002,
+   "p_holm": 0.0
+  },
+  {
+   "arm": "brinfo",
+   "label": "best-response information",
+   "games": 10,
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "index_51_100": -0.0019235682802349024,
+   "sd": 0.0002355539705599928,
+   "share_above_0.3": 0.0,
+   "index_1_10": 0.5660682832910303,
+   "index_91_100": -0.001985813204669812,
+   "share_above_0.3_at_91_100": 0.0,
+   "profit_index_51_100": -0.0028901112214181303,
+   "move_rate_51_100": 0.008,
+   "cs": 102.07580216703983,
+   "profit": 32.449767096510755,
+   "ts": 134.5255692635506,
+   "cs_change_pct": 58.08718253193159,
+   "profit_change_pct": -44.39503070623867,
+   "ts_change_pct": 9.43534500762857,
+   "effect": -0.6301243893370561,
+   "effect_ci": [
+    -0.88,
+    -0.434
+   ],
+   "p_permutation": 0.0,
+   "p_fisher_share_above_0.3": 0.00011907597046915932,
+   "p_mann_whitney": 0.0001458996427768919,
+   "p_holm": 0.0
+  }
+ ],
+ "games": {
+  "baseline": [
+   {
+    "seed": 1,
+    "name": "1792946889_oligopoly_4_firms_setting_P1_mem100_think0_seed1",
+    "index_51_100": 1.0708227496877845
+   },
+   {
+    "seed": 2,
+    "name": "1792946889_oligopoly_4_firms_setting_P1_mem100_think0_seed2",
+    "index_51_100": 0.5887876807097722
+   },
+   {
+    "seed": 3,
+    "name": "1792946889_oligopoly_4_firms_setting_P1_mem100_think0_seed3",
+    "index_51_100": 0.42155631706131497
+   },
+   {
+    "seed": 4,
+    "name": "1792948880_oligopoly_4_firms_setting_P1_mem100_think0_seed4",
+    "index_51_100": 0.15753409591657352
+   },
+   {
+    "seed": 5,
+    "name": "1792949131_oligopoly_4_firms_setting_P1_mem100_think0_seed5",
+    "index_51_100": 0.4441028119121825
+   },
+   {
+    "seed": 6,
+    "name": "1792949186_oligopoly_4_firms_setting_P1_mem100_think0_seed6",
+    "index_51_100": 0.37137999186406284
+   },
+   {
+    "seed": 7,
+    "name": "1792951130_oligopoly_4_firms_setting_P1_mem100_think0_seed7",
+    "index_51_100": 0.5293783583880085
+   },
+   {
+    "seed": 8,
+    "name": "1792951377_oligopoly_4_firms_setting_P1_mem100_think0_seed8",
+    "index_51_100": 0.5976057116713843
+   },
+   {
+    "seed": 9,
+    "name": "1792953105_oligopoly_4_firms_setting_P1_mem100_think0_seed9",
+    "index_51_100": 0.6017207927868035
+   },
+   {
+    "seed": 10,
+    "name": "1792953414_oligopoly_4_firms_setting_P1_mem100_think0_seed10",
+    "index_51_100": 1.4991197005703256
+   }
+  ],
+  "forced10": [
+   {
+    "seed": 1,
+    "name": "1792946889_oligopoly_4_firms_setting_P1_mem100_forced10_think0_seed1",
+    "index_51_100": 0.004738735758266693
+   },
+   {
+    "seed": 2,
+    "name": "1792946889_oligopoly_4_firms_setting_P1_mem100_forced10_think0_seed2",
+    "index_51_100": -0.03489053279862837
+   },
+   {
+    "seed": 3,
+    "name": "1792946889_oligopoly_4_firms_setting_P1_mem100_forced10_think0_seed3",
+    "index_51_100": -0.0342680835542825
+   },
+   {
+    "seed": 4,
+    "name": "1792949102_oligopoly_4_firms_setting_P1_mem100_forced10_think0_seed4",
+    "index_51_100": 0.005119121407582055
+   },
+   {
+    "seed": 5,
+    "name": "1792949146_oligopoly_4_firms_setting_P1_mem100_forced10_think0_seed5",
+    "index_51_100": 0.0034246762424126973
+   },
+   {
+    "seed": 6,
+    "name": "1792950790_oligopoly_4_firms_setting_P1_mem100_forced10_think0_seed6",
+    "index_51_100": -0.005151291124171571
+   },
+   {
+    "seed": 7,
+    "name": "1792951217_oligopoly_4_firms_setting_P1_mem100_forced10_think0_seed7",
+    "index_51_100": -0.06504474063599085
+   },
+   {
+    "seed": 8,
+    "name": "1792951404_oligopoly_4_firms_setting_P1_mem100_forced10_think0_seed8",
+    "index_51_100": -0.0760413439528222
+   },
+   {
+    "seed": 9,
+    "name": "1792953109_oligopoly_4_firms_setting_P1_mem100_forced10_think0_seed9",
+    "index_51_100": -0.027905269056491752
+   },
+   {
+    "seed": 10,
+    "name": "1792953481_oligopoly_4_firms_setting_P1_mem100_forced10_think0_seed10",
+    "index_51_100": 0.15516396980929842
+   }
+  ],
+  "brinfo": [
+   {
+    "seed": 1,
+    "name": "1792946891_oligopoly_4_firms_setting_P1_mem100_brinfo_think0_seed1",
+    "index_51_100": -0.002020393718244762
+   },
+   {
+    "seed": 2,
+    "name": "1792946891_oligopoly_4_firms_setting_P1_mem100_brinfo_think0_seed2",
+    "index_51_100": -0.002020393718244762
+   },
+   {
+    "seed": 3,
+    "name": "1792948836_oligopoly_4_firms_setting_P1_mem100_brinfo_think0_seed3",
+    "index_51_100": -0.002020393718244762
+   },
+   {
+    "seed": 4,
+    "name": "1792949128_oligopoly_4_firms_setting_P1_mem100_brinfo_think0_seed4",
+    "index_51_100": -0.0019512326910948621
+   },
+   {
+    "seed": 5,
+    "name": "1792949171_oligopoly_4_firms_setting_P1_mem100_brinfo_think0_seed5",
+    "index_51_100": -0.002020393718244762
+   },
+   {
+    "seed": 6,
+    "name": "1792951107_oligopoly_4_firms_setting_P1_mem100_brinfo_think0_seed6",
+    "index_51_100": -0.0012596224195958676
+   },
+   {
+    "seed": 7,
+    "name": "1792951364_oligopoly_4_firms_setting_P1_mem100_brinfo_think0_seed7",
+    "index_51_100": -0.002020393718244762
+   },
+   {
+    "seed": 8,
+    "name": "1792951406_oligopoly_4_firms_setting_P1_mem100_brinfo_think0_seed8",
+    "index_51_100": -0.0019512326910948621
+   },
+   {
+    "seed": 9,
+    "name": "1792953367_oligopoly_4_firms_setting_P1_mem100_brinfo_think0_seed9",
+    "index_51_100": -0.0019512326910948621
+   },
+   {
+    "seed": 10,
+    "name": "1792953494_oligopoly_4_firms_setting_P1_mem100_brinfo_think0_seed10",
+    "index_51_100": -0.002020393718244762
+   }
+  ]
+ }
+}

@@ -1,0 +1,84 @@
+brinfo s2: done
+hidden s1: done
+reset50 s2: done
+nashopen10 s1: done
+p2 s3: done
+nashopen10 s2: done
+reset50 s1: done
+brinfo s1: done
+hidden s2: done
+rpe s1: done
+p2 s2: done
+forced10 s2: done
+forced10 s1: done
+p2 s1: done
+rpe s2: done
+forced10 s3: done
+hidden s3: done
+brinfo s4: done
+brinfo s3: done
+reset50 s3: done
+nashopen10 s3: done
+hidden s4: done
+rpe s3: done
+p2 s5: done
+p2 s4: done
+forced10 s4: done
+nashopen10 s4: done
+reset50 s4: done
+rpe s4: done
+baseline s5: done
+think4096 s3: done
+hidden s6: FAILED (exit 1)
+nashopen10 s6: FAILED (exit 1)
+nashopen10 s5: FAILED (exit 1)
+reset50 s5: FAILED (exit 1)
+brinfo s5: FAILED (exit 1)
+rpe s6: FAILED (exit 1)
+forced10 s5: FAILED (exit 1)
+hidden s5: FAILED (exit 1)
+brinfo s6: FAILED (exit 1)
+baseline s6: FAILED (exit 1)
+forced10 s6: FAILED (exit 1)
+p2 s6: FAILED (exit 1)
+think4096 s5: FAILED (exit 1)
+think4096 s6: FAILED (exit 1)
+reset50 s6: FAILED (exit 1)
+baseline s7: FAILED (exit 1)
+p2 s7: FAILED (exit 1)
+rpe s5: FAILED (exit 1)
+nashopen10 s7: FAILED (exit 1)
+forced10 s7: FAILED (exit 1)
+think4096 s4: FAILED (exit 1)
+brinfo s7: FAILED (exit 1)
+hidden s7: FAILED (exit 1)
+rpe s7: FAILED (exit 1)
+reset50 s7: FAILED (exit 1)
+think4096 s7: FAILED (exit 1)
+baseline s8: FAILED (exit 1)
+p2 s8: FAILED (exit 1)
+forced10 s8: FAILED (exit 1)
+nashopen10 s8: FAILED (exit 1)
+hidden s8: FAILED (exit 1)
+think4096 s8: FAILED (exit 1)
+baseline s9: FAILED (exit 1)
+reset50 s8: FAILED (exit 1)
+brinfo s8: FAILED (exit 1)
+p2 s9: FAILED (exit 1)
+rpe s8: FAILED (exit 1)
+forced10 s9: FAILED (exit 1)
+nashopen10 s9: FAILED (exit 1)
+hidden s9: FAILED (exit 1)
+reset50 s9: FAILED (exit 1)
+think4096 s9: FAILED (exit 1)
+brinfo s9: FAILED (exit 1)
+rpe s9: FAILED (exit 1)
+baseline s10: FAILED (exit 1)
+p2 s10: FAILED (exit 1)
+nashopen10 s10: FAILED (exit 1)
+forced10 s10: FAILED (exit 1)
+hidden s10: FAILED (exit 1)
+think4096 s10: FAILED (exit 1)
+reset50 s10: FAILED (exit 1)
+brinfo s10: FAILED (exit 1)
+rpe s10: FAILED (exit 1)

@@ -1,0 +1,47 @@
+{
+ "baseline": {
+  "games": 20,
+  "cut": {
+   "events": 195,
+   "follow_same_direction": 0.3435897435897436,
+   "median_share_matched": 0.21171042782404062
+  },
+  "raise": {
+   "events": 97,
+   "follow_same_direction": 0.21649484536082475,
+   "median_share_matched": 0.0
+  },
+  "move_after_quiet_round": 0.029318541996830427,
+  "p_fisher_cut_vs_raise": 0.03018564566472908
+ },
+ "locked_high": {
+  "games": 14,
+  "cut": {
+   "events": 88,
+   "follow_same_direction": 0.2727272727272727,
+   "median_share_matched": 0.0
+  },
+  "raise": {
+   "events": 30,
+   "follow_same_direction": 0.1,
+   "median_share_matched": 0.0
+  },
+  "move_after_quiet_round": 0.019102196752626553,
+  "p_fisher_cut_vs_raise": 0.07635426823704747
+ },
+ "learning_down": {
+  "games": 6,
+  "cut": {
+   "events": 107,
+   "follow_same_direction": 0.40186915887850466,
+   "median_share_matched": 0.30024480070910364
+  },
+  "raise": {
+   "events": 67,
+   "follow_same_direction": 0.26865671641791045,
+   "median_share_matched": 0.20399586136545245
+  },
+  "move_after_quiet_round": 0.07906976744186046,
+  "p_fisher_cut_vs_raise": 0.10211602530271488
+ }
+}

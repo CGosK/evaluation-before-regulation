@@ -1,0 +1,84 @@
+p2 s1: already done
+forced10 s1: already done
+nashopen10 s1: already done
+brinfo s1: already done
+rpe s1: already done
+hidden s1: already done
+reset50 s1: already done
+p2 s2: already done
+forced10 s2: already done
+nashopen10 s2: already done
+brinfo s2: already done
+rpe s2: already done
+hidden s2: already done
+reset50 s2: already done
+p2 s3: already done
+forced10 s3: already done
+nashopen10 s3: already done
+brinfo s3: already done
+rpe s3: already done
+hidden s3: already done
+reset50 s3: already done
+think4096 s3: already done
+p2 s4: already done
+forced10 s4: already done
+nashopen10 s4: already done
+brinfo s4: already done
+rpe s4: already done
+hidden s4: already done
+reset50 s4: already done
+baseline s5: already done
+p2 s5: already done
+think4096 s8: FAILED (exit 1)
+rpe s10: FAILED (exit 1)
+forced10 s9: FAILED (exit 1)
+hidden s9: FAILED (exit 1)
+nashopen10 s8: FAILED (exit 1)
+brinfo s10: FAILED (exit 1)
+brinfo s9: FAILED (exit 1)
+hidden s8: FAILED (exit 1)
+baseline s10: FAILED (exit 1)
+brinfo s8: FAILED (exit 1)
+p2 s9: FAILED (exit 1)
+hidden s10: FAILED (exit 1)
+nashopen10 s10: FAILED (exit 1)
+reset50 s9: FAILED (exit 1)
+reset50 s8: FAILED (exit 1)
+p2 s8: FAILED (exit 1)
+forced10 s10: FAILED (exit 1)
+p2 s10: FAILED (exit 1)
+reset50 s10: FAILED (exit 1)
+nashopen10 s9: FAILED (exit 1)
+baseline s9: FAILED (exit 1)
+rpe s9: FAILED (exit 1)
+rpe s8: FAILED (exit 1)
+think4096 s10: FAILED (exit 1)
+think4096 s9: FAILED (exit 1)
+forced10 s8: FAILED (exit 1)
+nashopen10 s5: STALLED (adopted)
+hidden s5: STALLED (adopted)
+reset50 s5: STALLED (adopted)
+baseline s6: STALLED (adopted)
+forced10 s6: STALLED (adopted)
+nashopen10 s6: STALLED (adopted)
+baseline s7: STALLED (adopted)
+forced10 s7: STALLED (adopted)
+brinfo s7: STALLED (adopted)
+baseline s8: STALLED (adopted)
+think4096 s4: STALLED (adopted)
+forced10 s5: STALLED (adopted)
+brinfo s5: STALLED (adopted)
+rpe s5: STALLED (adopted)
+p2 s6: STALLED (adopted)
+brinfo s6: STALLED (adopted)
+rpe s6: STALLED (adopted)
+hidden s6: STALLED (adopted)
+reset50 s6: STALLED (adopted)
+think4096 s6: STALLED (adopted)
+p2 s7: STALLED (adopted)
+nashopen10 s7: STALLED (adopted)
+rpe s7: STALLED (adopted)
+hidden s7: STALLED (adopted)
+reset50 s7: STALLED (adopted)
+think4096 s7: STALLED (adopted)
+think4096 s5: STALLED (adopted)

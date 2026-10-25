@@ -1,0 +1,10 @@
+8 of 14 eligible sources; claude-haiku-4-5; up to 1584 calls; cap $60.00, $0.00 already logged in succession/runs/frontier/haiku45_enforcer2/usage.jsonl
+done 1750988131: $9.89 logged
+done 1750997185: $9.94 logged
+done 1750992373: $9.98 logged
+done 1750982396: $9.99 logged
+done 1751052703: $19.88 logged
+done 1751040841: $20.04 logged
+done 1751045680: $20.10 logged
+done 1751002658: $20.15 logged
+logged spend $20.1516

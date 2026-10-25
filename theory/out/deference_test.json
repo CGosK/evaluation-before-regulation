@@ -1,0 +1,20 @@
+{
+ "prevention": {
+  "brinfo": {
+   "firm_rounds": 1780,
+   "within_1pct_of_best_response": 0.9882022471910112
+  },
+  "baseline": {
+   "firm_rounds": 3560,
+   "within_1pct_of_best_response": 0.075
+  }
+ },
+ "removal_haiku45": {
+  "firm_rounds": 368,
+  "within_1pct_of_estimate": 0.4701086956521739
+ },
+ "removal_haiku45_enforcer": {
+  "firm_rounds": 368,
+  "within_1pct_of_estimate": 0.32065217391304346
+ }
+}

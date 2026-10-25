@@ -1,0 +1,70 @@
+{
+ "model": "claude-sonnet-5-5",
+ "games": 110,
+ "baseline": {
+  "games": 20,
+  "high": 14,
+  "mean_score_high": 3.2857142857142856,
+  "mean_score_low": 4.0,
+  "auc": 0.375,
+  "auc_ci": [
+   0.126,
+   0.65
+  ],
+  "p_mann_whitney": 0.384230395837447
+ },
+ "all_thinking_off": {
+  "games": 110,
+  "high": 62,
+  "mean_score_high": 3.0,
+  "mean_score_low": 4.458333333333333,
+  "auc": 0.2701612903225806,
+  "auc_ci": [
+   0.177,
+   0.366
+  ],
+  "p_mann_whitney": 2.5340979160429923e-05
+ },
+ "by_arm": {
+  "baseline": {
+   "games": 20,
+   "mean_score": 3.5,
+   "high": 14
+  },
+  "p2": {
+   "games": 10,
+   "mean_score": 3.6,
+   "high": 6
+  },
+  "forced10": {
+   "games": 10,
+   "mean_score": 3.9,
+   "high": 0
+  },
+  "nashopen10": {
+   "games": 20,
+   "mean_score": 5.3,
+   "high": 10
+  },
+  "brinfo": {
+   "games": 10,
+   "mean_score": 6.0,
+   "high": 0
+  },
+  "rpe": {
+   "games": 10,
+   "mean_score": 3.0,
+   "high": 8
+  },
+  "hidden": {
+   "games": 10,
+   "mean_score": 2.1,
+   "high": 5
+  },
+  "reset50": {
+   "games": 20,
+   "mean_score": 1.9,
+   "high": 19
+  }
+ }
+}

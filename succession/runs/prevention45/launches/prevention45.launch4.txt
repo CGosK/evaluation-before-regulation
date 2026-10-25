@@ -1,0 +1,84 @@
+p2 s1: already done
+forced10 s1: already done
+nashopen10 s1: already done
+brinfo s1: already done
+rpe s1: already done
+hidden s1: already done
+reset50 s1: already done
+p2 s2: already done
+forced10 s2: already done
+nashopen10 s2: already done
+brinfo s2: already done
+rpe s2: already done
+hidden s2: already done
+reset50 s2: already done
+p2 s3: already done
+forced10 s3: already done
+nashopen10 s3: already done
+brinfo s3: already done
+rpe s3: already done
+hidden s3: already done
+reset50 s3: already done
+think4096 s3: already done
+p2 s4: already done
+forced10 s4: already done
+nashopen10 s4: already done
+brinfo s4: already done
+rpe s4: already done
+hidden s4: already done
+reset50 s4: already done
+baseline s5: already done
+p2 s5: already done
+brinfo s8: done
+brinfo s9: done
+brinfo s6: done
+hidden s8: done
+reset50 s8: done
+brinfo s10: done
+brinfo s5: done
+brinfo s7: done
+hidden s10: done
+reset50 s5: done
+reset50 s6: done
+hidden s9: done
+reset50 s7: done
+reset50 s10: done
+baseline s8: done
+reset50 s9: done
+nashopen10 s6: done
+baseline s9: done
+baseline s7: done
+hidden s6: done
+p2 s6: done
+nashopen10 s9: done
+forced10 s8: done
+forced10 s10: done
+hidden s5: done
+nashopen10 s5: done
+forced10 s6: done
+baseline s10: done
+nashopen10 s10: done
+p2 s7: done
+rpe s7: done
+p2 s10: done
+p2 s9: done
+p2 s8: done
+rpe s6: done
+forced10 s9: done
+nashopen10 s7: done
+baseline s6: done
+nashopen10 s8: done
+forced10 s5: done
+rpe s9: done
+rpe s8: done
+forced10 s7: done
+hidden s7: done
+rpe s10: done
+rpe s5: done
+think4096 s6: done
+think4096 s4: done
+think4096 s5: done
+think4096 s9: done
+think4096 s8: done
+think4096 s10: done
+think4096 s7: done

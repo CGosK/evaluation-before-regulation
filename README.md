@@ -109,4 +109,5 @@ platform's own random choices, such as which firm a forced round holds.
 - Info hazard: `succession/branch.py` contains an instruction that tells agents to punish price cuts (the
   `enforcer` strategies). It was used only as a positive control in simulation, and it adds nothing beyond the
   strategies in the economics literature.
-- The harness is MIT-licensed by its authors; see `LICENSE`.
+- Everything here is under the MIT licence (`LICENSE`): the harness is copyright Peist, Romero & Sauer, and
+  the sprint additions are copyright Chris Graham.

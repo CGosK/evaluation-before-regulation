@@ -16,6 +16,30 @@ None of this is part of the sprint submission. [`CLAIMS_STATUS.md`](CLAIMS_STATU
 
 *Every remedy tested on Opus 5.5, waves 2–7: each game's index over rounds 51–100 (dot) and the arm's mean (bar). From wave 5 on, rounds with an overridden price are left out of the index.*
 
+## Contents
+
+Start with [`FOLLOWUP_NOTE.md`](FOLLOWUP_NOTE.md), which states the findings and links back here for the full tables. This file is the reference: each wave's design, results, exploratory measures and caveats, in the order the waves ran.
+
+- [What stays fixed](#what-stays-fixed)
+- [Files](#files)
+- [Wave 1: the three arms](#wave-1-the-three-arms)
+- [Wave 1 results](#wave-1-results)
+- [Wave 1 caveats](#wave-1-caveats)
+- [Known limits of the code](#known-limits-of-the-code)
+- [Corrections to wave 1 after an independent check (4 November 2026)](#corrections-to-wave-1-after-an-independent-check-4-november-2026)
+- [A scaling error in the forced-cut null bands (6 November 2026)](#a-scaling-error-in-the-forced-cut-null-bands-6-november-2026)
+- [Wave 2: more models and biased numbers (3–4 November 2026)](#wave-2-more-models-and-biased-numbers-34-november-2026)
+- [Wave 3: forced Nash rounds on Opus 5.5 (4–5 November 2026)](#wave-3-forced-nash-rounds-on-opus-55-45-november-2026)
+- [Wave 4: the paper's diagnosis on Opus 5.5 and Sonnet 5.5 (6 November 2026)](#wave-4-the-papers-diagnosis-on-opus-55-and-sonnet-55-6-november-2026)
+- [Wave 5: an automated search for a rule on Opus 5.5 (6 November 2026)](#wave-5-an-automated-search-for-a-rule-on-opus-55-6-november-2026)
+- [Wave 6: lifting the limit, and its wording against its threat (6 November 2026)](#wave-6-lifting-the-limit-and-its-wording-against-its-threat-6-november-2026)
+- [Wave 7: the matched estimate without a threat (6 November 2026)](#wave-7-the-matched-estimate-without-a-threat-6-november-2026)
+- [Wave 8: mixed-model markets (6 November 2026)](#wave-8-mixed-model-markets-6-november-2026)
+- [Raise and cut following on the saved games (exploratory)](#raise-and-cut-following-on-the-saved-games-exploratory)
+- [Wave 9: a forced raise in the diagnostic (6 November 2026)](#wave-9-a-forced-raise-in-the-diagnostic-6-november-2026)
+- [Limits that apply to every wave](#limits-that-apply-to-every-wave)
+- [Running it](#running-it)
+
 ## What stays fixed
 
 - The submission is the annotated tag `submission-2026-10-25`, in this repository and in the public one. `git checkout submission-2026-10-25` gives back exactly what was submitted.
@@ -28,7 +52,9 @@ None of this is part of the sprint submission. [`CLAIMS_STATUS.md`](CLAIMS_STATU
 | File | What it does |
 | --- | --- |
 | `PAPER_REVISED.md`, `.pdf`, `build_revised.py` | Wording revision after the review. The build uses the sprint's own build and number checker (81 of 81 checks pass) |
-| `FOLLOWUP_NOTE.md` | A short note reporting waves 1–8 for readers of the paper |
+| `FOLLOWUP_NOTE.md` | The main write-up of waves 1–9: the findings first, then the evidence by question |
+| `FOLLOWUP_NOTE.pdf` | The same, as a PDF, built by `build_note.py` |
+| `build_note.py` | Builds the note's PDF, after `check_followup.py` passes |
 | `CLAIMS_STATUS.md` | Each of the paper's claims, marked as holding, narrowed or not retested, with the wave that decides it |
 | `duopoly_followup.py` | The follow-up arms of both waves, as patches on `experiments_synthetic/common.py` |
 | `run_followup.py` | Wave 1: runs 10 games per arm through `succession/prevention45.py`'s runner |
@@ -38,6 +64,7 @@ None of this is part of the sprint submission. [`CLAIMS_STATUS.md`](CLAIMS_STATU
 | `out/null_band_scale.json` | The null bands as published and on the base scale |
 | `following_results.py` | Raise and cut following on the saved games, with the paper's measure (exploratory) |
 | `out/following.json` | Raise and cut following: results |
+| `check_followup.py` | Checks every number in `FOLLOWUP_NOTE.md` and `CLAIMS_STATUS.md` against the saved outputs, recomputing from the saved games any that no output stores |
 | `check_clean.py` | Checks a tree for home paths, the local username, personal emails, keys and plan-window readings before it goes public |
 | `followup_results.py` | Wave 1: Table 4's statistics for the new arms, plus how often agents follow the number they are shown |
 | `runs/` | Wave 1: game folders, per-game logs and the call log (`usage.jsonl`) |
@@ -89,7 +116,12 @@ None of this is part of the sprint submission. [`CLAIMS_STATUS.md`](CLAIMS_STATU
 | `wave9_results.py` | Wave 9: the raise responses, the null bands on the base scale, the plan's verdicts and test, the exploratory measures, and the notes for reading by hand |
 | `runs/wave9/` | Wave 9: the arms, each model's saved starting states, logs, call logs, the check run, Firm A's notes after the raise (`notes.jsonl`) and `launch.txt` |
 | `out/wave9.json` | Wave 9: results |
-| `figures_followup.py` | Figures for waves 5–8, from the waves' results and saved games |
+| `figures_followup.py` | The note's eight figures, from the waves' results and saved games |
+| `out/forced_cut_schematic.png` | An illustration of the forced-cut test, not data |
+| `out/models_baseline.png` | Each model against itself, by game |
+| `out/haiku45_number.png` | Haiku 4.5 and Haiku 5.5 shown a right or a wrong best-response number, by game |
+| `out/opus_sawtooth.png` | Opus 5.5's mean index by round under forced Nash rounds |
+| `out/diagnosis_summary.png` | Every forced-cut and forced-raise response against its null band, on the base scale |
 | `out/opus_remedies.png` | Every remedy tested on Opus 5.5, waves 2–7, by game |
 | `out/wave6_lifted.png` | Mean index by round: the limit kept, the limit lifted after round 50, the estimate, and baseline |
 | `out/wave8_mixed.png` | Each mixed game's Opus index against its rival's |
@@ -1159,10 +1191,17 @@ uv run --extra analysis python followup/wave7_results.py
 uv run --extra analysis python followup/wave8_results.py
 ```
 
-**Figures for waves 5–8.** These need no calls. They read the waves' `out/*.json` and saved games.
+**The note's figures and PDF.** These need no calls. The figures read the waves' `out/*.json` and saved games, and the PDF build checks the note's numbers first.
 
 ```bash
 uv run --extra analysis python followup/figures_followup.py
+uv run --extra analysis --with markdown --with playwright --with pypdf python followup/build_note.py
+```
+
+**Checking the note's numbers.** This needs no calls. Every number in the note and the claims page that comes from a result is checked, except counts read by hand from the agents' notes.
+
+```bash
+uv run --extra analysis python followup/check_followup.py
 ```
 
 **The null bands on the base scale.** This needs no calls.

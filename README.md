@@ -9,7 +9,7 @@ Stops It* (Chris Graham, AI Collusion Research Sprint, Apart Research, October 2
 summary below: the remedies that prevented collusion in Haiku 4.5 worked only partly or not at all on Claude
 Opus 5.5, and Opus's prices depend on which model it competes with. The work is in [`followup/`](followup/):
 
-- [`FOLLOWUP_NOTE.md`](followup/FOLLOWUP_NOTE.md): a short note on the nine waves;
+- [`FOLLOWUP_NOTE.md`](followup/FOLLOWUP_NOTE.md) ([PDF](followup/FOLLOWUP_NOTE.pdf)): the findings first, then the evidence;
 - [`CLAIMS_STATUS.md`](followup/CLAIMS_STATUS.md): each of the paper's claims, marked as holding, narrowed or
   not retested;
 - [`PAPER_REVISED.pdf`](followup/PAPER_REVISED.pdf): a wording-only revision of the paper.

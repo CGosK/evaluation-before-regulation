@@ -1,7 +1,12 @@
 """
-Figures for follow-up waves 5-8 (November 2026, not part of the submission). Per-game values come from each
+Figures for the follow-up (November 2026, not part of the submission). Per-game values come from each
 wave's out/*.json; the per-round paths and the best-response curve are computed from the saved games.
 
+    out/forced_cut_schematic.png  an illustration of the forced-cut test (not data)
+    out/models_baseline.png    each model against itself, each game's index over rounds 51-100
+    out/haiku45_number.png     Haiku 4.5 and Haiku 5.5 shown a right or a wrong best-response number
+    out/opus_sawtooth.png      Opus 5.5's mean index by round under forced Nash rounds
+    out/diagnosis_summary.png  every forced-cut and forced-raise response against its null band (base scale)
     out/opus_remedies.png   every remedy tested on Opus 5.5, each game's index over rounds 51-100
     out/wave6_lifted.png    mean index by round: the limit kept, lifted after round 50, the estimate, baseline
     out/wave8_mixed.png     each mixed game's Opus index against its rival's
@@ -206,7 +211,7 @@ def wave8_mixed():
     arms = [
         ("opus-haiku55", "Opus and Haiku 5.5", SERIES[0], "o"),
         ("opus-haiku45", "Opus and Haiku 4.5", SERIES[1], "s"),
-        ("opus-haiku45-brinfo", "Opus and Haiku 4.5, with the estimate", SERIES[2], "^"),
+        ("opus-haiku45-brinfo", "Opus and Haiku 4.5, best-response information", SERIES[2], "^"),
     ]
     top = 0.95
     fig, ax = plt.subplots(figsize=(6.4, 5.0), layout="constrained")
@@ -271,8 +276,265 @@ def wave8_mixed():
     plt.close(fig)
 
 
+def dot_rows(ax, rows, xlim, mean_x, refs=(), clip=None):
+    """One row per (label, values, colour, obedience-or-None); dots per game, a bar at the mean."""
+    n = len(rows)
+    for x, text in refs:
+        ax.axvline(
+            x, color=AXIS if x == 0 else GRID, lw=1, ls="-" if x == 0 else (0, (2, 2)), zorder=0
+        )
+        ax.text(x, n - 0.35, text, color=MUTED, fontsize=7.5, ha="center", va="bottom")
+    rng = np.random.default_rng(2026)
+    for i, (label, vals, color, obey) in enumerate(rows):
+        y = n - 1 - i
+        vals = np.asarray(vals, float)
+        right = clip if clip is not None else xlim[1] - 0.06
+        off = vals > right
+        if off.any():
+            ax.scatter(
+                [right] * int(off.sum()),
+                y + np.linspace(-0.12, 0.12, int(off.sum())),
+                marker=">",
+                s=28,
+                color=color,
+                edgecolors=SURFACE,
+                linewidths=0.6,
+                zorder=3,
+            )
+            lo_v, hi_v = vals[off].min(), vals[off].max()
+            span = f"{lo_v:.1f}" if abs(hi_v - lo_v) < 0.05 else f"{lo_v:.1f}–{hi_v:.1f}"
+            ax.text(
+                right - 0.06,
+                y + 0.3,
+                f"{int(off.sum())} off the scale, at {span}",
+                color=INK2,
+                fontsize=7,
+                ha="right",
+                va="bottom",
+            )
+        ax.scatter(
+            np.minimum(vals, right),
+            y + rng.uniform(-0.18, 0.18, len(vals)),
+            s=22,
+            color=color,
+            alpha=0.85,
+            edgecolors=SURFACE,
+            linewidths=0.8,
+            zorder=3,
+        )
+        ax.plot([vals.mean()] * 2, [y - 0.32, y + 0.32], color=INK, lw=1.6, zorder=4)
+        if obey is not None:
+            ax.plot([obey] * 2, [y - 0.36, y + 0.36], color=INK2, lw=1, ls=(0, (2, 1.5)), zorder=2)
+        ax.text(
+            mean_x,
+            y,
+            f"{vals.mean():.2f}".replace("-0.00", "0.00").replace("-", "−"),
+            color=INK,
+            fontsize=8,
+            va="center",
+            ha="right",
+        )
+    ax.text(mean_x, n - 0.35, "mean", color=MUTED, fontsize=7.5, ha="right", va="bottom")
+    ax.set_yticks(range(n), [r[0] for r in rows][::-1])
+    ax.tick_params(axis="y", length=0)
+    ax.spines["left"].set_visible(False)
+    ax.set_xlim(*xlim)
+    ax.set_ylim(-0.6, n + 0.1)
+    ax.set_xlabel("Market index, rounds 51–100 (0 = Nash, 1 = monopoly)")
+
+
+def models_baseline():
+    w2, w3j = load("wave2.json"), load("wave3.json")
+    bias = {(r["family"], r["arm"]): r["index_by_game"] for r in w2["bias"]}
+    sonnet = next(r["index_by_game"] for r in w2["stage_b"]["sonnet55"] if r["arm"] == "baseline")
+    opus = next(r["index_by_game"] for r in w3j["rows"] if r["arm"] == "baseline")
+    rows = [
+        ("Haiku 4.5  (20 games, the paper's)", bias[("haiku45", "baseline")], SERIES[0], None),
+        ("Haiku 5.5  (10)", bias[("haiku55", "baseline")], SERIES[0], None),
+        ("Sonnet 5.5  (10)", sonnet, SERIES[0], None),
+        ("Opus 5.5  (15)", opus, SERIES[0], None),
+    ]
+    fig, ax = plt.subplots(figsize=(7.6, 2.6), layout="constrained")
+    dot_rows(ax, rows, (-0.3, 3.15), 3.1, refs=((0, "Nash"), (0.3, "ends high"), (1, "monopoly")))
+    fig.savefig(OUT / "models_baseline.png", dpi=200)
+    plt.close(fig)
+
+
+def haiku_number():
+    w1, w2 = load("followup.json"), load("wave2.json")
+    g1 = {a: [g["index_51_100"] for g in v] for a, v in w1["games"].items()}
+    bias = {(r["family"], r["arm"]): r for r in w2["bias"]}
+    up, down = w1["obedient_index_for_bias"], bias[("haiku45", "brinfo_biasdown")]["obedient_index"]
+    rows = [
+        ("Haiku 4.5: no number (baseline)", g1["baseline"], MUTED, None),
+        ("Haiku 4.5: its best response", g1["brinfo"], SERIES[0], None),
+        ("Haiku 4.5: best response with 10% noise", g1["brinfo_noise"], SERIES[0], None),
+        ("Haiku 4.5: best response +10%", g1["brinfo_bias"], SERIES[0], up),
+        (
+            "Haiku 4.5: best response −10%",
+            bias[("haiku45", "brinfo_biasdown")]["index_by_game"],
+            SERIES[0],
+            down,
+        ),
+        (
+            "Haiku 4.5 told to enforce: no number",
+            bias[("haiku45enf", "baseline")]["index_by_game"],
+            MUTED,
+            None,
+        ),
+        (
+            "Haiku 4.5 told to enforce: +10%",
+            bias[("haiku45enf", "brinfo_bias")]["index_by_game"],
+            SERIES[0],
+            up,
+        ),
+        ("Haiku 5.5: no number", bias[("haiku55", "baseline")]["index_by_game"], MUTED, None),
+        (
+            "Haiku 5.5: best response +10%",
+            bias[("haiku55", "brinfo_bias")]["index_by_game"],
+            SERIES[0],
+            up,
+        ),
+    ]
+    fig, ax = plt.subplots(figsize=(7.6, 4.1), layout="constrained")
+    dot_rows(ax, rows, (-0.7, 3.55), 3.5, refs=((0, "Nash"), (1, "monopoly")), clip=3.05)
+    ax.text(
+        up + 0.03, -0.55, "dashed tick: where obeying the number leads", color=MUTED, fontsize=7.5
+    )
+    fig.savefig(OUT / "haiku45_number.png", dpi=200)
+    plt.close(fig)
+
+
+def opus_sawtooth():
+    g = w3.opus_games()
+    t = np.arange(1, 101)
+    fig, ax = plt.subplots(figsize=(7.6, 3.4), layout="constrained")
+    ax.axhline(0, color=AXIS, lw=1, zorder=0)
+    ax.axhline(0.3, color=GRID, lw=1, ls=(0, (2, 2)), zorder=0)
+    ax.text(7, 1.55, "every arm opens above the scale", color=MUTED, fontsize=7.5, va="top")
+    ax.text(2, 0.315, "ends high", color=MUTED, fontsize=7.5, va="bottom")
+    lines = [
+        ("Baseline (15 games)", g["baseline"], MUTED),
+        ("Forced Nash round every 10", g["forced10"], SERIES[0]),
+        ("Forced Nash round every 5", g["forced5"], SERIES[1]),
+    ]
+    for label, xs, color in lines:
+        y = mean_path(xs)
+        ax.plot(t, y, color=color, lw=1.6, solid_capstyle="round")
+        ax.text(101.5, float(y[-5:].mean()), label, color=INK2, fontsize=7.5, va="center")
+    ax.set_xlim(1, 100)
+    ax.set_ylim(-0.1, 1.6)
+    ax.set_xlabel("Round")
+    ax.set_ylabel("Mean market index")
+    ax.yaxis.grid(True, color=GRID, lw=0.6)
+    ax.set_axisbelow(True)
+    fig.savefig(OUT / "opus_sawtooth.png", dpi=200)
+    plt.close(fig)
+
+
+def diagnosis_summary():
+    nb, w9 = load("null_band_scale.json"), load("wave9.json")
+    rows = []
+    for key, label in (
+        ("haiku", "Haiku 5.5, forced cut (paper)"),
+        ("fable", "Fable 5.1, forced cut (paper)"),
+        ("haiku45", "Haiku 4.5, forced cut (paper)"),
+        ("haiku45_enforcer2", "Haiku 4.5 told to enforce, forced cut (paper)"),
+        ("sonnet55", "Sonnet 5.5, forced cut (wave 4)"),
+        ("opus55", "Opus 5.5, forced cut (wave 4)"),
+    ):
+        b = nb[key]["base_scale"]
+        lo = min(b["null_sbr"][0], b["null_br"][0])
+        hi = max(b["null_sbr"][1], b["null_br"][1])
+        verdict = b["verdict"] if key != "haiku45_enforcer2" else "can't be called: band too wide"
+        rows.append((label, b["punishment"], lo, hi, verdict))
+    for key, label in (
+        ("haiku45", "Haiku 4.5, forced raise (wave 9)"),
+        ("opus55", "Opus 5.5, forced raise (wave 9)"),
+    ):
+        v = w9[key]
+        rows.append((label, v["response"], v["band_lower"], v["band_upper"], v["verdict"]))
+    n = len(rows)
+    fig, ax = plt.subplots(figsize=(7.6, 3.8), layout="constrained")
+    ax.axvline(0, color=AXIS, lw=1, zorder=0)
+    for i, (label, resp, lo, hi, verdict) in enumerate(rows):
+        y = n - 1 - i
+        ax.plot([lo, hi], [y, y], color=GRID, lw=7, solid_capstyle="round", zorder=1)
+        ax.scatter(
+            [resp],
+            [y],
+            s=46,
+            color=SERIES[0] if "cut" in label else SERIES[1],
+            edgecolors=SURFACE,
+            linewidths=1,
+            zorder=3,
+        )
+        ax.text(
+            1.02,
+            y,
+            verdict,
+            color=INK2,
+            fontsize=7.5,
+            va="center",
+            ha="left",
+            transform=ax.get_yaxis_transform(),
+        )
+    ax.axhline(1.5, color=GRID, lw=0.8, zorder=0)
+    ax.set_yticks(range(n), [r[0] for r in rows][::-1])
+    ax.tick_params(axis="y", length=0)
+    ax.spines["left"].set_visible(False)
+    ax.set_xlim(-1.0, 1.0)
+    ax.set_xlabel(
+        "Firm A's response over the five rounds after the forced move (bar: non-strategic null band)"
+    )
+    fig.savefig(OUT / "diagnosis_summary.png", dpi=200)
+    plt.close(fig)
+
+
+def forced_cut_schematic():
+    """An illustration, not data: the two arms of the forced-cut test and where it scores."""
+    t = np.arange(0, 13)
+    ctl_b = np.full(13, 0.7)
+    dev_b = ctl_b.copy()
+    dev_b[1] = 0.0
+    dev_b[2:] = 0.55 + 0.1 * (1 - np.exp(-(t[2:] - 2) / 3))
+    ctl_a = np.full(13, 0.72)
+    follow_a = ctl_a.copy()
+    follow_a[2:] = 0.72 - 0.35 * np.exp(-(t[2:] - 2) / 6)
+    fig, axes = plt.subplots(1, 2, figsize=(7.6, 2.6), layout="constrained", sharey=True)
+    for ax, title in zip(axes, ("Firm B (the one forced)", "Firm A (the one watched)")):
+        ax.axvspan(1.5, 6.5, color=GRID, alpha=0.6, lw=0, zorder=0)
+        ax.set_title(title, fontsize=8.5, color=INK2, loc="left")
+        ax.set_xticks([0, 1, 2, 6, 12], ["B", "B+1", "B+2", "B+6", "B+12"])
+        ax.set_ylim(-0.08, 0.95)
+        ax.axhline(0, color=AXIS, lw=1, zorder=0)
+    axes[0].plot(t, ctl_b, color=MUTED, lw=1.6)
+    axes[0].plot(t, dev_b, color=SERIES[0], lw=1.6)
+    axes[0].annotate(
+        "forced to Nash for one round",
+        (1, 0.0),
+        (2.4, 0.16),
+        color=INK2,
+        fontsize=7.5,
+        arrowprops={"arrowstyle": "-", "color": MUTED, "lw": 0.8},
+    )
+    axes[1].plot(t, ctl_a, color=MUTED, lw=1.6)
+    axes[1].plot(t, follow_a, color=SERIES[0], lw=1.6)
+    axes[1].text(12, 0.76, "control arm", color=MUTED, fontsize=7.5, ha="right")
+    axes[1].text(12, 0.47, "deviate arm", color=SERIES[0], fontsize=7.5, ha="right")
+    axes[1].text(4, 0.9, "scored: B+2 to B+6", color=INK2, fontsize=7.5, ha="center")
+    axes[0].set_ylabel("Market index")
+    fig.savefig(OUT / "forced_cut_schematic.png", dpi=200)
+    plt.close(fig)
+
+
 if __name__ == "__main__":
+    forced_cut_schematic()
+    models_baseline()
+    haiku_number()
+    opus_sawtooth()
+    diagnosis_summary()
     opus_remedies()
     wave6_lifted()
     wave8_mixed()
-    print("wrote out/opus_remedies.png, out/wave6_lifted.png, out/wave8_mixed.png")
+    print("wrote the eight figures in out/")

@@ -65,6 +65,7 @@ Start with [`FOLLOWUP_NOTE.md`](FOLLOWUP_NOTE.md), which states the findings and
 | `following_results.py` | Raise and cut following on the saved games, with the paper's measure (exploratory) |
 | `out/following.json` | Raise and cut following: results |
 | `check_followup.py` | Checks every number in `FOLLOWUP_NOTE.md` and `CLAIMS_STATUS.md` against the saved outputs, recomputing from the saved games any that no output stores |
+| `check_readme.py`, `extras_readme.py` | Checks this README the same way: every decimal and percentage must match a saved output for its section, and the results tables are rebuilt from the outputs and must match row for row |
 | `check_clean.py` | Checks a tree for home paths, the local username, personal emails, keys and plan-window readings before it goes public |
 | `followup_results.py` | Wave 1: Table 4's statistics for the new arms, plus how often agents follow the number they are shown |
 | `runs/` | Wave 1: game folders, per-game logs and the call log (`usage.jsonl`) |
@@ -116,7 +117,7 @@ Start with [`FOLLOWUP_NOTE.md`](FOLLOWUP_NOTE.md), which states the findings and
 | `wave9_results.py` | Wave 9: the raise responses, the null bands on the base scale, the plan's verdicts and test, the exploratory measures, and the notes for reading by hand |
 | `runs/wave9/` | Wave 9: the arms, each model's saved starting states, logs, call logs, the check run, Firm A's notes after the raise (`notes.jsonl`) and `launch.txt` |
 | `out/wave9.json` | Wave 9: results |
-| `figures_followup.py` | The note's eight figures, from the waves' results and saved games |
+| `figures_followup.py` | The note's eight figures and three for this README (`wave1_arms.png`, `wave2_remedies.png`, `wave4_paths.png`), from the waves' results and saved games. The results scripts' own figures (`followup.png`, `wave2.png`, `wave3.png`, `wave4_forced_cut.png`) are kept; `wave4_forced_cut.png` shows the null bands as published, not on the base scale |
 | `out/forced_cut_schematic.png` | An illustration of the forced-cut test, not data |
 | `out/models_baseline.png` | Each model against itself, by game |
 | `out/haiku45_number.png` | Haiku 4.5 and Haiku 5.5 shown a right or a wrong best-response number, by game |
@@ -155,7 +156,7 @@ The next table shows how often an agent's next price lands within 1% of a number
 | Best response, noisy | 33.8% (17–61%) | 14.1% |
 | Best response, biased +10% | 94.9% (69–100%) | 0.0% |
 
-![Follow-up results](out/followup.png)
+![Every Haiku 4.5 arm in wave 1, each game's index over rounds 51–100](out/wave1_arms.png)
 
 **Agents follow a wrong number almost as readily as a right one.** With the number biased up by 10%, agents set it within 1% in 95% of firm-rounds (69–100% by game), against 99% (92–100%) for the exact number, and never set the true best response. Every game settled where obedience predicts, with indices from 0.58 to 0.64 against the predicted 0.62. Collusion was lower than in the baseline but more consistent: all 10 games were above 0.3, against 14 of the 20 baseline games. So the best-response remedy is only as good as the number. A platform that publishes a high estimate sets a high price, and nothing in the agents' behaviour would show it. The revision's caveat in §5 ("I did not test whether agents follow a wrong number as readily") now has an answer: largely, they do.
 
@@ -214,10 +215,10 @@ I found this while planning wave 9. It affects the null bands of the paper's §4
 | Model | Punishment | Band lower bound, as published | On the base scale | Verdict, both ways |
 | --- | ---: | ---: | ---: | --- |
 | Haiku 5.5 | −0.17 | −0.48 | −0.34 | non-strategic |
-| Fable 5.1 | −0.05 | −0.14 | −0.09 | non-strategic |
+| Fable 5.1 | −0.04 | −0.14 | −0.09 | non-strategic |
 | Haiku 4.5 | −0.34 | −0.07 | −0.04 | following |
-| Haiku 4.5, told to enforce (first instruction) | −0.30 | −1.93 | −1.35 | non-strategic |
-| Haiku 4.5, told to enforce (positive control) | −0.74 | −1.26 | −0.91 | non-strategic |
+| Haiku 4.5, told to enforce (first instruction) | −0.29 | −1.93 | −1.35 | non-strategic |
+| Haiku 4.5, told to enforce (positive control) | −0.74 | −1.25 | −0.91 | non-strategic |
 | Opus 5.5 (wave 4) | −0.16 | −0.23 | −0.20 | non-strategic |
 | Sonnet 5.5 (wave 4) | −0.02 | −0.35 | −0.25 | non-strategic |
 
@@ -280,6 +281,8 @@ The next table shows how often an agent's next price lands within 1% of a number
 
 **An instruction to enforce collusion weakens deference only a little.** Agents told to enforce set the inflated number in 81% of firm-rounds. In wave 1, uninstructed agents set it in 95%, though that comparison is across runs and was not planned. Seven of the 10 games settle at 0.60–0.64, against 0.62 for obedience. The enforcer baseline runs from price wars at −0.41 to 4.48, so the comparison of means is not significant. The number narrowed that spread to 0.60–1.15, mostly near 0.62, and profit rose 73% against the baseline.
 
+![Haiku 4.5 and Haiku 5.5 shown a right or a wrong best-response number](out/haiku45_number.png)
+
 ### Remedies on Opus 5.5 and Sonnet 5.5
 
 Each remedy is compared with that model's 10 baseline games, with Holm's correction over its two remedies.
@@ -295,7 +298,7 @@ Each remedy is compared with that model's 10 baseline games, with Holm's correct
 
 For comparison, the same two remedies took Haiku 4.5 from 1.09 to 0.01 and 0.08.
 
-![Wave 2 results](out/wave2.png)
+![Best-response information and the 10% cut on Sonnet 5.5 and Opus 5.5](out/wave2_remedies.png)
 
 **Neither remedy has a detectable effect on Opus 5.5.** Opus sets the best response it is shown in 10% of firm-rounds, against 99% for Haiku 4.5. Exact information leaves its index at 0.73, against 0.76 in the baseline. The forced cut leaves it at 0.67, with every game above 0.3. With 10 games per arm, the intervals still allow drops of up to 0.28 and 0.24.
 
@@ -386,7 +389,7 @@ Each remedy is compared with Opus 5.5's 15 baseline games: wave 2's 10 plus the 
 | Forced Nash round every 10 | 10 | 0.43 | 8 of 10 | −0.33 [−0.49, −0.16] | 0.002 | +30% | −11% |
 | Forced Nash round every 5 | 10 | 0.25 | 1 of 10 | −0.51 [−0.65, −0.36] | < 0.001 | +47% | −18% |
 
-![Wave 3 results](out/wave3.png)
+![Opus 5.5's mean index by round under forced Nash rounds](out/opus_sawtooth.png)
 
 **Forced Nash rounds are the first remedy with a detectable effect on Opus 5.5, but neither frequency brings it near Nash.**
 - The index falls from 0.76 to 0.43 with a forced round every 10 rounds, and to 0.25 with one every 5.
@@ -403,7 +406,7 @@ Size and frequency both matter. This is exploratory: the plan named these questi
 | Nash round every 10 | 0.43 |
 | Nash round every 5 | 0.25 |
 
-**Opus climbs back between forced rounds** (exploratory). This is the sawtooth in the figure's right panel. The table averages over the forced rounds from 60 to 90 (every 10) and from 55 to 95 (every 5):
+**Opus climbs back between forced rounds** (exploratory). This is the sawtooth in the figure above. The table averages over the forced rounds from 60 to 90 (every 10) and from 55 to 95 (every 5):
 
 | Rule | Mean index the round after a forced round | Just before the next |
 | --- | ---: | ---: |
@@ -484,7 +487,7 @@ The paper's protocol and analysis code, unchanged:
 | Move rate, median step | 74%, 1.7% | 82%, 2.7% |
 | Verdict | non-strategic | non-strategic |
 
-![Wave 4 diagnosis](out/wave4_forced_cut.png)
+![Firm A's path after the forced cut, against the null band on the base scale](out/wave4_paths.png)
 
 **Neither model punishes and returns.**
 - Both bands are narrower than the −0.74 the plan set for calling a verdict inconclusive, so both verdicts stand.
@@ -495,7 +498,7 @@ The paper's protocol and analysis code, unchanged:
 
 | Design | Opus 5.5 | p (Holm) | Sonnet 5.5 |
 | --- | --- | ---: | --- |
-| Removal: hidden minus control over B+1..B+12, 8 states | −0.02 [−0.10, +0.08] | 0.74 | +0.07 [−0.04, +0.20], p 0.37 (secondary, uncorrected) |
+| Removal: hidden minus control over B+1..B+12, 8 states | −0.02 [−0.10, +0.08] | 0.74 | +0.07 [−0.04, +0.19], p 0.37 (secondary, uncorrected) |
 | Prevention: index over rounds 51–100, 10 games against Opus's 15 baseline games | 0.38 against 0.76; effect −0.37 [−0.54, −0.20]; 6 of 10 games above 0.3 | 0.002 | not run |
 
 **Hiding rival prices lowers Opus's prices when it is on from round 1, but not once prices are high.** In the paper:
@@ -1191,7 +1194,7 @@ uv run --extra analysis python followup/wave7_results.py
 uv run --extra analysis python followup/wave8_results.py
 ```
 
-**The note's figures and PDF.** These need no calls. The figures read the waves' `out/*.json` and saved games, and the PDF build checks the note's numbers first.
+**The figures and the note's PDF.** These need no calls. The figures read the waves' `out/*.json` and saved games, and the PDF build checks the note's numbers first.
 
 ```bash
 uv run --extra analysis python followup/figures_followup.py
@@ -1202,6 +1205,12 @@ uv run --extra analysis --with markdown --with playwright --with pypdf python fo
 
 ```bash
 uv run --extra analysis python followup/check_followup.py
+```
+
+**Checking this README's numbers.** This needs no calls. The checker skips counts read by hand from the agents' notes and prices quoted from them.
+
+```bash
+uv run --extra analysis python followup/check_readme.py
 ```
 
 **The null bands on the base scale.** This needs no calls.

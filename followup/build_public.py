@@ -4,7 +4,7 @@ Build the public copy of this project into a clone of the public repository. Not
 The rules are the October release's (theory/HANDOFF.md) plus the follow-up's:
     excluded     the thesis PDFs and LaTeX, the notebooks, CLAUDE.md, the lint workflow and pre-commit config,
                  theory/references/, HANDOFF.md, CLOUD_RUN.md and build_paper.sh, and the usage guard's
-                 plan-window readings (usage_guard.jsonl and .log, pause files). Only committed files are
+                 plan-window readings (usage_guard.jsonl and .log, pause files), and the private NEXT_STEPS.md. Only committed files are
                  copied, so nothing outside git can reach the public copy
     kept as is   pyproject.toml and uv.lock, which the public copy points at the public starter repository
     rewritten    this folder's absolute path becomes ./ and any other home path becomes ~
@@ -26,7 +26,7 @@ EXCLUDE = re.compile(
     r"^(BSE_DSDM_.*\.pdf|main\.tex|final_presentation\.tex|CLAUDE\.md|\.pre-commit-config\.yaml"
     r"|\.github/.*|latex/.*|notebooks/.*|theory/references/.*"
     r"|theory/(HANDOFF\.md|CLOUD_RUN\.md|build_paper\.sh)"
-    r"|followup/.*(usage_guard\.(jsonl|log)|pause[^/]*\.json)|followup/PAPER_REVISED\.html)$"
+    r"|followup/.*(usage_guard\.(jsonl|log)|pause[^/]*\.json)|followup/(PAPER_REVISED\.html|NEXT_STEPS\.md))$"
 )
 KEEP_PUBLIC = {"pyproject.toml", "uv.lock"}
 PAPER_LINE = "**Paper:** [`theory/PAPER_DRAFT.pdf`]"

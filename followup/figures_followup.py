@@ -10,6 +10,9 @@ wave's out/*.json; the per-round paths and the best-response curve are computed 
     out/opus_remedies.png   every remedy tested on Opus 5.5, each game's index over rounds 51-100
     out/wave6_lifted.png    mean index by round: the limit kept, lifted after round 50, the estimate, baseline
     out/wave8_mixed.png     each mixed game's Opus index against its rival's
+    out/wave1_arms.png      wave 1: every Haiku 4.5 arm, each game's index over rounds 51-100
+    out/wave2_remedies.png  wave 2: best-response information and the 10% cut on Sonnet 5.5 and Opus 5.5
+    out/wave4_paths.png     wave 4: Firm A's path after the forced cut against the base-scale null band
 
 Usage:  uv run --extra analysis python followup/figures_followup.py
 """
@@ -491,6 +494,98 @@ def diagnosis_summary():
     plt.close(fig)
 
 
+def wave1_arms():
+    w1 = load("followup.json")
+    g = {a: [x["index_51_100"] for x in v] for a, v in w1["games"].items()}
+    up = w1["obedient_index_for_bias"]
+    rows = [
+        ("Baseline  (20 games)", g["baseline"], MUTED, None),
+        ("Best response, exact  (paper)", g["brinfo"], SERIES[0], None),
+        ("Forced Nash round every 10  (paper)", g["forced10"], SERIES[0], None),
+        ("Best response, 10% noise", g["brinfo_noise"], SERIES[0], None),
+        ("Best response, biased +10%", g["brinfo_bias"], SERIES[0], up),
+        ("Forced 10% cut every 10", g["cut10"], SERIES[0], None),
+    ]
+    fig, ax = plt.subplots(figsize=(7.6, 3.0), layout="constrained")
+    dot_rows(ax, rows, (-0.4, 3.2), 3.15, refs=((0, "Nash"), (0.3, "ends high"), (1, "monopoly")))
+    ax.text(
+        up + 0.04, -0.55, "dashed tick: where obeying the number leads", color=MUTED, fontsize=7.5
+    )
+    fig.savefig(OUT / "wave1_arms.png", dpi=200)
+    plt.close(fig)
+
+
+def wave2_remedies():
+    sb = load("wave2.json")["stage_b"]
+    rows = []
+    for fam, name in (("sonnet55", "Sonnet 5.5"), ("opus55", "Opus 5.5")):
+        base, exact, cut = sb[fam]
+        rows += [
+            (f"{name}: baseline", base["index_by_game"], MUTED, None),
+            (f"{name}: best response, exact", exact["index_by_game"], SERIES[0], None),
+            (f"{name}: 10% cut every 10", cut["index_by_game"], SERIES[0], None),
+        ]
+    fig, ax = plt.subplots(figsize=(7.6, 3.0), layout="constrained")
+    dot_rows(ax, rows, (-0.15, 1.25), 1.22, refs=((0, "Nash"), (0.3, "ends high"), (1, "monopoly")))
+    ax.axhline(2.5, color=GRID, lw=0.8, zorder=0)
+    fig.savefig(OUT / "wave2_remedies.png", dpi=200)
+    plt.close(fig)
+
+
+def wave4_paths():
+    """Firm A's path after the forced cut, deviate minus control, against the base-scale null band."""
+    import frontier_results as fres
+    import null_band_scale as nbs
+    import polars as pl
+    from bandit import fit, load as load_games, markets
+
+    nb = load("null_band_scale.json")
+    duo = load_games().filter(pl.col("num_agents") == 2)
+    m = fit(markets(duo.filter(pl.col("prompt") == "P1")))
+    fres.RUNS, fres.read = nbs.RUNS["opus55"], nbs.base_scale_read
+    fig, axes = plt.subplots(1, 2, figsize=(7.6, 2.8), sharey=True, layout="constrained")
+    for ax, (key, name) in zip(axes, (("opus55", "Opus 5.5"), ("sonnet55", "Sonnet 5.5"))):
+        fres.MODELS = {key: key}
+        r = fres.analyse(key, m, np.random.default_rng(11))
+        b = nb[key]["base_scale"]
+        assert (
+            abs(r["punishment"] - b["punishment"]) < 1e-12
+            and abs(r["null_lo"] - b["null_lo"]) < 1e-12
+        )
+        k = np.arange(1, fres.H + 1)
+        ctl, dev = np.array(r["paths"]["control"]), np.array(r["paths"]["deviate"])
+        lo = np.minimum(r["path_band"]["sbr"][0], r["path_band"]["br"][0])
+        hi = np.maximum(r["path_band"]["sbr"][1], r["path_band"]["br"][1])
+        ax.axvspan(1.5, 6.5, color=GRID, alpha=0.35, lw=0, zorder=0)
+        ax.fill_between(k, lo, hi, color=GRID, alpha=0.9, lw=0, zorder=1, label="Null band (95%)")
+        ax.axhline(0, color=AXIS, lw=1, zorder=2)
+        firm_b = dev[:, 1] - ctl[:, 1]
+        ax.plot(
+            k,
+            firm_b,
+            color=MUTED,
+            lw=1.4,
+            ls=(0, (3, 2)),
+            zorder=3,
+            label="Firm B, forced to Nash at round 1",
+        )
+        ax.plot(
+            k, dev[:, 0] - ctl[:, 0], color=SERIES[0], lw=2, zorder=4, label="Firm A, the responder"
+        )
+        ax.scatter(
+            k, dev[:, 0] - ctl[:, 0], s=14, color=SERIES[0], edgecolors=SURFACE, lw=0.6, zorder=5
+        )
+        ax.set_title(f"{name}: {b['verdict']}", fontsize=9, color=INK, loc="left")
+        ax.set_xlabel("Rounds after the branch")
+        ax.set_xlim(0.6, 12.4)
+        ax.text(4, 0.62, "scored rounds", color=MUTED, fontsize=7.5, ha="center")
+    axes[0].set_ylabel("Index, deviate minus control")
+    axes[1].legend(loc="lower right", frameon=False, fontsize=7.5, labelcolor=INK2)
+    axes[0].set_ylim(-0.85, 0.7)
+    fig.savefig(OUT / "wave4_paths.png", dpi=200)
+    plt.close(fig)
+
+
 def forced_cut_schematic():
     """An illustration, not data: the two arms of the forced-cut test and where it scores."""
     t = np.arange(0, 13)
@@ -537,4 +632,7 @@ if __name__ == "__main__":
     opus_remedies()
     wave6_lifted()
     wave8_mixed()
-    print("wrote the eight figures in out/")
+    wave1_arms()
+    wave2_remedies()
+    wave4_paths()
+    print("wrote the eleven figures in out/")

@@ -6,6 +6,7 @@ Check a tree before it goes public: no home paths, usernames, personal emails, k
     data files   (.json, .jsonl, .txt, .log, .csv) also plan-window fields: utilization, resets_at,
                  overage, pauses
     binary files home paths and the local username, as raw bytes
+    any file     anything under followup/private/
 
 Usage:  .venv/bin/python followup/check_clean.py DIR [--user NAME]
 Exits 1 and lists each hit if anything is found.
@@ -38,6 +39,8 @@ def scan(root: Path, user: str) -> list:
             continue
         raw = f.read_bytes()
         rel = f.relative_to(root)
+        if rel.parts[:2] == ("followup", "private"):
+            hits.append((rel, "private file", str(rel)))
         try:
             text = raw.decode("utf-8")
         except UnicodeDecodeError:

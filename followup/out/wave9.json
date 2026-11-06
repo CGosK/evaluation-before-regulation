@@ -1,0 +1,221 @@
+{
+ "opus55": {
+  "states": 8,
+  "verdict": "no detectable raise-following",
+  "response": -0.035456380737307516,
+  "response_ci": [
+   -0.241928780382574,
+   0.18764543442600587
+  ],
+  "band_upper": 0.16541805675888568,
+  "band_lower": -0.14375927682561987,
+  "band_sbr": [
+   -0.14375927682561987,
+   0.15903930837222494
+  ],
+  "band_br": [
+   -0.07111738716566907,
+   0.16541805675888568
+  ],
+  "full_following": 0.39578195297740093,
+  "persistence": -0.0031108765967342786,
+  "raiser_after": -0.057816843321007116,
+  "a_raises_in_b2": 3,
+  "move_rate": 0.6614583333333334,
+  "median_step": 0.015600851294242712,
+  "lambda_hat": 0.16491473522079006,
+  "per_state": [
+   {
+    "source": "1750982396",
+    "index_at_branch": 0.6461007935177873,
+    "response": 0.017697070403308146,
+    "persistence": 0.0,
+    "raiser_after": 0.022121338004135516,
+    "full_following": 0.3915476826731932,
+    "a_raises_in_b2": true
+   },
+   {
+    "source": "1750988131",
+    "index_at_branch": 0.602551214743628,
+    "response": -0.022121238221136652,
+    "persistence": -0.02765154777642098,
+    "raiser_after": -0.027023103508775237,
+    "full_following": 0.3829758587707231,
+    "a_raises_in_b2": false
+   },
+   {
+    "source": "1750992373",
+    "index_at_branch": 0.6792840445981856,
+    "response": -0.06636369358630545,
+    "persistence": -0.02212123119543552,
+    "raiser_after": -0.13674942920814515,
+    "full_following": 0.38933569464193923,
+    "a_raises_in_b2": true
+   },
+   {
+    "source": "1750997185",
+    "index_at_branch": 0.8230714975508688,
+    "response": -0.3804870136711255,
+    "persistence": -0.13272802802481132,
+    "raiser_after": -0.0020110307276486328,
+    "full_following": 0.4203054220785689,
+    "a_raises_in_b2": false
+   },
+   {
+    "source": "1751002658",
+    "index_at_branch": 0.42281615419689145,
+    "response": 0.00691288694410519,
+    "persistence": -0.03456443472052628,
+    "raiser_after": -0.05655998408813401,
+    "full_following": 0.3421898258005021,
+    "a_raises_in_b2": false
+   },
+   {
+    "source": "1751040841",
+    "index_at_branch": 1.5980069346947858,
+    "response": 0.6221598249694733,
+    "persistence": 0.10369330416157929,
+    "raiser_after": 0.053417762749904174,
+    "full_following": 0.49772978204287055,
+    "a_raises_in_b2": false
+   },
+   {
+    "source": "1751045680",
+    "index_at_branch": 0.5907991198164445,
+    "response": -0.5132125637340975,
+    "persistence": 0.02212123119543552,
+    "raiser_after": -0.25037211671197124,
+    "full_following": 0.371638709685591,
+    "a_raises_in_b2": false
+   },
+   {
+    "source": "1751052703",
+    "index_at_branch": 0.6958749679947618,
+    "response": 0.05176368099731832,
+    "persistence": 0.06636369358630506,
+    "raiser_after": -0.06535818307742236,
+    "full_following": 0.37053264812581915,
+    "a_raises_in_b2": true
+   }
+  ]
+ },
+ "haiku45": {
+  "states": 8,
+  "verdict": "no detectable raise-following",
+  "response": 0.020980623557842817,
+  "response_ci": [
+   -0.0026614735950702476,
+   0.05084687455076673
+  ],
+  "band_upper": 0.04018015863661317,
+  "band_lower": -0.03956905245188785,
+  "band_sbr": [
+   -0.03956905245188785,
+   0.04018015863661317
+  ],
+  "band_br": [
+   -0.038316410896701604,
+   0.039893595621030425
+  ],
+  "full_following": 0.4127634545736897,
+  "persistence": -0.018491984170143735,
+  "raiser_after": -0.004191760739709005,
+  "a_raises_in_b2": 2,
+  "move_rate": 0.140625,
+  "median_step": 0.00921660786745171,
+  "lambda_hat": 0.0008430558589768091,
+  "per_state": [
+   {
+    "source": "1750982396",
+    "index_at_branch": 0.43594808247850264,
+    "response": -0.022121338004135238,
+    "persistence": -0.06636401401240566,
+    "raiser_after": -0.08245225983359483,
+    "full_following": 0.37163847846947146,
+    "a_raises_in_b2": true
+   },
+   {
+    "source": "1750988131",
+    "index_at_branch": 0.6267463190479963,
+    "response": 0.0,
+    "persistence": 0.0,
+    "raiser_after": 0.0,
+    "full_following": 0.3871235909371863,
+    "a_raises_in_b2": false
+   },
+   {
+    "source": "1750992373",
+    "index_at_branch": 0.5100566259531059,
+    "response": 0.0,
+    "persistence": 0.0,
+    "raiser_after": -5.551115123125783e-17,
+    "full_following": 0.38623872227457834,
+    "a_raises_in_b2": false
+   },
+   {
+    "source": "1750997185",
+    "index_at_branch": 0.845192835555004,
+    "response": 0.044242676008270365,
+    "persistence": 0.044242676008270365,
+    "raiser_after": 0.016088245821189284,
+    "full_following": 0.43579035868146354,
+    "a_raises_in_b2": false
+   },
+   {
+    "source": "1751002658",
+    "index_at_branch": 0.6820494146008387,
+    "response": 0.11613650066096826,
+    "persistence": -0.10369330416157907,
+    "raiser_after": 0.03079376911465076,
+    "full_following": 0.4113186952415547,
+    "a_raises_in_b2": false
+   },
+   {
+    "source": "1751040841",
+    "index_at_branch": 1.7155260127445755,
+    "response": 0.009678041721747466,
+    "persistence": 0.0,
+    "raiser_after": 0.0006284442676460777,
+    "full_following": 0.49703849334846,
+    "a_raises_in_b2": false
+   },
+   {
+    "source": "1751045680",
+    "index_at_branch": 0.8651023866398415,
+    "response": -0.004424246239087104,
+    "persistence": -0.02212123119543552,
+    "raiser_after": 0.0,
+    "full_following": 0.4380024032718967,
+    "a_raises_in_b2": false
+   },
+   {
+    "source": "1751052703",
+    "index_at_branch": 0.8584660172812106,
+    "response": 0.024333354314978795,
+    "persistence": 0.0,
+    "raiser_after": 0.001407714712436725,
+    "full_following": 0.37495689436490626,
+    "a_raises_in_b2": true
+   }
+  ]
+ },
+ "between": {
+  "states": 8,
+  "mean_difference": -0.056437004295150334,
+  "p": 0.71875,
+  "different": false
+ },
+ "reading": "the saved games' asymmetry doesn't show up in the diagnostic",
+ "drift": {
+  "opus55": {
+   "states": 8,
+   "mean_difference": 0.017056055735731074,
+   "p": 0.6015625
+  },
+  "haiku45": {
+   "states": 8,
+   "mean_difference": -0.015422006525317021,
+   "p": 0.6875
+  }
+ }
+}

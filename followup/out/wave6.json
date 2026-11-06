@@ -1,0 +1,192 @@
+{
+ "baseline": {
+  "games": 15,
+  "index": 0.7556972757696079
+ },
+ "limit_kept": {
+  "games": 10,
+  "primary_index": 0.01232445969931358
+ },
+ "rules": {
+  "w6-lifted": {
+   "games": 10,
+   "primary_index": 0.4428388792667909,
+   "primary_by_game": [
+    0.016,
+    0.045,
+    0.083,
+    0.221,
+    0.309,
+    0.331,
+    0.751,
+    0.815,
+    0.896,
+    0.962
+   ],
+   "index_all_rounds": 0.4428388792667909,
+   "games_above_0.3": 6,
+   "blocks_of_10": [
+    0.415,
+    0.014,
+    0.012,
+    0.012,
+    0.012,
+    0.473,
+    0.452,
+    0.434,
+    0.44,
+    0.415
+   ],
+   "overrides": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    3,
+    0,
+    2,
+    0
+   ]
+  },
+  "w6-limit-no-threat": {
+   "games": 10,
+   "primary_index": 0.015642660399933866,
+   "primary_by_game": [
+    0.016,
+    0.016,
+    0.016,
+    0.016,
+    0.016,
+    0.016,
+    0.016,
+    0.016,
+    0.016,
+    0.016
+   ],
+   "index_all_rounds": 0.015642660399933866,
+   "games_above_0.3": 0,
+   "blocks_of_10": [
+    0.411,
+    0.016,
+    0.016,
+    0.016,
+    0.016,
+    0.016,
+    0.016,
+    0.016,
+    0.016,
+    0.016
+   ],
+   "overrides": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "w6-estimate-threat": {
+   "games": 10,
+   "primary_index": -0.0042665438037878395,
+   "primary_by_game": [
+    -0.006,
+    -0.006,
+    -0.006,
+    -0.006,
+    -0.006,
+    -0.006,
+    -0.006,
+    -0.006,
+    0.005,
+    0.005
+   ],
+   "index_all_rounds": -0.004234150415766832,
+   "games_above_0.3": 0,
+   "blocks_of_10": [
+    0.354,
+    -0.003,
+    -0.004,
+    -0.004,
+    -0.004,
+    -0.004,
+    -0.004,
+    -0.004,
+    -0.004,
+    -0.004
+   ],
+   "overrides": [
+    5,
+    2,
+    5,
+    2,
+    4,
+    1,
+    3,
+    6,
+    9,
+    4
+   ]
+  }
+ },
+ "tests": {
+  "lifted_vs_kept": {
+   "p": 5e-05,
+   "p_holm": 0.0001,
+   "significant": 1.0,
+   "effect": 0.4305144195674773
+  },
+  "lifted_vs_baseline": {
+   "p": 0.02245,
+   "p_holm": 0.02245,
+   "significant": 1.0,
+   "effect": -0.312858396502817
+  },
+  "limit-no-threat_vs_baseline": {
+   "p": 0.0,
+   "p_holm": 0.0,
+   "significant": true,
+   "effect": -0.740054615369674
+  },
+  "estimate-threat_vs_baseline": {
+   "p": 0.0,
+   "p_holm": 0.0,
+   "significant": true,
+   "effect": -0.7599638195733958
+  }
+ },
+ "decisions": {
+  "w6-lifted": "prices partly return",
+  "w6-limit-no-threat": "competitive",
+  "w6-estimate-threat": "competitive",
+  "wording_or_threat": "either is enough"
+ },
+ "exploratory": {
+  "follow_no_threat_11_99": {
+   "firm_rounds": 1780,
+   "within_1pct": 1.0
+  },
+  "follow_estimate_threat_11_99": {
+   "firm_rounds": 1780,
+   "within_1pct": 0.9932584269662922
+  },
+  "follow_lifted_11_49": {
+   "firm_rounds": 780,
+   "within_1pct": 0.9987179487179487
+  },
+  "follow_lifted_would_have_51_99": {
+   "firm_rounds": 980,
+   "within_1pct": 0.4275510204081633
+  },
+  "follow_kept_51_99": {
+   "firm_rounds": 980,
+   "within_1pct": 0.9989795918367347
+  }
+ }
+}

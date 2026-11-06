@@ -5,6 +5,17 @@ Stops It* (Chris Graham, AI Collusion Research Sprint, Apart Research, October 2
 
 **Paper:** [`theory/PAPER_DRAFT.pdf`](theory/PAPER_DRAFT.pdf) (source: [`theory/PAPER_DRAFT.md`](theory/PAPER_DRAFT.md))
 
+**Follow-up (November 2026).** After the sprint review I ran nine more waves of experiments. They narrow the
+summary below: the remedies that prevented collusion in Haiku 4.5 worked only partly or not at all on Claude
+Opus 5.5, and Opus's prices depend on which model it competes with. The work is in [`followup/`](followup/):
+
+- [`FOLLOWUP_NOTE.md`](followup/FOLLOWUP_NOTE.md): a short note on the nine waves;
+- [`CLAIMS_STATUS.md`](followup/CLAIMS_STATUS.md): each of the paper's claims, marked as holding, narrowed or
+  not retested;
+- [`PAPER_REVISED.pdf`](followup/PAPER_REVISED.pdf): a wording-only revision of the paper.
+
+The paper linked above is the version submitted on 25 October 2026, tagged `submission-2026-10-25`.
+
 LLM pricing agents reach prices above the competitive level without being told to. I tested whether they hold
 those prices the way a cartel does, by punishing whoever cuts. They do not. When one agent was forced to cut,
 its rival ignored the cut or followed it down. The high prices come from agents that start high and learn too

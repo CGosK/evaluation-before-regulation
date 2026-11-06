@@ -1,0 +1,468 @@
+{
+ "wave2": {
+  "deference_by_game": {
+   "haiku55 brinfo_bias": {
+    "shown_range": [
+     0.0,
+     0.135
+    ],
+    "true_range": [
+     0.258,
+     0.792
+    ],
+    "games": [
+     {
+      "seed": 1,
+      "index_51_100": 0.074,
+      "shown": 0.022,
+      "true_best_response": 0.404
+     },
+     {
+      "seed": 2,
+      "index_51_100": 0.033,
+      "shown": 0.0,
+      "true_best_response": 0.792
+     },
+     {
+      "seed": 3,
+      "index_51_100": 0.531,
+      "shown": 0.135,
+      "true_best_response": 0.258
+     },
+     {
+      "seed": 4,
+      "index_51_100": 0.115,
+      "shown": 0.0,
+      "true_best_response": 0.472
+     },
+     {
+      "seed": 5,
+      "index_51_100": 0.156,
+      "shown": 0.006,
+      "true_best_response": 0.657
+     },
+     {
+      "seed": 6,
+      "index_51_100": 0.209,
+      "shown": 0.073,
+      "true_best_response": 0.545
+     },
+     {
+      "seed": 7,
+      "index_51_100": 0.177,
+      "shown": 0.034,
+      "true_best_response": 0.309
+     },
+     {
+      "seed": 8,
+      "index_51_100": 0.066,
+      "shown": 0.011,
+      "true_best_response": 0.674
+     },
+     {
+      "seed": 9,
+      "index_51_100": 0.104,
+      "shown": 0.017,
+      "true_best_response": 0.579
+     },
+     {
+      "seed": 10,
+      "index_51_100": 0.05,
+      "shown": 0.017,
+      "true_best_response": 0.59
+     }
+    ]
+   },
+   "haiku45 brinfo_biasdown": {
+    "shown_range": [
+     0.399,
+     1.0
+    ],
+    "true_range": [
+     0.0,
+     0.157
+    ],
+    "games": [
+     {
+      "seed": 1,
+      "index_51_100": -0.493,
+      "shown": 0.91,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 2,
+      "index_51_100": -0.293,
+      "shown": 0.399,
+      "true_best_response": 0.011
+     },
+     {
+      "seed": 3,
+      "index_51_100": -0.296,
+      "shown": 0.483,
+      "true_best_response": 0.028
+     },
+     {
+      "seed": 4,
+      "index_51_100": -0.34,
+      "shown": 0.556,
+      "true_best_response": 0.157
+     },
+     {
+      "seed": 5,
+      "index_51_100": -0.44,
+      "shown": 0.528,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 6,
+      "index_51_100": -0.493,
+      "shown": 0.831,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 7,
+      "index_51_100": -0.493,
+      "shown": 0.938,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 8,
+      "index_51_100": -0.493,
+      "shown": 1.0,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 9,
+      "index_51_100": -0.493,
+      "shown": 0.966,
+      "true_best_response": 0.006
+     },
+     {
+      "seed": 10,
+      "index_51_100": -0.485,
+      "shown": 0.994,
+      "true_best_response": 0.0
+     }
+    ]
+   },
+   "haiku45enf brinfo_bias": {
+    "shown_range": [
+     0.152,
+     1.0
+    ],
+    "true_range": [
+     0.0,
+     0.0
+    ],
+    "games": [
+     {
+      "seed": 1,
+      "index_51_100": 0.635,
+      "shown": 0.938,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 2,
+      "index_51_100": 1.155,
+      "shown": 0.5,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 3,
+      "index_51_100": 0.635,
+      "shown": 1.0,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 4,
+      "index_51_100": 0.602,
+      "shown": 0.983,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 5,
+      "index_51_100": 0.613,
+      "shown": 1.0,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 6,
+      "index_51_100": 0.724,
+      "shown": 0.5,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 7,
+      "index_51_100": 0.635,
+      "shown": 1.0,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 8,
+      "index_51_100": 0.635,
+      "shown": 1.0,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 9,
+      "index_51_100": 0.814,
+      "shown": 0.152,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 10,
+      "index_51_100": 0.613,
+      "shown": 1.0,
+      "true_best_response": 0.0
+     }
+    ]
+   },
+   "sonnet55 brinfo": {
+    "shown_range": [
+     0.0,
+     0.961
+    ],
+    "true_range": [
+     0.0,
+     0.961
+    ],
+    "games": [
+     {
+      "seed": 1,
+      "index_51_100": 0.042,
+      "shown": 0.472,
+      "true_best_response": 0.472
+     },
+     {
+      "seed": 2,
+      "index_51_100": 0.046,
+      "shown": 0.466,
+      "true_best_response": 0.466
+     },
+     {
+      "seed": 3,
+      "index_51_100": 0.599,
+      "shown": 0.017,
+      "true_best_response": 0.017
+     },
+     {
+      "seed": 4,
+      "index_51_100": 0.158,
+      "shown": 0.107,
+      "true_best_response": 0.107
+     },
+     {
+      "seed": 5,
+      "index_51_100": 0.042,
+      "shown": 0.478,
+      "true_best_response": 0.478
+     },
+     {
+      "seed": 6,
+      "index_51_100": 0.017,
+      "shown": 0.152,
+      "true_best_response": 0.152
+     },
+     {
+      "seed": 7,
+      "index_51_100": 0.398,
+      "shown": 0.0,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 8,
+      "index_51_100": -0.006,
+      "shown": 0.961,
+      "true_best_response": 0.961
+     },
+     {
+      "seed": 9,
+      "index_51_100": 0.243,
+      "shown": 0.028,
+      "true_best_response": 0.028
+     },
+     {
+      "seed": 10,
+      "index_51_100": 0.105,
+      "shown": 0.315,
+      "true_best_response": 0.315
+     }
+    ]
+   },
+   "opus55 brinfo": {
+    "shown_range": [
+     0.0,
+     0.612
+    ],
+    "true_range": [
+     0.0,
+     0.612
+    ],
+    "games": [
+     {
+      "seed": 1,
+      "index_51_100": 0.369,
+      "shown": 0.112,
+      "true_best_response": 0.112
+     },
+     {
+      "seed": 2,
+      "index_51_100": 0.944,
+      "shown": 0.0,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 3,
+      "index_51_100": 0.996,
+      "shown": 0.0,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 4,
+      "index_51_100": 0.922,
+      "shown": 0.011,
+      "true_best_response": 0.017
+     },
+     {
+      "seed": 5,
+      "index_51_100": 0.412,
+      "shown": 0.236,
+      "true_best_response": 0.236
+     },
+     {
+      "seed": 6,
+      "index_51_100": 0.69,
+      "shown": 0.056,
+      "true_best_response": 0.056
+     },
+     {
+      "seed": 7,
+      "index_51_100": 0.017,
+      "shown": 0.612,
+      "true_best_response": 0.612
+     },
+     {
+      "seed": 8,
+      "index_51_100": 1.035,
+      "shown": 0.0,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 9,
+      "index_51_100": 0.975,
+      "shown": 0.0,
+      "true_best_response": 0.0
+     },
+     {
+      "seed": 10,
+      "index_51_100": 0.986,
+      "shown": 0.0,
+      "true_best_response": 0.0
+     }
+    ]
+   }
+  },
+  "cut_response": {
+   "haiku45 (wave 1)": {
+    "forced_rounds": 80,
+    "rival_median_change_pct": -3.752464094621233,
+    "rival_share_cutting_5pct": 0.375
+   },
+   "sonnet55": {
+    "forced_rounds": 80,
+    "rival_median_change_pct": 0.0,
+    "rival_share_cutting_5pct": 0.1
+   },
+   "opus55": {
+    "forced_rounds": 80,
+    "rival_median_change_pct": -2.857142857142858,
+    "rival_share_cutting_5pct": 0.4625
+   }
+  },
+  "thinking": {
+   "claude-sonnet-5-5": {
+    "calls": 6000,
+    "share_with_thinking": 0.057166666666666664,
+    "median_thinking_tokens": 243
+   },
+   "claude-haiku-5-5": {
+    "calls": 4034,
+    "share_with_thinking": 1.0,
+    "median_thinking_tokens": 1951.0
+   },
+   "claude-opus-5-5": {
+    "calls": 6000,
+    "share_with_thinking": 0.9538333333333333,
+    "median_thinking_tokens": 143
+   },
+   "claude-haiku-4-5": {
+    "calls": 6000,
+    "share_with_thinking": 0.0,
+    "median_thinking_tokens": 0
+   }
+  }
+ },
+ "wave3": {
+  "forced10": {
+   "without_forced_rounds": {
+    "index_51_100": 0.45385407662962785,
+    "games_above_0.3": 8
+   },
+   "lowest_block": {
+    "rounds": "81-90",
+    "mean_index": 0.3977808882918937
+   },
+   "recovery": {
+    "forced_rounds": [
+     60,
+     70,
+     80,
+     90
+    ],
+    "round_after": 0.30543218825410523,
+    "round_before_next": 0.496505245264823
+   },
+   "forced_rounds_per_game": 9
+  },
+  "forced5": {
+   "without_forced_rounds": {
+    "index_51_100": 0.2901546391949993,
+    "games_above_0.3": 4
+   },
+   "lowest_block": {
+    "rounds": "71-80",
+    "mean_index": 0.2274940028876622
+   },
+   "recovery": {
+    "forced_rounds": [
+     55,
+     60,
+     65,
+     70,
+     75,
+     80,
+     85,
+     90,
+     95
+    ],
+    "round_after": 0.26960791031963066,
+    "round_before_next": 0.28877973658988115
+   },
+   "forced_rounds_per_game": 18
+  },
+  "p_forced5_vs_forced10": 0.02015,
+  "p_cut10_wave2_vs_forced10": 0.00415,
+  "haiku45_submission_forced10": {
+   "games": 10,
+   "first_block_below_0.1": "41-50",
+   "index_51_100_range_by_round": [
+    -0.04629708601164471,
+    0.0731581392106854
+   ],
+   "without_forced_rounds": {
+    "index_51_100": 0.0018536930440229103,
+    "games_above_0.3": 0
+   }
+  }
+ }
+}

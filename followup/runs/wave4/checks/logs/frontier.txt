@@ -1,0 +1,3 @@
+1 of 14 eligible sources; claude-haiku-4-5; up to 8 calls; cap $1000.00, $0.00 already logged in ./followup/runs/wave4/checks/frontier/usage.jsonl
+done 1750982396: $0.10 logged
+logged spend $0.1010

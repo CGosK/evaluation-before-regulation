@@ -1,0 +1,11 @@
+8 of 14 eligible sources; claude-opus-5-5 (effort medium); up to 624 calls; cap $1000.00, $0.00 already logged in ./followup/runs/wave4/frontier/opus55/usage.jsonl
+done 1750982396: $31.97 logged
+done 1751040841: $42.23 logged
+done 1750992373: $42.55 logged
+done 1751045680: $42.74 logged
+done 1750997185: $42.89 logged
+done 1751002658: $43.28 logged
+done 1750988131: $43.34 logged
+done 1751052703: $43.47 logged
+logged spend $43.4715
+✅ done

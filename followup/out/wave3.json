@@ -1,0 +1,231 @@
+{
+ "plan": "followup/WAVE3_PLAN.md",
+ "notes": {
+  "haiku45": {
+   "games": 10,
+   "firm_rounds": 1780,
+   "share_mentioning": 0.999438202247191
+  },
+  "sonnet55": {
+   "games": 10,
+   "firm_rounds": 1780,
+   "share_mentioning": 1.0
+  },
+  "opus55": {
+   "games": 10,
+   "firm_rounds": 1780,
+   "share_mentioning": 0.999438202247191
+  }
+ },
+ "stage_b_rule": {
+  "forced10_games": 10,
+  "forced10_mean_index": 0.4287397008141906,
+  "run": true,
+  "rule": "stage B runs if forced10's mean index over rounds 51-100 is above 0.3"
+ },
+ "rows": [
+  {
+   "arm": "baseline",
+   "label": "baseline",
+   "games": 15,
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+   ],
+   "index_51_100": 0.7556972757696079,
+   "sd": 0.25529708455194183,
+   "share_above_0.3": 0.9333333333333333,
+   "index_1_10": 1.976256847706437,
+   "index_91_100": 0.7510665423474089,
+   "share_above_0.3_at_91_100": 0.9333333333333333,
+   "profit_index_51_100": 0.8472659717919563,
+   "move_rate_51_100": 0.15533333333333335,
+   "cs": 41.77611713983188,
+   "profit": 64.00194967152896,
+   "ts": 105.77806681136084,
+   "cs_change_pct": 0.0,
+   "profit_change_pct": 0.0,
+   "ts_change_pct": 0.0,
+   "index_by_game": [
+    0.279,
+    0.366,
+    0.431,
+    0.436,
+    0.725,
+    0.736,
+    0.77,
+    0.837,
+    0.945,
+    0.945,
+    0.945,
+    0.945,
+    0.945,
+    0.977,
+    1.055
+   ],
+   "first_block_below_0.1": null
+  },
+  {
+   "arm": "forced10",
+   "label": "forced Nash round every 10",
+   "games": 10,
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "index_51_100": 0.4287397008141906,
+   "sd": 0.17979571332701097,
+   "share_above_0.3": 0.8,
+   "index_1_10": 1.8143286535161671,
+   "index_91_100": 0.4011543923012987,
+   "share_above_0.3_at_91_100": 0.6,
+   "profit_index_51_100": 0.5493197108879748,
+   "move_rate_51_100": 0.618,
+   "cs": 54.45603106781722,
+   "profit": 57.172685253612414,
+   "ts": 111.62871632142965,
+   "index_51_100_unforced_rounds": 0.45385407662962785,
+   "cs_change_pct": 30.352064280037027,
+   "profit_change_pct": -10.670400593990848,
+   "ts_change_pct": 5.5310611040968904,
+   "effect": -0.3269575749554173,
+   "effect_ci": [
+    -0.487,
+    -0.162
+   ],
+   "p_permutation": 0.0024,
+   "p_fisher_share_above_0.3": 0.5434782608695652,
+   "p_mann_whitney": 0.004922340183634536,
+   "index_by_game": [
+    0.103,
+    0.253,
+    0.329,
+    0.336,
+    0.419,
+    0.445,
+    0.522,
+    0.552,
+    0.654,
+    0.675
+   ],
+   "first_block_below_0.1": null,
+   "p_holm": 0.0024,
+   "rival_response": {
+    "forced_rounds": 80,
+    "rival_median_change_pct": -2.667140825035558,
+    "rival_share_cutting_5pct": 0.4375
+   }
+  },
+  {
+   "arm": "forced5",
+   "label": "forced Nash round every 5",
+   "games": 10,
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "index_51_100": 0.24600956277780303,
+   "sd": 0.13270945351816701,
+   "share_above_0.3": 0.1,
+   "index_1_10": 1.965417392084411,
+   "index_91_100": 0.2805299107405011,
+   "share_above_0.3_at_91_100": 0.3,
+   "profit_index_51_100": 0.3408578843326485,
+   "move_rate_51_100": 0.71,
+   "cs": 61.53660391007361,
+   "profit": 52.39543389354704,
+   "ts": 113.93203780362069,
+   "cs_change_pct": 47.30091766092086,
+   "profit_change_pct": -18.1346284567094,
+   "ts_change_pct": 7.708564958746322,
+   "effect": -0.5096877129918048,
+   "effect_ci": [
+    -0.648,
+    -0.358
+   ],
+   "p_permutation": 0.0001,
+   "p_fisher_share_above_0.3": 4.619488735789719e-05,
+   "p_mann_whitney": 0.00013651673371375665,
+   "index_by_game": [
+    0.127,
+    0.129,
+    0.137,
+    0.167,
+    0.221,
+    0.257,
+    0.268,
+    0.288,
+    0.292,
+    0.574
+   ],
+   "first_block_below_0.1": null,
+   "p_holm": 0.0002,
+   "rival_response": {
+    "forced_rounds": 170,
+    "rival_median_change_pct": 0.0,
+    "rival_share_cutting_5pct": 0.18823529411764706
+   }
+  }
+ ],
+ "drift_check": {
+  "wave2_baseline": {
+   "games": 10,
+   "index_by_game": [
+    0.279,
+    0.436,
+    0.725,
+    0.736,
+    0.77,
+    0.837,
+    0.945,
+    0.945,
+    0.945,
+    0.945
+   ]
+  },
+  "wave3_baseline": {
+   "games": 5,
+   "index_by_game": [
+    0.366,
+    0.431,
+    0.945,
+    0.977,
+    1.055
+   ]
+  }
+ },
+ "thinking": {
+  "calls": 5000,
+  "share_with_thinking": 0.9728,
+  "median_thinking_tokens": 188.0
+ }
+}

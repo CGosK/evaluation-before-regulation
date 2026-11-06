@@ -1,0 +1,32 @@
+2026-11-05T00:12:23Z stage A: followup/run_wave3.py --stage A --parallel 20 --config-dir ~/.claude
+WAVE3_PLAN.md sha256 70c4ea9e37664c9af71de3ba806e0544e1426624b8ec63ad823c194bc7170bbc
+code sha256: followup/duopoly_followup.py 3bf5022b76a2c91f7a599b4304a682477d2464d7c14d19671405f5e80c067c16; followup/run_wave3.py 91b13962f814a302ce20bd44ac944f3773746d3f2eccf32955576159930f9ed6; followup/run_wave2.py 4fd54947365f71b75234b1d006ac3b80deb67dae321f76a5e363a8ca2ab5dae7; followup/usage_guard.py 9d7d2c85bcc74808fb70ad8ca1f3b17430fbb3a89a551e6069f110b6fcc2705c; experiments_synthetic/common.py db68617f3b941578d136df083eb201c4f4b647372fbded7cb07b724cfb29879a
+opus55 baseline s14: done
+opus55 forced10 s4: done
+opus55 baseline s15: done
+opus55 baseline s11: done
+opus55 forced10 s7: done
+opus55 forced10 s1: done
+opus55 forced10 s9: done
+opus55 forced10 s5: done
+opus55 baseline s13: done
+opus55 forced10 s8: done
+opus55 forced10 s3: done
+opus55 forced10 s6: done
+opus55 forced10 s2: done
+opus55 baseline s12: done
+opus55 forced10 s10: done
+2026-11-05T08:03:05Z stage B: followup/run_wave3.py --stage B --parallel 20 --config-dir ~/.claude
+WAVE3_PLAN.md sha256 70c4ea9e37664c9af71de3ba806e0544e1426624b8ec63ad823c194bc7170bbc
+code sha256: followup/duopoly_followup.py 3bf5022b76a2c91f7a599b4304a682477d2464d7c14d19671405f5e80c067c16; followup/run_wave3.py 91b13962f814a302ce20bd44ac944f3773746d3f2eccf32955576159930f9ed6; followup/run_wave2.py 4fd54947365f71b75234b1d006ac3b80deb67dae321f76a5e363a8ca2ab5dae7; followup/usage_guard.py 38f3b8f31c4b2826c921ac1343834d26f7ac3c7d00b601ecadfad1ed59975ba7; experiments_synthetic/common.py db68617f3b941578d136df083eb201c4f4b647372fbded7cb07b724cfb29879a
+stage B rule: {'forced10_games': 10, 'forced10_mean_index': 0.4287397008141906, 'run': True, 'rule': "stage B runs if forced10's mean index over rounds 51-100 is above 0.3"}
+opus55 forced5 s4: done
+opus55 forced5 s2: done
+opus55 forced5 s10: done
+opus55 forced5 s1: done
+opus55 forced5 s5: done
+opus55 forced5 s9: done
+opus55 forced5 s7: done
+opus55 forced5 s6: done
+opus55 forced5 s3: done
+opus55 forced5 s8: done

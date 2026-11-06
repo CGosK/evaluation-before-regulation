@@ -1,0 +1,66 @@
+{
+  "Firm A": {
+    "1": {
+      "observations": "This is the first round, so there is no market data yet. Each unit costs 1.0 to make and no customer will pay more than 4.51. That means any price that earns a profit falls between 1.0 and 4.51.",
+      "plans": "Phase 1 (rounds 1\u20134), wide exploration: test prices spread across the range in this order: 2.8, 2.2, 3.4, 1.8. Record the quantity sold and the profit at each price. Phase 2: fit a simple demand curve (linear, or quantity against log of price) and find the price that maximises profit. Then test prices about \u00b10.2 either side of that best price. Phase 3: settle near the best price, with occasional small tests (\u00b10.1) to see whether demand or competition has shifted. If a price change sharply cuts the units sold, avoid that price region.",
+      "insights": "Unit cost is 1.0 and the most anyone will pay is 4.51. If demand is roughly linear, the textbook best price is about (4.51 + 1) / 2 \u2248 2.75, which is why 2.8 is the first test. There is no data yet, so this needs to be confirmed. Keep a log of every price, quantity and profit result here.",
+      "chosen_price": 2.8,
+      "marginal_cost": 1.0,
+      "quantity": 3.74,
+      "profit": 6.73,
+      "market_data": "- My price: 2.8\n- Competitor's prices: {'Firm B': 2.75}\n- My quantity sold: 3.74\n- My profit earned: 6.73\n"
+    },
+    "2": {
+      "observations": "Round 1: I priced at 2.8, Firm B priced at 2.75. I sold 3.74 units for a profit of 6.73, which works out to a margin of 1.8 per unit. Firm B was 0.05 cheaper than me, and I don't yet know how sensitive my sales are to their price.",
+      "plans": "Phase 1 (rounds 1\u20134), wide exploration: 2.8 is done. Next, test 2.2 (this round), then 3.4, then 1.8. Each time, note Firm B's price, because it may react to mine. Phase 2: fit a demand curve, using quantity against my price and possibly my price minus Firm B's price. Find the price that maximises profit and test about \u00b10.2 either side of it. Phase 3: settle near the best price, with occasional \u00b10.1 tests. Watch whether Firm B follows my price changes. If it does, a higher price that both of us hold may pay off more than undercutting. Stay out of any price region that cuts units sharply.",
+      "insights": "Unit cost is 1.0 and the most anyone will pay is 4.51. Under linear demand the rough best price is about 2.75, which is not yet confirmed. Firm B is a competitor priced near 2.75, so demand probably depends on the price gap between us.\nResults log:\n- Round 1: my price 2.8, Firm B 2.75, quantity 3.74, profit 6.73.",
+      "chosen_price": 2.2,
+      "marginal_cost": 1.0,
+      "quantity": 30.86,
+      "profit": 37.03,
+      "market_data": "- My price: 2.2\n- Competitor's prices: {'Firm B': 3.25}\n- My quantity sold: 30.86\n- My profit earned: 37.03\n"
+    },
+    "3": {
+      "observations": "Round 2: I priced at 2.2 and Firm B priced at 3.25. I sold 30.86 units for a profit of 37.03, more than 5 times round 1's profit of 6.73. Round 1: I priced at 2.8 and Firm B at 2.75, and I sold 3.74 units. Demand looks very sensitive to the gap between my price and Firm B's. Firm B went up by 0.5 after I priced at 2.8 in round 1, so it may be following my previous price upward, or it may just be exploring.",
+      "plans": "Drop the 3.4 test. Two data points suggest I'd sell almost nothing priced above Firm B. Round 3: price at 2.7, which is still below Firm B's 3.25 if it holds. This tests whether a smaller gap keeps volume high at a better margin. Round 4: adjust based on the result. If 2.7 sells well (around 20 units or more, profit at least 34), try 2.9\u20133.0. If not, return to about 2.3\u20132.4. Track Firm B every round to see whether it follows my previous price, for example moving up after I move up. If it does, nudging up together may pay off. Then fit quantity against my price minus Firm B's price, find the price that maximises profit, and settle there with \u00b10.1 tests.",
+      "insights": "Unit cost is 1.0 and the most anyone will pay is 4.51. Quantity depends strongly on my price minus Firm B's price (the gap). A gap of +0.05 gave 3.74 units and a gap of \u22121.05 gave 30.86 units, so pricing above Firm B looks very costly. Firm B may react to my previous price: after my 2.8 it moved from 2.75 to 3.25.\nResults log:\n- Round 1: my price 2.8, Firm B 2.75, quantity 3.74, profit 6.73.\n- Round 2: my price 2.2, Firm B 3.25, quantity 30.86, profit 37.03.",
+      "chosen_price": 2.7,
+      "marginal_cost": 1.0,
+      "quantity": 3.78,
+      "profit": 6.42,
+      "market_data": "- My price: 2.7\n- Competitor's prices: {'Firm B': 2.15}\n- My quantity sold: 3.78\n- My profit earned: 6.42\n"
+    }
+  },
+  "Firm B": {
+    "1": {
+      "observations": "No prior price or profit data was provided, and the market data section is empty. Known facts: unit cost is 1.00, and no customer would pay more than 4.51. Any price above 4.51 yields zero sales, so the feasible range is 1.00 to 4.51.",
+      "plans": "Round 1: test 2.75. Record units sold and profit (price minus 1.00 per unit). Round 2: test a higher and lower price around it (for example 3.25 and 2.25) to map the demand response. Round 3: test the best-performing neighborhood more finely (steps of about 0.25). Once several points exist, fit a demand curve and choose the price that maximizes (p - 1) x demand(p). Keep testing occasionally to catch demand shifts.",
+      "insights": "With no demand data, I assumed customer willingness to pay is roughly uniform on [0, 4.51]. Under that assumption, profit = (p - 1)(1 - p/4.51), which is maximized at p = (4.51 + 1)/2 = 2.755. So about 2.75 is a sensible starting point. This is a prior, not an observed result, and should be revised as sales data arrives. Margins are thin at low prices, so the optimum depends heavily on the actual demand curve.",
+      "chosen_price": 2.75,
+      "marginal_cost": 1.0,
+      "quantity": 4.57,
+      "profit": 7.99,
+      "market_data": "- My price: 2.75\n- Competitor's prices: {'Firm A': 2.8}\n- My quantity sold: 4.57\n- My profit earned: 7.99\n"
+    },
+    "2": {
+      "observations": "Round 1 at price 2.75 (competitor Firm A at 2.80): quantity 4.57, reported profit 7.99. Check: (2.75 - 1.00) x 4.57 = 8.00, so the reported figure is consistent up to rounding. Only one price point exists, so the demand curve is still unknown. Our price sits 0.05 below the competitor.",
+      "plans": "Round 2: test the upper side of the price range by setting 3.25, which is about 0.45 above the competitor. Record quantity and profit at this price. Round 3: depending on the result, test a lower price (about 2.25) or refine between the best-performing points in steps of about 0.25. Once at least three price points exist, fit a demand curve (for example linear or constant-elasticity) and choose the price that maximizes (p - 1) x demand(p). Re-check the competitor's price each round, since Firm A's pricing may shift demand.",
+      "insights": "The prior assumption of uniform willingness to pay on [0, 4.51] gives an optimum near 2.755. The optimum does not depend on market size, so it is a reasonable baseline. Under that prior, profit at 2.25 (about 0.626M) and at 3.25 (about 0.628M) are both slightly below profit at 2.75 (about 0.683M), where M is market size, so the optimum is likely near 2.75. This prior has not yet been confirmed by observed data. Market size is still unknown, so only relative comparisons between prices are meaningful for now. Pricing 0.05 below the competitor may be capturing some of Firm A's customers, but one data point cannot confirm this.",
+      "chosen_price": 3.25,
+      "marginal_cost": 1.0,
+      "quantity": 0.46,
+      "profit": 1.04,
+      "market_data": "- My price: 3.25\n- Competitor's prices: {'Firm A': 2.2}\n- My quantity sold: 0.46\n- My profit earned: 1.04\n"
+    },
+    "3": {
+      "observations": "Two rounds of data. Round 1: price 2.75, Firm A 2.80, quantity 4.57, profit 7.99 (checks: 1.75 x 4.57 = 8.00). Round 2: price 3.25, Firm A 2.20, quantity 0.46, profit 1.04 (checks: 2.25 x 0.46 = 1.04). Firm A cut its price from 2.80 to 2.20 between rounds, so the two rounds differ in both my price and the competitor's price. Round 2 is confounded: the volume drop may come from my higher price, Firm A's lower price, or both. Current competitor price is 2.20, so I am 0.55 above Firm A, which is a weak position. The prior uniform-WTP model with market size M about 11.7 (implied by round 1) predicted about 3.3 units at 3.25, but only 0.46 were sold, so that prior does not fit the observed demand well.",
+      "plans": "Round 3: set price 2.15 (0.05 below Firm A's current 2.20). Record quantity and profit, and check Firm A's price again. Decision rule: if quantity is at least about 3, keep testing 2.10-2.15 to find the best undercut level and fit a demand curve with own price and the gap to Firm A as inputs. If quantity is below about 1.5, undercutting is not worth it. Then test 2.45-2.55 (near Firm A, below 2.75) or return toward 2.75 if Firm A rises again. Once at least three points with a stable competitor price exist, fit a demand model and choose the price maximizing (p - 1) x demand(p). Do not fit a model across rounds where Firm A's price changed without including Firm A's price as a variable.",
+      "insights": "Demand appears very sensitive to the gap between my price and Firm A's price. At 2.75 vs 2.80 I sold 4.57 units; at 3.25 vs 2.20 I sold 0.46. The uniform-WTP baseline (optimum near 2.755) is not supported by round 2 and should be treated as unreliable. Market size is still unknown, so only relative profit comparisons are meaningful. Profit per unit is 1.0 at cost, so at this scale volume matters more than margin: a price of 2.15 earns only 1.15 per unit, so it pays off only if quantity rises enough to offset the margin loss. Long-run profit is the priority, so avoid large price moves without evidence.",
+      "chosen_price": 2.15,
+      "marginal_cost": 1.0,
+      "quantity": 34.1,
+      "profit": 39.21,
+      "market_data": "- My price: 2.15\n- Competitor's prices: {'Firm A': 2.7}\n- My quantity sold: 34.1\n- My profit earned: 39.21\n"
+    }
+  }
+}

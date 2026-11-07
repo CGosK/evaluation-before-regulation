@@ -5,8 +5,9 @@ exact string. Numbers that no output file stores are recomputed here from the sa
 p-value recomputed here is checked within its sampling error, not to the digit.
 
 Not covered, and listed at the end: counts read by hand from the agents' notes, design constants (rounds,
-games per arm, sizes fixed in the plans), and numbers quoted from the paper's text. Every other number in the
-two docs that no check matched is printed for review.
+games per arm, sizes fixed in the plans), numbers quoted from the paper's text, and numbers quoted from other
+work, which must still appear as listed. Every other number in the two docs that no check matched, outside
+model versions, links and the references, is printed for review.
 
 Usage:  uv run --extra analysis python followup/check_followup.py
 Exits 1 if any check fails.
@@ -635,6 +636,54 @@ check(
     f"({np.mean(dc['wave3_baseline']['index_by_game']):.3f} against {np.mean(dc['wave2_baseline']['index_by_game']):.3f})",
 )
 
+# ---------------------------------------------------------------- wave 10 (wave10.json, plus per-game windows)
+import extras_readme as ex  # noqa: E402
+
+w10 = load("wave10.json")
+P10, S10, E10 = w10["primary"], w10["secondary"], w10["exploratory"]
+g10 = ex.wave10_games()["estimate"]
+a51 = {s: float(i[50:100].mean()) for s, i in g10.items()}
+b151 = {s: float(i[150:200].mean()) for s, i in g10.items()}
+fell = sorted(g10, key=lambda s: b151[s] - a51[s])[:3]
+check_true("W10 the three that fell are seeds 4, 5 and 7", sorted(fell) == [4, 5, 7])
+check(
+    "W10 table estimate",
+    f"| Estimate, no threat (10 games) | {f(P10['estimate_index_51_100'])} | {f(P10['estimate_index_151_200'])} | {f(P10['estimate_change'])} |",
+)
+check(
+    "W10 table baseline",
+    f"| Baseline (5 games) | {f(P10['baseline_index_51_100'])} | {f(P10['baseline_index_151_200'])} | {f(P10['baseline_change'])} |",
+)
+check(
+    "W10 tests",
+    f"isn't significant (p = {f(P10['p_holm']['change'])}, Holm), and neither is its difference from the baseline's change (p = {f(P10['p_holm']['against_baseline'])})",
+)
+lo10, hi10 = P10["estimate_index_151_200_ci"]
+check(
+    "W10 level",
+    f"the arm's index is {f(P10['estimate_index_151_200'])} (95% interval {f(lo10)}–{f(hi10)}), and no game is below 0.1",
+)
+check_true("W10 no game below 0.1", E10["estimate_games_below_0.1_151_200"] == 0)
+check(
+    "W10 remedy table",
+    f"| The same, over rounds 151–200 of 200 | wave 10 | – | – | {f(P10['estimate_index_151_200'])} |",
+)
+check(
+    "W10 fell",
+    f"from {f(min(a51[s] for s in fell))}–{f(max(a51[s] for s in fell))} over rounds 51–100 to {f(min(b151[s] for s in fell))}–{f(max(b151[s] for s in fell))} over rounds 151–200",
+)
+check("W10 rose", f"one from {f(a51[3])} to {f(b151[3])}")
+blocks10 = E10["blocks_10"]["estimate"][10:]
+check("W10 blocks", f"sits between {f(min(blocks10))} and {f(max(blocks10))}")
+check(
+    "W10 spread",
+    f"from {f(min(b151.values()))} to {f(max(b151.values()))}, against {f(min(a51.values()))} to {f(max(a51.values()))}",
+)
+check(
+    "W10 follow",
+    f"in {pc(S10['follow_101_199'])} of firm-rounds over rounds 101–199 against {pc(S10['follow_11_99'])} over rounds 11–99, but the rise isn't significant (p = {ex.r(S10['p'])})",
+)
+
 # ---------------------------------------------------------------- CLAIMS_STATUS.md
 check(
     "Claims: Opus info and forced10",
@@ -665,6 +714,11 @@ check("Claims: limit", f"at an index of {lim['primary_index']:.3f}", "claims")
 check("Claims: lifted", f"the index rose to {f(li['primary_index'])}", "claims")
 check("Claims: estimate", f"partway down, to {f(r7['primary_index'])}", "claims")
 check(
+    "Claims: wave 10",
+    f"settled at {f(P10['estimate_index_151_200'])} over rounds 151–200, with no significant change",
+    "claims",
+)
+check(
     "Claims: following",
     f"raise {pc(o['follow_raise'])} of the time and a cut {pc(o['follow_cut'])}; Haiku 4.5 follows {pc(h45['follow_raise'])} and {pc(h45['follow_cut'])}",
     "claims",
@@ -674,11 +728,27 @@ check(
 print(f"\n{sum(results)} of {len(results)} checks pass")
 HAND = {
     "note": "notes counts read by hand: wave 4's 8 of 8 and 7 of 8; wave 5's 59 of 60 and 2 of 20; wave 6's 15 of 20 and "
-    "13 of 20; wave 7's 12 of 20; wave 9's 3 of 8 and 4 of 8",
+    "13 of 20; wave 7's 12 of 20; wave 9's 3 of 8 and 4 of 8; wave 10's 9 of 20 and four",
 }
 print(f"Not covered: {HAND['note']}; design constants; numbers quoted from the paper's text.")
+QUOTED = [
+    "from 31% of the time (Claude Opus) to 63% (GPT-3.5)",
+    "ranging from 43.5% to 89.5%",
+    "in 98–99% of replays",
+    "by 11.5 points",
+]
+missing = [q for q in QUOTED if q not in NOTE]
+results += [not missing]
+matched["note"] += [q for q in QUOTED if q in NOTE]
+print(
+    f"Quoted from other work (§7, Limits), checked against the sources by hand: {'; '.join(QUOTED)}"
+)
+if missing:
+    print(f"FAIL quoted text no longer in the note: {missing}")
 NUM = re.compile(r"[−+]?\d+(?:\.\d+)?%?")
+NOT_RESULTS = r"## References.*|\]\([^)]*\)|(?:GPT-|DeepSeek-V|Llama-|(?:Claude|Fable|Haiku|Opus|Sonnet) )\d+(?:\.\d+)?"
 for doc, text in DOCS.items():
+    text = re.sub(NOT_RESULTS, lambda m: " " * len(m.group(0)), text)
     covered = " ".join(matched[doc])
     left = [m for m in NUM.finditer(text) if "." in m.group(0) or "%" in m.group(0)]
     left = [m for m in left if m.group(0).lstrip("−+") not in covered]

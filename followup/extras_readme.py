@@ -17,16 +17,17 @@ def j(name: str, folder: Path = OUT):
 
 def sources() -> dict:
     w1, w2, w3, w4 = j("followup.json"), j("wave2.json"), j("wave3.json"), j("wave4.json")
-    w5, w6, w7, w8, w9 = (
+    w5, w6, w7, w8, w9, w10 = (
         j("wave5.json"),
         j("wave6.json"),
         j("wave7.json"),
         j("wave8.json"),
         j("wave9.json"),
+        j("wave10.json"),
     )
     fol, nb, exp = j("following.json"), j("null_band_scale.json"), j("exploratory.json")
     paper = [j("prevention45.json", THEORY), j("frontier_forced_cut.json", THEORY)]
-    every = [w1, w2, w3, w4, w5, w6, w7, w8, w9, fol, nb, exp, *paper]
+    every = [w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, fol, nb, exp, *paper]
     return {
         "*": [],
         "Follow-up work after the sprint review": every,
@@ -44,9 +45,51 @@ def sources() -> dict:
         "Wave 8": [w8, w2, w3, w1],
         "Raise and cut following": [fol, w8],
         "Wave 9": [w9, fol, w4],
+        "Wave 10": [w10, w7],
         "Limits that apply": [w3],
         "Running it": [],
     }
+
+
+def wave10_games() -> dict:
+    """Each continued game's index series over rounds 1-200, by arm and seed."""
+    import sys
+
+    sys.path[:0] = [str(HERE), str(HERE.parent / "theory")]
+    import prevention45_results as p
+    import wave5_results as w5
+
+    folder = HERE / "runs/wave10/games/2_agents"
+    out = {}
+    for arm, pattern in (
+        ("estimate", "*_rule-w7-estimate-no-threat_*"),
+        ("baseline", "*_baseline_*"),
+    ):
+        xs = [w5.load(f) for f in folder.glob(pattern)]
+        out[arm] = {x["seed"]: p.index(x) for x in xs}
+    return out
+
+
+def wave10_extras() -> list:
+    """Wave 7's late drift (the copies' rounds 1-100), per-game windows, and the share of calls with thinking."""
+    import numpy as np
+
+    g = wave10_games()
+    vals = []
+    for arm in g.values():
+        for i in arm.values():
+            vals += [i[50:100].mean(), i[90:100].mean(), i[100:110].mean(), i[150:200].mean()]
+    drift = {
+        a: np.mean([i[75:100].mean() - i[50:75].mean() for i in x.values()]) for a, x in g.items()
+    }
+    vals += [float(drift["estimate"]), float(drift["baseline"])]
+    vals += [float(np.mean([i[99] for i in g["estimate"].values()]))]
+    calls = [
+        json.loads(line) for line in (HERE / "runs/wave10/usage.jsonl").read_text().splitlines()
+    ]
+    ok = [c for c in calls if not c["is_error"]]
+    vals += [float(np.mean([(c.get("thinking_tokens") or 0) > 0 for c in ok]))]
+    return [float(v) for v in vals]
 
 
 def computed() -> dict:
@@ -70,6 +113,7 @@ def computed() -> dict:
         rival = np.round(x["P"][:99, 1 - x["models"].index(w8.OPUS)], 2)
         held.append(float(statistics.mode(rival)))
     return {
+        "Wave 10": wave10_extras(),
         "Wave 3": [float(np.mean(v["index_by_game"])) for v in drift.values()],
         "Wave 5": [w6.follow(kept, range(11, 100))["within_1pct"], *by_game, *path],
         "Wave 8": held,
@@ -166,7 +210,7 @@ def exact_rows() -> list:
         )
         rows.append((f"W1 deference {arm}", f"| {label} | {cell}"))
     rows += scaling_rows() + w2_rows() + w3_rows() + w4_rows() + w5_rows() + w6_rows() + w7_rows()
-    return rows + w8_rows() + following_rows() + w9_rows()
+    return rows + w8_rows() + following_rows() + w9_rows() + w10_rows()
 
 
 def signed_pct(x: float) -> str:
@@ -727,3 +771,31 @@ def w9_rows() -> list:
             f"| Raises its own price this round | {o['a_raises_in_b2']} | {h['a_raises_in_b2']} |",
         ),
     ]
+
+
+def w10_rows() -> list:
+    w10, g = j("wave10.json")["primary"], wave10_games()
+    assert w10["reading"].startswith("stands")
+    hp = w10["p_holm"]
+    rows = [
+        (
+            "W10 estimate",
+            f"| Estimate, no threat (10 games) | {r(w10['estimate_index_51_100'])} | {r(w10['estimate_index_151_200'])} {ci(*w10['estimate_index_151_200_ci'])} | {r(w10['estimate_change'])} | p = {ph(hp['change'])} (sign-flip, Holm) |",
+        ),
+        (
+            "W10 baseline",
+            f"| Baseline (5 games) | {r(w10['baseline_index_51_100'])} | {r(w10['baseline_index_151_200'])} | {r(w10['baseline_change'])} | |",
+        ),
+        (
+            "W10 difference",
+            f"| Estimate's change minus baseline's | | | {r(w10['change_minus_baseline_change'])} | p = {ph(hp['against_baseline'])} (permutation, Holm) |",
+        ),
+    ]
+    for seed, i in sorted(g["estimate"].items()):
+        rows.append(
+            (
+                f"W10 seed {seed}",
+                f"| {seed} | {r(i[50:100].mean())} | {r(i[90:100].mean())} | {r(i[100:110].mean())} | {r(i[150:200].mean())} |",
+            )
+        )
+    return rows

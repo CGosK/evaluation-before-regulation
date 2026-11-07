@@ -1,0 +1,134 @@
+{
+  "primary": {
+    "estimate_index_51_100": 0.44883376186591145,
+    "estimate_index_151_200": 0.3186165057045697,
+    "estimate_index_151_200_ci": [
+      0.2526938123853466,
+      0.3954887083023897
+    ],
+    "estimate_change": -0.13021725616134183,
+    "estimate_change_by_game": [
+      0.0,
+      0.001,
+      0.254,
+      -0.635,
+      -0.525,
+      0.129,
+      -0.554,
+      -0.024,
+      0.111,
+      -0.059
+    ],
+    "baseline_index_51_100": 0.7546501991040788,
+    "baseline_index_151_200": 0.7040586990886215,
+    "baseline_change": -0.05059150001545718,
+    "baseline_change_by_game": [
+      -0.05,
+      -0.173,
+      -0.029,
+      0.0,
+      0.0
+    ],
+    "change_minus_baseline_change": -0.07962575614588466,
+    "p_raw": {
+      "change": 0.2265625,
+      "against_baseline": 0.5651015651015651
+    },
+    "p_holm": {
+      "change": 0.453125,
+      "against_baseline": 0.5651015651015651
+    },
+    "reading": "stands: no change after round 100; the estimate takes prices only partway down"
+  },
+  "secondary": {
+    "follow_11_99": 0.36235955056179775,
+    "follow_101_199": 0.498989898989899,
+    "follow_change_by_game": [
+      0.0,
+      0.093,
+      -0.412,
+      0.455,
+      0.421,
+      -0.011,
+      0.461,
+      0.236,
+      0.011,
+      0.112
+    ],
+    "p": 0.125
+  },
+  "exploratory": {
+    "blocks_10": {
+      "estimate": [
+        1.5772985168018585,
+        0.6895692226959129,
+        0.6447735132375392,
+        0.5175758197137617,
+        0.5129303387328933,
+        0.49158324755890287,
+        0.5008742095206397,
+        0.4879332267882206,
+        0.4428056972597848,
+        0.32097242820201005,
+        0.2650275643895522,
+        0.2858769254584496,
+        0.31048691398805006,
+        0.3028882343836296,
+        0.2997912470630507,
+        0.31339586993559376,
+        0.32080651816697914,
+        0.3209171248569998,
+        0.32788534632830235,
+        0.31007766923497354
+      ],
+      "baseline": [
+        2.1056666750306277,
+        1.064415295175984,
+        0.7233042631522191,
+        0.8184260165700005,
+        0.8005077327866509,
+        0.775953047602061,
+        0.7443195342561475,
+        0.757149910298546,
+        0.7310467314536664,
+        0.7647817719099725,
+        0.7494074419970986,
+        0.718879995551392,
+        0.7164466483709372,
+        0.7111375272499447,
+        0.7078193265493244,
+        0.7106951004898621,
+        0.7049435526087869,
+        0.701846565288208,
+        0.6996344314877945,
+        0.7031738455684561
+      ]
+    },
+    "index_round_200": {
+      "estimate": 0.30178216748342285,
+      "baseline": 0.7036162723285388
+    },
+    "estimate_games_below_0.1_151_200": 0
+  },
+  "games": {
+    "estimate": [
+      "1793952701_duopoly_setting_P1_mem100_opus55_rule-w7-estimate-no-threat_think0_effort-medium_seed1",
+      "1793952701_duopoly_setting_P1_mem100_opus55_rule-w7-estimate-no-threat_think0_effort-medium_seed2",
+      "1793952701_duopoly_setting_P1_mem100_opus55_rule-w7-estimate-no-threat_think0_effort-medium_seed3",
+      "1793952701_duopoly_setting_P1_mem100_opus55_rule-w7-estimate-no-threat_think0_effort-medium_seed4",
+      "1793952701_duopoly_setting_P1_mem100_opus55_rule-w7-estimate-no-threat_think0_effort-medium_seed5",
+      "1793952702_duopoly_setting_P1_mem100_opus55_rule-w7-estimate-no-threat_think0_effort-medium_seed6",
+      "1793952701_duopoly_setting_P1_mem100_opus55_rule-w7-estimate-no-threat_think0_effort-medium_seed7",
+      "1793952701_duopoly_setting_P1_mem100_opus55_rule-w7-estimate-no-threat_think0_effort-medium_seed8",
+      "1793952701_duopoly_setting_P1_mem100_opus55_rule-w7-estimate-no-threat_think0_effort-medium_seed9",
+      "1793952702_duopoly_setting_P1_mem100_opus55_rule-w7-estimate-no-threat_think0_effort-medium_seed10"
+    ],
+    "baseline": [
+      "1793837547_duopoly_setting_P1_mem100_opus55_baseline_think0_effort-medium_seed11",
+      "1793837547_duopoly_setting_P1_mem100_opus55_baseline_think0_effort-medium_seed12",
+      "1793837547_duopoly_setting_P1_mem100_opus55_baseline_think0_effort-medium_seed13",
+      "1793837547_duopoly_setting_P1_mem100_opus55_baseline_think0_effort-medium_seed14",
+      "1793837547_duopoly_setting_P1_mem100_opus55_baseline_think0_effort-medium_seed15"
+    ]
+  }
+}

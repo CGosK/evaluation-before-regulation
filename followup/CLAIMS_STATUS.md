@@ -2,7 +2,7 @@
 
 *Chris Graham · November 2026*
 
-This page checks each claim of "Evaluation Before Regulation" (frozen at the tag `submission-2026-10-25`) against the nine follow-up waves. The waves are reported in [`FOLLOWUP_NOTE.md`](FOLLOWUP_NOTE.md), with full tables in [`README.md`](README.md).
+This page checks each claim of "Evaluation Before Regulation" (frozen at the tag `submission-2026-10-25`) against the ten follow-up waves. The waves are reported in [`FOLLOWUP_NOTE.md`](FOLLOWUP_NOTE.md), with full tables in [`README.md`](README.md).
 
 **No claim is contradicted on the models the paper tested.** Three are narrowed: they hold for Mistral and Haiku 4.5 but not for Opus 5.5, and those three carry the paper's main argument. Five hold, three of them extended to newer models. Four haven't been retested.
 
@@ -33,7 +33,7 @@ This page checks each claim of "Evaluation Before Regulation" (frozen at the tag
   - Obeyed, the limit reaches Nash by construction, so it shows that Opus obeys a posted cap.
   - Opus obeyed it with or without the threat behind it (wave 6).
   - Lifted halfway through a game, it lost part of its effect: the index rose to 0.44 (wave 6).
-  - The same number called an estimate took prices only partway down, to 0.45 (wave 7).
+  - The same number called an estimate took prices only partway down, to 0.45 (wave 7). Continued to 200 rounds, those games settled at 0.32 over rounds 151–200, with no significant change (wave 10).
 - **Opus follows raises more than cuts, the reverse of Haiku 4.5.** In its own games it follows a rival's raise 37% of the time and a cut 21%; Haiku 4.5 follows 22% and 34%. This is an exploratory check on saved games, and following raises isn't enough on its own: Haiku 5.5 does it too and competes. A forced raise in the diagnostic showed no detectable following from either model (wave 9).
 - **Collusion depends on the pairing.** Opus's own index fell by about half against Haiku 5.5 and against Haiku 4.5 (wave 8). Against a rival that set its best response, Opus held a higher price, like a price leader.
 

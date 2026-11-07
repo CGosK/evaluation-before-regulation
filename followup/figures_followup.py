@@ -13,6 +13,7 @@ wave's out/*.json; the per-round paths and the best-response curve are computed 
     out/wave1_arms.png      wave 1: every Haiku 4.5 arm, each game's index over rounds 51-100
     out/wave2_remedies.png  wave 2: best-response information and the 10% cut on Sonnet 5.5 and Opus 5.5
     out/wave4_paths.png     wave 4: Firm A's path after the forced cut against the base-scale null band
+    out/wave10_continued.png  wave 10: the estimate and baseline games continued to round 200
 
 Usage:  uv run --extra analysis python followup/figures_followup.py
 """
@@ -623,6 +624,66 @@ def forced_cut_schematic():
     plt.close(fig)
 
 
+def wave10_continued():
+    folder = HERE / "runs/wave10/games/2_agents"
+    arms = {
+        arm: [w5.load(f) for f in sorted(folder.glob(pattern))]
+        for arm, pattern in (
+            ("estimate", "*_rule-w7-estimate-no-threat_*"),
+            ("baseline", "*_baseline_*"),
+        )
+    }
+    idx = {arm: [p.index(x) for x in xs] for arm, xs in arms.items()}
+    res = load("wave10.json")["primary"]
+    assert (
+        abs(np.mean([i[150:200].mean() for i in idx["estimate"]]) - res["estimate_index_151_200"])
+        < 1e-9
+    )
+    fig, (ax, bx) = plt.subplots(
+        1, 2, figsize=(8.4, 3.6), layout="constrained", gridspec_kw={"width_ratios": [2.6, 1]}
+    )
+    t = np.arange(1, 201)
+    ax.axhline(0, color=AXIS, lw=1, zorder=0)
+    ax.axvline(100.5, color=GRID, lw=1, zorder=0)
+    ax.text(102, 1.25, "continued from here\n(wave 10)", color=MUTED, fontsize=7.5, va="top")
+    ax.text(24, 1.25, "both arms open above the scale", color=MUTED, fontsize=7.5, va="top")
+    for label, arm, color in (
+        ("Baseline (5 games)", "baseline", MUTED),
+        ("Estimate, no threat (10 games)", "estimate", SERIES[2]),
+    ):
+        y = np.mean(idx[arm], axis=0)
+        ax.plot(t, y, color=color, lw=1.6, solid_capstyle="round")
+        ax.text(150, float(y[140:160].mean()) + 0.07, label, color=INK2, fontsize=7.5, ha="center")
+    ax.set_xlim(1, 200)
+    ax.set_ylim(-0.1, 1.3)
+    ax.set_xlabel("Round")
+    ax.set_ylabel("Mean market index")
+    ax.yaxis.grid(True, color=GRID, lw=0.6)
+    ax.set_axisbelow(True)
+    for arm, color, z in (("baseline", MUTED, 1), ("estimate", SERIES[2], 2)):
+        for i in idx[arm]:
+            a, b = i[50:100].mean(), i[150:200].mean()
+            bx.plot([0, 1], [a, b], color=color, lw=1.2, alpha=0.9, zorder=z)
+            bx.scatter([0, 1], [a, b], s=14, color=color, edgecolor=SURFACE, lw=1, zorder=z + 1)
+    bx.axhline(0.1, color=GRID, lw=1, ls=(0, (3, 3)), zorder=0)
+    bx.text(0.5, 0.06, "competitive (0.1)", color=MUTED, fontsize=7, ha="center", va="top")
+    bx.set_xticks([0, 1], ["Rounds\n51–100", "Rounds\n151–200"])
+    bx.set_xlim(-0.25, 1.25)
+    bx.set_ylim(-0.1, 1.3)
+    bx.set_ylabel("Each game's index")
+    handles = [
+        plt.Line2D([], [], color=SERIES[2], lw=1.2, marker="o", ms=3.5, label="Estimate"),
+        plt.Line2D([], [], color=MUTED, lw=1.2, marker="o", ms=3.5, label="Baseline"),
+    ]
+    bx.legend(
+        handles=handles, loc="upper center", ncol=2, frameon=False, fontsize=7.5, handlelength=1.6
+    )
+    bx.yaxis.grid(True, color=GRID, lw=0.6)
+    bx.set_axisbelow(True)
+    fig.savefig(OUT / "wave10_continued.png", dpi=200)
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     forced_cut_schematic()
     models_baseline()
@@ -635,4 +696,5 @@ if __name__ == "__main__":
     wave1_arms()
     wave2_remedies()
     wave4_paths()
-    print("wrote the eleven figures in out/")
+    wave10_continued()
+    print("wrote the twelve figures in out/")

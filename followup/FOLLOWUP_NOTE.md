@@ -4,7 +4,7 @@
 
 After the review of "Evaluation Before Regulation", I ran twelve more waves of experiments, from 3 to 9 November 2026. The paper tested its remedies on Claude Haiku 4.5, and its diagnosis on Haiku 4.5, Haiku 5.5 and Fable 5.1. These waves ask whether the remedies and the diagnosis carry over to newer Claude models, what works where they don't, whether that carries over in turn, and whether the answer depends on the market a model is in. Most of the findings are known in general form from other work; [§7](#7-how-this-fits-with-other-work) says which parts are new.
 
-None of it is part of the submission, which stays frozen at the tag `submission-2026-10-25`. For which of the paper's claims hold, and which the follow-ups narrow, see [`CLAIMS_STATUS.md`](CLAIMS_STATUS.md). The full tables, code and caveats are in [`README.md`](README.md).
+A short paper on the main finding, that a remedy works only as far as the model defers to the platform's number, is [`PAPER_DEFERENCE.md`](PAPER_DEFERENCE.md). None of it is part of the submission, which stays frozen at the tag `submission-2026-10-25`. For which of the paper's claims hold, and which the follow-ups narrow, see [`CLAIMS_STATUS.md`](CLAIMS_STATUS.md). The full tables, code and caveats are in [`README.md`](README.md).
 
 **Contents**
 

@@ -794,6 +794,143 @@ def wave12_limit_cap():
     plt.close(fig)
 
 
+def paper_remedies():
+    """The short paper's Figure 1: the same remedies on each model, and how often each model set the number."""
+    import wave12_exploratory as w12x
+
+    w1, w2, w3j = load("followup.json"), load("wave2.json"), load("wave3.json")
+    w6j, w7j, w11j, w12j = (
+        load("wave6.json"),
+        load("wave7.json"),
+        load("wave11.json"),
+        load("wave12.json"),
+    )
+    x11, x12 = load("wave11_exploratory.json"), load("wave12_exploratory.json")
+    bias = {(r["family"], r["arm"]): r for r in w2["bias"]}
+    sb = {fam: {r["arm"]: r for r in rows} for fam, rows in w2["stage_b"].items()}
+    w12 = __import__("wave12_results")
+    son_base = [w12.late(x) for x in w12x.sonnet_baseline()]
+    assert abs(np.mean(son_base) - w12j["part2"]["baseline_index"]) < 1e-9
+    opus_base = next(r["index_by_game"] for r in w3j["rows"] if r["arm"] == "baseline")
+    g1 = {a: [g["index_51_100"] for g in v] for a, v in w1["games"].items()}
+    sets = {
+        "h_info": pct_txt(w1["deference"]["brinfo"]["within_1pct_of_shown"]),
+        "s_info": pct_txt(sb["sonnet55"]["brinfo"]["deference"]["within_1pct_of_shown"]),
+        "s_lim": pct_txt(w11j["secondary"]["A_follow_11_99"]),
+        "o_info": pct_txt(sb["opus55"]["brinfo"]["deference"]["within_1pct_of_shown"]),
+        "o_est": pct_txt(w7j["exploratory"]["follow_11_99"]["within_1pct"]),
+        "o_lim": pct_txt(w6j["exploratory"]["follow_no_threat_11_99"]["within_1pct"]),
+        "m_lim": "Opus {}\nSonnet {}".format(
+            *(pct_txt(w12j["secondary"]["follow_A2_11_99"][m]) for m in ("opus55", "sonnet55"))
+        ),
+    }
+    rows = [
+        ("Haiku 4.5: no remedy  (20)", bias[("haiku45", "baseline")]["index_by_game"], MUTED, ""),
+        ("best-response information  (10)", g1["brinfo"], SERIES[0], sets["h_info"]),
+        ("Sonnet 5.5: no remedy  (20)", son_base, MUTED, ""),
+        (
+            "best-response information  (10)",
+            sb["sonnet55"]["brinfo"]["index_by_game"],
+            SERIES[0],
+            sets["s_info"],
+        ),
+        (
+            "posted limit  (10)",
+            list(x11["limit"]["index_by_game"].values()),
+            SERIES[1],
+            sets["s_lim"],
+        ),
+        ("Opus 5.5: no remedy  (15)", opus_base, MUTED, ""),
+        (
+            "best-response information  (10)",
+            sb["opus55"]["brinfo"]["index_by_game"],
+            SERIES[0],
+            sets["o_info"],
+        ),
+        (
+            "the limit's number, as an estimate  (10)",
+            w7j["w7-estimate-no-threat"]["primary_by_game"],
+            SERIES[0],
+            sets["o_est"],
+        ),
+        (
+            "posted limit  (10)",
+            w6j["rules"]["w6-limit-no-threat"]["primary_by_game"],
+            SERIES[1],
+            sets["o_lim"],
+        ),
+        (
+            "Opus and Sonnet: no remedy  (10)",
+            list(x12["mixed"]["mixed"]["index_by_game"].values()),
+            MUTED,
+            "",
+        ),
+        (
+            "posted limit  (10)",
+            list(x12["mixed"]["A2"]["index_by_game"].values()),
+            SERIES[1],
+            sets["m_lim"],
+        ),
+    ]
+    fig, ax = plt.subplots(figsize=(8.2, 4.9), layout="constrained")
+    dot_rows(
+        ax,
+        [(a, v, c, None) for a, v, c, _ in rows],
+        (-0.15, 1.75),
+        1.38,
+        refs=((0, "Nash"), (1, "monopoly")),
+        clip=1.2,
+    )
+    ax.set_xticks([0, 0.25, 0.5, 0.75, 1.0])
+    n = len(rows)
+    for i, (_, _, _, txt) in enumerate(rows):
+        ax.text(1.74, n - 1 - i, txt, color=INK2, fontsize=7.5, va="center", ha="right")
+    ax.text(1.74, n - 0.35, "sets the number", color=MUTED, fontsize=7.5, ha="right", va="bottom")
+    for y in (n - 2.5, n - 5.5, n - 9.5):
+        ax.axhline(y, color=GRID, lw=0.6, zorder=0)
+    fig.savefig(OUT / "paper_remedies.png", dpi=200)
+    plt.close(fig)
+
+
+def pct_txt(v: float) -> str:
+    return f"{100 * v:.0f}%"
+
+
+def paper_caps():
+    """The short paper's Figure 2: the cap from round 1 (waves 11 and 12) against the cap from round 31."""
+    import wave12_exploratory as w12x
+    import wave12_results as w12
+
+    c = w12.single("sonnet55", "w11-cap174", w12.W11) + w12.single("sonnet55", "w11-cap174")
+    d = w12.single("sonnet55", "w12-cap174-from31")
+    y = np.mean([p.index(x)[:100] for x in w12x.sonnet_baseline()], axis=0)
+    cap = (1.74 - 1.4729) / (1.925 - 1.4729)
+    n_held = sum(w12.held(x) for x in c)
+    fig, axes = plt.subplots(1, 2, figsize=(8.6, 3.2), layout="constrained", sharey=True)
+    t = np.arange(1, 101)
+    for ax, xs, color, title in (
+        (axes[0], c, SERIES[1], f"Cap from round 1: {len(c)} games, {n_held} held the cap"),
+        (axes[1], d, SERIES[2], f"Cap from round 31: {len(d)} games, none held the cap"),
+    ):
+        ax.axhline(0, color=AXIS, lw=1, zorder=0)
+        ax.axhline(cap, color=GRID, lw=1, ls=(0, (3, 3)), zorder=0)
+        for x in xs:
+            ax.plot(t, p.index(x)[:100], color=color, lw=0.8, alpha=0.45, zorder=2)
+        ax.plot(t, y, color=MUTED, lw=1.8, zorder=3)
+        ax.set_title(title, fontsize=8.5, color=INK, loc="left")
+        ax.set_xlim(1, 100)
+        ax.set_ylim(-0.1, 1.0)
+        ax.set_xlabel("Round")
+        ax.yaxis.grid(True, color=GRID, lw=0.6)
+        ax.set_axisbelow(True)
+    axes[1].axvline(31, color=AXIS, lw=1, ls=(0, (2, 2)), zorder=0)
+    axes[0].text(60, cap + 0.03, "the cap, 1.74", color=INK2, fontsize=7.5)
+    axes[0].text(16, 0.86, "baseline mean (20 games)", color=INK2, fontsize=7.5)
+    axes[0].set_ylabel("Market index, Sonnet 5.5")
+    fig.savefig(OUT / "paper_caps.png", dpi=200)
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     forced_cut_schematic()
     models_baseline()
@@ -809,4 +946,6 @@ if __name__ == "__main__":
     wave10_continued()
     wave11_caps()
     wave12_limit_cap()
-    print("wrote the fourteen figures in out/")
+    paper_remedies()
+    paper_caps()
+    print("wrote the sixteen figures in out/")

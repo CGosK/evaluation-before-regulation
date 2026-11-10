@@ -60,7 +60,7 @@ Start with [`FOLLOWUP_NOTE.md`](FOLLOWUP_NOTE.md), which states the findings and
 | `PAPER_REVISED.md`, `.pdf`, `build_revised.py` | Wording revision after the review. The build uses the sprint's own build and number checker (81 of 81 checks pass) |
 | `FOLLOWUP_NOTE.md` | The main write-up of waves 1–11: the findings first, then the evidence by question |
 | `FOLLOWUP_NOTE.pdf` | The same, as a PDF, built by `build_note.py` |
-| `build_note.py` | Builds the note's PDF, after `check_followup.py` passes |
+| `build_note.py` | Builds the note's PDF, or the short paper's, after `check_followup.py` passes |
 | `CLAIMS_STATUS.md` | Each of the paper's claims, marked as holding, narrowed or not retested, with the wave that decides it |
 | `duopoly_followup.py` | The follow-up arms of both waves, as patches on `experiments_synthetic/common.py` |
 | `run_followup.py` | Wave 1: runs 10 games per arm through `succession/prevention45.py`'s runner |
@@ -157,6 +157,8 @@ Start with [`FOLLOWUP_NOTE.md`](FOLLOWUP_NOTE.md), which states the findings and
 | `out/wave10_continued.png` | Wave 10: the mean index by round over 200 rounds, and each game before and after round 100 |
 | `out/wave11_caps.png` | Wave 11: each game under the limit and the cap, and each Sonnet cap game by round |
 | `out/wave12_limit_cap.png` | Wave 12: each game by arm, and each game under the cap from round 31 by round |
+| `PAPER_DEFERENCE.md`, `PAPER_DEFERENCE.pdf` | A short paper on the main finding: remedies work only as far as the model defers to the platform's number. Its numbers are checked by `check_followup.py`, and `build_note.py PAPER_DEFERENCE` builds the PDF |
+| `out/paper_remedies.png`, `out/paper_caps.png` | The short paper's two figures |
 
 ## Wave 1: the three arms
 
@@ -1514,14 +1516,15 @@ uv run --extra analysis python followup/wave7_results.py
 uv run --extra analysis python followup/wave8_results.py
 ```
 
-**The figures and the note's PDF.** These need no calls. The figures read the waves' `out/*.json` and saved games, and the PDF build checks the note's numbers first.
+**The figures, the note's PDF and the short paper's.** These need no calls. The figures read the waves' `out/*.json` and saved games, and the PDF build checks the note's numbers first.
 
 ```bash
 uv run --extra analysis python followup/figures_followup.py
 uv run --extra analysis --with markdown --with playwright --with pypdf python followup/build_note.py
+uv run --extra analysis --with markdown --with playwright --with pypdf python followup/build_note.py PAPER_DEFERENCE
 ```
 
-**Checking the note's numbers.** This needs no calls. Every number in the note and the claims page that comes from a result is checked, except counts read by hand from the agents' notes.
+**Checking the note's numbers.** This needs no calls. Every number in the note, the claims page and the short paper that comes from a result is checked, except counts read by hand from the agents' notes.
 
 ```bash
 uv run --extra analysis python followup/check_followup.py

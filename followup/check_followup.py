@@ -1,5 +1,5 @@
 """
-Checks the numbers in FOLLOWUP_NOTE.md and CLAIMS_STATUS.md against the follow-up's saved outputs (out/*.json),
+Checks the numbers in FOLLOWUP_NOTE.md, CLAIMS_STATUS.md and PAPER_DEFERENCE.md against the follow-up's saved outputs (out/*.json),
 in the style of theory/check_paper.py. Each check formats a value the way the docs print it and looks for that
 exact string. Numbers that no output file stores are recomputed here from the saved games. A permutation
 p-value recomputed here is checked within its sampling error, not to the digit.
@@ -28,8 +28,9 @@ from bandit import benchmarks  # noqa: E402
 benchmarks_pn, benchmarks_pm = (float(v) for v in benchmarks(2))
 NOTE = (HERE / "FOLLOWUP_NOTE.md").read_text().replace("\n", " ")
 CLAIMS = (HERE / "CLAIMS_STATUS.md").read_text().replace("\n", " ")
-DOCS = {"note": NOTE, "claims": CLAIMS}
-results, matched = [], {"note": [], "claims": []}
+PAPER = (HERE / "PAPER_DEFERENCE.md").read_text().replace("\n", " ")
+DOCS = {"note": NOTE, "claims": CLAIMS, "paper": PAPER}
+results, matched = [], {"note": [], "claims": [], "paper": []}
 
 
 def f(x: float, d: int = 2, plus: bool = False) -> str:
@@ -1111,6 +1112,231 @@ check(
     "claims",
 )
 
+
+# ---------------------------------------------------------------- PAPER_DEFERENCE.md (the short paper)
+PP = "paper"
+ob, oi = sb["opus55"]["baseline"], sb["opus55"]["brinfo"]
+sbb, si = sb["sonnet55"]["baseline"], sb["sonnet55"]["brinfo"]
+d_h, d_s, d_o = (
+    dfr["brinfo"]["within_1pct_of_shown"],
+    si["deference"]["within_1pct_of_shown"],
+    oi["deference"]["within_1pct_of_shown"],
+)
+check(
+    "Paper abstract: information",
+    f"On Claude Opus 5.5 it had no detectable effect ({f(oi['index_51_100'])} against {f(ob['index_51_100'])} on an index",
+    PP,
+)
+check(
+    "Paper abstract: Sonnet",
+    f"on Sonnet 5.5 it helped partly ({f(si['index_51_100'])} against {f(sbb['index_51_100'])})",
+    PP,
+)
+check(
+    "Paper abstract: deference",
+    f"Haiku 4.5 sets the number it is shown in {pc(d_h)} of firm-rounds, and one biased 10% too high in {pc(dfr['brinfo_bias']['within_1pct_of_shown'])}. Opus sets it in {pc(d_o)}.",
+    PP,
+)
+check(
+    "Paper abstract: limit and estimate",
+    f"took Opus to {f(nt['primary_index'])}. Called an estimate, it took prices only to {f(r7['primary_index'])}.",
+    PP,
+)
+check(
+    "Paper abstract: mixed",
+    f"The limit took Sonnet's own markets only partway ({f(A11['index_51_100'])}). Next to Opus, every market ended competitive ({f(P1['A2_index'])})",
+    PP,
+)
+pool12 = CAP12["pooled_with_wave11"]
+check("Paper abstract: cap", f"holding {pool12['held_cap']} of {pool12['games']} at the cap", PP)
+check_true(
+    "Paper: Nash and monopoly prices",
+    f"The one-shot Nash price is {benchmarks_pn:.3f} and the joint-monopoly price {benchmarks_pm:.3f}."
+    in PAPER,
+)
+matched[PP] += [f"{benchmarks_pn:.3f}", f"{benchmarks_pm:.3f}"]
+h55b = bias[("haiku55", "baseline")]
+check(
+    "Paper: screen",
+    f"Opus and Sonnet collude on their own ({f(r3['baseline']['index_51_100'])} and {f(sbb['index_51_100'])}), and Haiku 5.5 competes ({f(h55b['index_51_100'])})",
+    PP,
+)
+check("Paper: limit line", "(never below the competitive price, 1.47)", PP)
+check(
+    "Paper: cap line", "Every seller has the same limit; a price above it is replaced by 1.74.", PP
+)
+check(
+    "Paper §3: Haiku 4.5",
+    f"It took Haiku 4.5 from {f(paper['baseline']['index_51_100'])} to {f(paper['brinfo']['index_51_100'])} in the sprint paper.",
+    PP,
+)
+lo, hi = oi["effect_ci"]
+check(
+    "Paper §3: Opus",
+    f"On Opus 5.5 the index was {f(oi['index_51_100'])} against a baseline of {f(ob['index_51_100'])} ({f(oi['effect'])} [{f(lo)}, {f(hi)}], p = {oi['p_holm']:.2f})",
+    PP,
+)
+lo, hi = si["effect_ci"]
+check(
+    "Paper §3: Sonnet",
+    f"on Sonnet 5.5 it was {f(si['index_51_100'])} against {f(sbb['index_51_100'])} ({f(si['effect'])} [{f(lo)}, {f(hi)}], p = {si['p_holm']:.3f})",
+    PP,
+)
+check(
+    "Paper §3: forced Nash",
+    f"took Haiku 4.5 to {f(row1['forced10']['index_51_100'])} and Opus only to {f(r3['forced10']['index_51_100'])}",
+    PP,
+)
+check(
+    "Paper §3: set rates",
+    f"Haiku 4.5 set the number in {pc(d_h)} of firm-rounds, Sonnet in {pc(d_s)} and Opus in {pc(d_o)}.",
+    PP,
+)
+check(
+    "Paper §3: Opus notes",
+    f"its notes mention it in {pc(w3j['notes']['opus55']['share_mentioning'], 1)} of firm-rounds",
+    PP,
+)
+check(
+    "Paper §3: limit on Opus",
+    f"took Opus to {f(nt['primary_index'])}, and Opus set it in {pc(ex6['follow_no_threat_11_99']['within_1pct'])} of firm-rounds",
+    PP,
+)
+check(
+    "Paper §3: limit on Sonnet",
+    f"at {f(A11['index_51_100'])} against {f(SB['pooled_index'])} (p = {f(A11['p_holm'], 3)}), with Sonnet setting it in {pc(w11['secondary']['A_follow_11_99'])}",
+    PP,
+)
+check(
+    "Paper §3: placebo",
+    f"lands within 1% of its best response {pc(pl['best_response_shown']['below 0.1']['share_within_1pct'])} of the time with the number shown and {pc(pl['no_number']['below 0.1']['share_within_1pct'])} without it",
+    PP,
+)
+check(
+    "Paper §4: +10%",
+    f"set it in {pc(dfr['brinfo_bias']['within_1pct_of_shown'])} of firm-rounds and never set the true one. Obedience predicts a market at {f(w1['obedient_index_for_bias'])}, and all 10 games settled at {f(min(bias_games))}–{f(max(bias_games))}",
+    PP,
+)
+check(
+    "Paper §4: −10%",
+    f"the number was set in {pc(down['deference']['within_1pct_of_shown'])} of firm-rounds, and profit fell {pc(-down['profit_change_pct'] / 100)}",
+    PP,
+)
+check(
+    "Paper §4: enforcers and Haiku 5.5",
+    f"still set the inflated number in {pc(enf['deference']['within_1pct_of_shown'])} of firm-rounds. Haiku 5.5, which competes on its own, set it in {pc(h55['deference']['within_1pct_of_shown'])}.",
+    PP,
+)
+check("Paper Table 1 baseline", f"The baseline is {f(r3['baseline']['index_51_100'])}.", PP)
+check(
+    "Paper Table 1 estimate",
+    f"| Called an estimate | {f(r7['primary_index'])} | {f(et['primary_index'])} |",
+    PP,
+)
+check(
+    "Paper Table 1 limit",
+    f"| Called a limit | {f(nt['primary_index'])} | {f(lim['primary_index'])} |",
+    PP,
+)
+check(
+    "Paper §4: estimate and 200 rounds",
+    f"the same number took Opus only partway, to {f(r7['primary_index'])}, and in games continued to 200 rounds it settled at {f(P10['estimate_index_151_200'])}",
+    PP,
+)
+check("Paper §4: lifted", f"the index rose to {f(li['primary_index'])}", PP)
+check(
+    "Paper §4: diagnosis",
+    f"Opus's response, {f(dg['opus55']['punishment'])}, sits inside the non-strategic band",
+    PP,
+)
+check_true(
+    "Paper §4: inside the band",
+    dg["opus55"]["punishment"] > load("null_band_scale.json")["opus55"]["base_scale"]["null_lo"],
+)
+lo, hi = P1["difference_ci"]
+check(
+    "Paper §5: mixed",
+    f"With no remedy, the market ended at {f(P1['mixed_index'])}. Under the posted limit with no threat, it ended at {f(P1['A2_index'])} ({f(P1['difference'])} [{f(lo)}, {f(hi)}], p < 0.001), and no game ended above 0.05.",
+    PP,
+)
+check(
+    "Paper §5: Sonnet own",
+    f"Sonnet's own index fell to {f(so['A2'])}, against {f(so['wave11'])} under the same limit in its own markets.",
+    PP,
+)
+check(
+    "Paper §5: follow",
+    f"Sonnet set the limit in {pc(fo['sonnet55'])} of firm-rounds, against {pc(w11f)} next to another Sonnet.",
+    PP,
+)
+check(
+    "Paper §5: Sonnet notes",
+    f"Sonnet kept the limit in {sk} of its 30 notes and set it aside in {sa}",
+    PP,
+)
+T8b = T8["5 brinfo vs opus-haiku45: market"]
+check(
+    "Paper §5: wave 8",
+    f"best-response information had no detectable effect: {f(A8['opus-haiku45-brinfo']['market_index'])} against {f(A8['opus-haiku45']['market_index'])} (p = {T8b['p_holm']:.2f})",
+    PP,
+)
+check(
+    "Paper §5: Haiku 4.5 set",
+    f"Haiku 4.5 set the number in {pc(fl8['claude-haiku-4-5']['within_1pct'])} of firm-rounds",
+    PP,
+)
+check(
+    "Paper §5: leader-follower",
+    f"the leader-follower outcome of {f(P1['leader_follower_index'])}",
+    PP,
+)
+check(
+    "Paper §6: cap index", f"a fixed, enforced cap of 1.74, an index of {f(x11['cap_index'])}", PP
+)
+check(
+    "Paper §6: wave 11",
+    f"On Sonnet the index was {f(C11['index_51_100'])} against {f(SB['pooled_index'])} (p = {f(C11['p_holm'])}), and on Haiku 5.5 it was {f(B11['index_51_100'])} against {f(HB['pooled_index'])} (p = {f(B11['p_holm'])})",
+    PP,
+)
+check(
+    "Paper §6: pooled",
+    f"{pool12['held_cap']} of {pool12['games']} held the cap to the end, and {pool12['below_0.2']} of {pool12['games']} ended below 0.2",
+    PP,
+)
+check(
+    "Paper §6: spread",
+    f"(standard deviation {f(c2['sd'])} against {f(P2['baseline_sd'])}, p < 0.001)",
+    PP,
+)
+check_true(
+    "Paper §6: the same 16 of 40 firms in each set, all blocked",
+    cs["firms_at_cap_51_100"] == 16
+    and N12["C2_cap_best"]["same_firms_each_round"]
+    and all(v["cap_best"] == 16 for v in nc["by_round"].values()),
+)
+check(
+    "Paper §6: round 30",
+    f"At round 30, these games averaged {f(r30['D'])}, the same as the baseline's.",
+    PP,
+)
+check(
+    "Paper §6: T3",
+    f"The cap held none of 20 games, against {c2['held_cap']} of 20 under the cap from round 1 (p = {f(P2['p_holm']['held_D_vs_C2'], 3)})",
+    PP,
+)
+check_true("Paper §6: all came down", all(v <= 1.74 for v in D12["their_round_31_prices"]))
+check(
+    "Paper §6: firms above",
+    f"the {D12['firms_above_cap_round_30']} firms above it at round 30 all came down to it or below in round 31",
+    PP,
+)
+check(
+    "Paper §6: T4",
+    f"to {f(d2['index'])} against {f(P2['baseline_index'])} ({f(d2['difference'])} [{f(dlo)}, {f(dhi)}], p = {f(P2['p_holm']['index_D'], 3)})",
+    PP,
+)
+check("Paper §6: rank test", f"a rank test gives {f(t4['mann_whitney_p'])}", PP)
+
 # ---------------------------------------------------------------- summary and coverage
 print(f"\n{sum(results)} of {len(results)} checks pass")
 HAND = {
@@ -1125,7 +1351,8 @@ QUOTED = [
     "in 98–99% of replays",
     "by 11.5 points",
 ]
-missing = [q for q in QUOTED if q not in NOTE]
+missing = [q for q in QUOTED if q not in NOTE] + [q for q in ("by 11.5 points",) if q not in PAPER]
+matched["paper"] += [q for q in ("by 11.5 points",) if q in PAPER]
 results += [not missing]
 matched["note"] += [q for q in QUOTED if q in NOTE]
 print(

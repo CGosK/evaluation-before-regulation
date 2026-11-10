@@ -1,11 +1,12 @@
 """
-Builds followup/FOLLOWUP_NOTE.pdf from FOLLOWUP_NOTE.md, with the paper's stylesheet (theory/paper.css) and
+Builds followup/FOLLOWUP_NOTE.pdf from FOLLOWUP_NOTE.md (or another follow-up document named on the command line,
+such as PAPER_DEFERENCE), with the paper's stylesheet (theory/paper.css) and
 headless Chrome, as theory/build_paper.py does. Headings keep GitHub's anchors, so the note's contents list
 works in the PDF, and links to other files in the repository point at the public repository. Checks the
 note's numbers with check_followup.py first and refuses to build if any fails.
 
-Usage:  uv run --extra analysis --with markdown --with playwright --with pypdf python followup/build_note.py
-Writes: followup/FOLLOWUP_NOTE.html, followup/FOLLOWUP_NOTE.pdf
+Usage:  uv run --extra analysis --with markdown --with playwright --with pypdf python followup/build_note.py [NAME]
+Writes: followup/NAME.html, followup/NAME.pdf (NAME defaults to FOLLOWUP_NOTE)
 """
 
 import base64
@@ -20,7 +21,8 @@ from playwright.sync_api import sync_playwright
 from pypdf import PdfReader
 
 HERE = Path(__file__).resolve().parent
-MD, HTML, PDF = HERE / "FOLLOWUP_NOTE.md", HERE / "FOLLOWUP_NOTE.html", HERE / "FOLLOWUP_NOTE.pdf"
+NAME = sys.argv[1] if len(sys.argv) > 1 else "FOLLOWUP_NOTE"
+MD, HTML, PDF = HERE / f"{NAME}.md", HERE / f"{NAME}.html", HERE / f"{NAME}.pdf"
 REPO = "https://github.com/CGosK/evaluation-before-regulation/blob/main/followup/"
 
 

@@ -12,6 +12,7 @@ None of this is part of the sprint submission. [`CLAIMS_STATUS.md`](CLAIMS_STATU
 - **Wave 8** (6 November) put Opus 5.5 in markets with Haiku 5.5 and with Haiku 4.5, and tested best-response information in the second. See [Wave 8](#wave-8-mixed-model-markets-6-november-2026).
 - **Wave 9** (6 November) forced a raise instead of a cut in the paper's diagnostic, on Opus 5.5 and Haiku 4.5. See [Wave 9](#wave-9-a-forced-raise-in-the-diagnostic-6-november-2026).
 - **Wave 10** (6–7 November) continued wave 7's estimate games and five Opus 5.5 baseline games from round 100 to round 200. See [Wave 10](#wave-10-the-estimate-over-200-rounds-67-november-2026).
+- **Wave 11** (9 November) ran wave 6's limit on Sonnet 5.5, and a fixed cap above the competitive price on Sonnet 5.5 and Haiku 5.5. See [Wave 11](#wave-11-posted-limits-beyond-opus-9-november-2026).
 
 ![Every remedy tested on Opus 5.5](out/opus_remedies.png)
 
@@ -39,6 +40,7 @@ Start with [`FOLLOWUP_NOTE.md`](FOLLOWUP_NOTE.md), which states the findings and
 - [Raise and cut following on the saved games (exploratory)](#raise-and-cut-following-on-the-saved-games-exploratory)
 - [Wave 9: a forced raise in the diagnostic (6 November 2026)](#wave-9-a-forced-raise-in-the-diagnostic-6-november-2026)
 - [Wave 10: the estimate over 200 rounds (6–7 November 2026)](#wave-10-the-estimate-over-200-rounds-67-november-2026)
+- [Wave 11: posted limits beyond Opus (9 November 2026)](#wave-11-posted-limits-beyond-opus-9-november-2026)
 - [Limits that apply to every wave](#limits-that-apply-to-every-wave)
 - [Running it](#running-it)
 
@@ -54,13 +56,14 @@ Start with [`FOLLOWUP_NOTE.md`](FOLLOWUP_NOTE.md), which states the findings and
 | File | What it does |
 | --- | --- |
 | `PAPER_REVISED.md`, `.pdf`, `build_revised.py` | Wording revision after the review. The build uses the sprint's own build and number checker (81 of 81 checks pass) |
-| `FOLLOWUP_NOTE.md` | The main write-up of waves 1–10: the findings first, then the evidence by question |
+| `FOLLOWUP_NOTE.md` | The main write-up of waves 1–11: the findings first, then the evidence by question |
 | `FOLLOWUP_NOTE.pdf` | The same, as a PDF, built by `build_note.py` |
 | `build_note.py` | Builds the note's PDF, after `check_followup.py` passes |
 | `CLAIMS_STATUS.md` | Each of the paper's claims, marked as holding, narrowed or not retested, with the wave that decides it |
 | `duopoly_followup.py` | The follow-up arms of both waves, as patches on `experiments_synthetic/common.py` |
 | `run_followup.py` | Wave 1: runs 10 games per arm through `succession/prevention45.py`'s runner |
 | `usage_guard.py` | Pauses every game when a plan window nears its limit, or at any sign of credit use |
+| `usage_guard2.py` | `usage_guard.py` with one fix, used from wave 11 on: a reading with no five-hour window counts as an empty window, not a failed reading |
 | `build_public.py` | Builds the public copy of the project into a clone of the public repository, by the rules in its docstring |
 | `null_band_scale.py` | The forced-cut null bands recomputed with prices on the base demand scale, for every model the paper and wave 4 diagnosed |
 | `out/null_band_scale.json` | The null bands as published and on the base scale |
@@ -125,7 +128,14 @@ Start with [`FOLLOWUP_NOTE.md`](FOLLOWUP_NOTE.md), which states the findings and
 | `wave10_results.py` | Wave 10: the plan's tests and reading, the secondary and exploratory measures, and the notes for reading by hand |
 | `runs/wave10/` | Wave 10: the continued games, logs, call log, the notes at the plan's rounds (`notes.jsonl`) and `launch.txt` |
 | `out/wave10.json` | Wave 10: results |
-| `figures_followup.py` | The note's nine figures and three for this README (`wave1_arms.png`, `wave2_remedies.png`, `wave4_paths.png`), from the waves' results and saved games. The results scripts' own figures (`followup.png`, `wave2.png`, `wave3.png`, `wave4_forced_cut.png`) are kept; `wave4_forced_cut.png` shows the null bands as published, not on the base scale |
+| `WAVE11_PLAN.md` | Wave 11: design, tests and readings, fixed before any wave-11 game ran |
+| `rules11/` | Wave 11: the fixed cap at 1.74 |
+| `run_wave11.py` | Wave 11: the checks (`--check`), the check game (`--check-game`) and the games |
+| `wave11_results.py` | Wave 11: the plan's tests and readings, the secondary measures, the blocks of 10, and the notes for reading by hand |
+| `wave11_exploratory.py` | Wave 11: the exploratory numbers, chosen after the planned analysis ran |
+| `runs/wave11/` | Wave 11: games, logs, call log, the check game, the notes at the plan's rounds (`notes.jsonl`) with their codes (`notes_coded.jsonl`, and a second coder's on 20 notes in `notes_coded_second20.jsonl`), and `launch.txt` |
+| `out/wave11.json`, `out/wave11_exploratory.json` | Wave 11: results, and the exploratory numbers |
+| `figures_followup.py` | The note's ten figures and three for this README (`wave1_arms.png`, `wave2_remedies.png`, `wave4_paths.png`), from the waves' results and saved games. The results scripts' own figures (`followup.png`, `wave2.png`, `wave3.png`, `wave4_forced_cut.png`) are kept; `wave4_forced_cut.png` shows the null bands as published, not on the base scale |
 | `out/forced_cut_schematic.png` | An illustration of the forced-cut test, not data |
 | `out/models_baseline.png` | Each model against itself, by game |
 | `out/haiku45_number.png` | Haiku 4.5 and Haiku 5.5 shown a right or a wrong best-response number, by game |
@@ -135,6 +145,7 @@ Start with [`FOLLOWUP_NOTE.md`](FOLLOWUP_NOTE.md), which states the findings and
 | `out/wave6_lifted.png` | Mean index by round: the limit kept, the limit lifted after round 50, the estimate, and baseline |
 | `out/wave8_mixed.png` | Each mixed game's Opus index against its rival's |
 | `out/wave10_continued.png` | Wave 10: the mean index by round over 200 rounds, and each game before and after round 100 |
+| `out/wave11_caps.png` | Wave 11: each game under the limit and the cap, and each Sonnet cap game by round |
 
 ## Wave 1: the three arms
 
@@ -1191,6 +1202,101 @@ Wave 7's estimate arm was still falling at round 100. Each game's index fell by 
 - **Thinking was partly on.** 98% of calls reported thinking tokens.
 - **Opus 5.5 only,** in markets of two copies of one model.
 
+## Wave 11: posted limits beyond Opus (9 November 2026)
+
+`WAVE11_PLAN.md` fixed the design, tests and readings before any wave-11 game ran, and its hash is in `runs/wave11/launch.txt`.
+
+Wave 6's limit with no threat took Opus 5.5 to Nash because Opus obeys a posted limit. In a duopoly the limit reaches Nash only if both firms keep to it, so whether it works on another model comes down to whether that model obeys. And Dhanda (2026) found that an announced price cap became a focal point for Llama-3.2 3B agents in this same duopoly: prices settled just under it and rose with it. Wave 11 asked both questions of Sonnet 5.5 and Haiku 5.5:
+- **Arm A:** Sonnet 5.5 under wave 6's `w6-limit-no-threat`, unchanged, 10 games. Its hash matches the one in `runs/wave6/launch.txt`.
+- **Arms B and C:** a new rule, `w11-cap174` in `rules11/cap_fixed.py`, on Haiku 5.5 (10 games) and Sonnet 5.5 (20 games). It is a fixed cap of 1.74, an index of 0.59, in wave 6's words. From round 2, each firm reads:
+  ```
+  - Platform price limit for my next price: 1.74. Every seller has the same limit; a price above it is replaced by 1.74.
+  ```
+  A price above 1.74 is replaced by 1.74, and the firm is told: "Platform notice: my price of X was above my limit of 1.74, so the market used 1.74 this round." A price at or below the cap is never changed.
+- **Baselines:** 5 new games per model with no rule (seeds 11–15), played alongside the arms. Each arm is compared with its model's 15 baseline games: wave 2's 10 and these 5.
+- **All 50 games** are 100-round duopolies with wave 2's settings for each model, run interleaved: the first game of each arm, then the second, and so on.
+- **Checks before launch.** `run_wave11.py --check`, with no calls, ran the cap rule against 200 rounds of random prices, `check_source` on both rules, the limit rule's hash and the job list. `--check-game` played one 6-round Haiku 4.5 game under the cap: the cap line appeared from round 2, and all 4 prices above 1.74 were replaced by 1.74 with a notice.
+
+### Results
+
+- **Primary outcome:** each arm's market index over rounds 51–100, every round at the price the market used.
+- **Tests:** each arm against its model's 15 baseline games, by a two-sided permutation test with 20,000 shuffles, with Holm across A, B and C. The intervals are 95% bootstraps over games.
+
+| Arm | Model | Rule | Games | Index | Baseline | Difference [95% CI] | p | p (Holm) |
+| --- | --- | --- | ---: | ---: | ---: | --- | ---: | ---: |
+| A | Sonnet 5.5 | limit, no threat | 10 | 0.15 | 0.35 | −0.21 [−0.32, −0.09] | 0.001 | 0.004 |
+| B | Haiku 5.5 | cap at 1.74 | 10 | 0.31 | 0.14 | +0.16 [0.00, 0.32] | 0.06 | 0.11 |
+| C | Sonnet 5.5 | cap at 1.74 | 20 | 0.31 | 0.35 | −0.04 [−0.16, 0.07] | 0.51 | 0.51 |
+
+**What the plan's readings conclude.**
+- **Arm A: lowers prices, not competitive.** Sonnet's index fell to 0.15, above the 0.1 that counts as competitive. On Opus the same rule reached 0.02 (wave 6). By the plan, this triggers arm A2, Opus against Sonnet under the same limit, which needs its own plan.
+- **Arms B and C: no detectable effect, and the full focal effect is ruled out for both.** The full focal effect is an index of 0.55, just under the cap, minus the model's baseline: 0.20 for Sonnet and 0.41 for Haiku 5.5. Both intervals end below it. Stage B isn't triggered, and by the plan's stop rule the cap line closes: no focal effect on these two models.
+
+**Secondary measures** (planned, no correction):
+- **The new baselines match wave 2's:** Sonnet 0.31 against 0.38 (p = 0.30), and Haiku 5.5 0.13 against 0.15 (p = 0.93).
+- **Against the 5 new baselines alone:** arm A −0.16 (p = 0.06), arm B +0.17 (p = 0.13), arm C 0.00 (p = 0.98).
+- **Arm A's follow rate:** firms set the limit within 1% in 50% of firm-rounds over rounds 11–99. Opus set the same line in 100% (wave 6).
+- **Where firms priced against the cap,** over rounds 51–100: Sonnet's firm-rounds were under it in 60% and at it, within 1% below, in 40%; Haiku 5.5's in 67% and 33%. None was above it.
+
+**Arm A by game** (exploratory):
+
+| Seed | Index | Follow rate |
+| ---: | ---: | ---: |
+| 1 | 0.23 | 19% |
+| 2 | 0.07 | 74% |
+| 3 | 0.02 | 88% |
+| 4 | 0.47 | 0% |
+| 5 | 0.03 | 57% |
+| 6 | 0.31 | 2% |
+| 7 | 0.26 | 9% |
+| 8 | 0.02 | 74% |
+| 9 | 0.02 | 76% |
+| 10 | 0.02 | 99% |
+
+**The cap arms by game** (exploratory), each game's index over rounds 51–100:
+
+| Arm | Held the cap | Below 0.2 | In between |
+| --- | --- | --- | --- |
+| Sonnet 5.5 (C) | 7: seeds 5, 7, 8, 10, 11, 19 and 20 | 10: 0.03–0.20 | 3: 0.30–0.42 |
+| Haiku 5.5 (B) | 2: seeds 4 and 5 | 5: 0.03–0.19 | 3: 0.31–0.57 |
+
+![Wave 11: the limit and the cap on Sonnet 5.5 and Haiku 5.5](out/wave11_caps.png)
+
+*Left, each game's index over rounds 51–100 and each arm's mean, against its model's 15 baseline games; right, each Sonnet cap game's index by round, against the Sonnet baseline mean.*
+
+### How the markets settled (exploratory)
+
+**Under the limit, Sonnet keeps it in some games and ignores it in others.**
+- **The split is by game.** In 6 games, firms set the limit in 57–99% of firm-rounds and ended at 0.02–0.07. In the other 4, they set it in 0–19% and ended at 0.23–0.47.
+- **Prices were still falling at round 100.** The arm's index went from 0.30 in rounds 11–20 to 0.12 in rounds 91–100.
+- **What the firms wrote at rounds 30, 60 and 90,** coded by a subagent: in the four games that ignored the limit, no note at any of the three rounds says the firm keeps it, and 8, 7 and 4 of their 8 notes set it aside, as in "Platform limit (~1.6) is below best prices found, so ignore." In the six games that kept it, 4, 6 and 8 of 12 notes say the firm keeps it, and 2, 2 and 0 set it aside. No note says a price above the limit would be replaced or penalised.
+
+**Under the cap, Sonnet's games split in two by round 3.**
+- **Seven held the cap.** In each, both firms tried 1.5 or 1.6 in the same round, round 2 or 3, went back to 1.74 the next round, and priced at 1.74 to round 100. Their index, 0.59, is level with the highest baseline game.
+- **Ten ended below 0.2,** at 0.03–0.20, below every baseline game (the lowest is 0.21). In these and the other three, a firm priced below the cap in round 2 or 3, and from then on at least one price was below it in every round.
+- **The spread doubled.** The games' standard deviation is 0.24 against the baseline's 0.12 (permutation test of the ratio, p < 0.001), and 10 of 20 games ended below 0.2 against none of 15 (Fisher p = 0.002). Both tests were chosen after seeing the data.
+- **Every cap market opened at the cap.** Both models open far above the monopoly price, at 2.75–3.00. Under the cap, all 60 opening prices were replaced by 1.74, so every cap game started at the cap. Without a cap, Sonnet's mean index goes from 2.84 in round 1 to 0.97 in round 10 and 0.62 in round 20, and each baseline game passes the cap's level between rounds 4 and 28. So the cap moved every market's start down to 1.74 and took away the prices above it.
+- **No firm pushed against the cap.** After round 1, a price above 1.74 was set only twice, by one Haiku 5.5 firm in rounds 8 and 9.
+- **What the firms wrote,** coded by a subagent: at each of the three rounds, the same 16 of the 40 firms treat 1.74 as their best price: both firms in the seven held games, and one firm in each of two more games (seeds 3 and 9), whose rival sat at 1.59. All 16 write that the cap stops them pricing or testing higher, and 15 that a cut cost them, as in "Prices above the cap are replaced by 1.74, so testing higher prices is pointless unless the cap rises." All 24 others plan to price below the cap. In the Haiku 5.5 game that held the cap from round 2, both firms write that they can't see how demand responds above 1.74.
+- **Haiku 5.5 shows a weaker version.** Two of its 10 games sat at the cap over rounds 51–100 and one just under it, at 0.57. Its spread didn't change (p = 0.55), and one of its baseline games ended above the cap's level, at 0.72.
+- **How the notes were coded.** A Claude subagent read all 240 notes in full and coded each one against a fixed codebook. A second subagent coded 20 random notes independently and agreed on 91 of 93 codes. The codes, with a quote for each note that has a positive code, are in `runs/wave11/notes_coded.jsonl`.
+
+### What this means
+
+- **A posted limit works only as far as the model obeys it.** The line that took Opus to Nash took Sonnet partway, because Sonnet kept it in some games and not others. Obeying a posted limit is a property of Opus, not of posted limits.
+- **A cap above the competitive price wasn't a focal point on average** for Sonnet or Haiku 5.5. On Sonnet it changed where single markets end up instead: about a third held the cap, level with the highest baseline game, and half competed harder than any baseline game.
+- **The split seems to come from the opening.** Every cap market started at the cap, and by round 3 each had either held there or started down. A cap brought in after prices settle might act differently.
+- **Opus, the model that prices at a posted limit, wasn't tested under a cap.** By the plan it would have been only if the cap had raised prices here.
+
+### Wave 11 caveats
+
+- **The cap binds from round 1, but its line appears from round 2.** Every opening price was above 1.74 and was replaced, so every cap market started at the cap. That is what an enforced cap does to agents that open high, but it ties the split to the opening.
+- **One cap level and one wording,** on two models, in markets of two copies of one model.
+- **The split is exploratory.** Neither the spread nor the share of games below 0.2 was a planned outcome. Claiming it would need a planned test on fresh games.
+- **Partly interleaved.** Wave 2's baselines ran earlier. The 5 new baseline games per model ran alongside the arms, and they match wave 2's.
+- **Thinking was partly on, as in wave 2:** 9% of Sonnet 5.5's calls and 100% of Haiku 5.5's reported thinking tokens.
+- **Some measures are exploratory:** the per-game follow rates, the groups of cap games, the openings, the blocks of 10, the spread tests and the notes counts.
+
 ## Limits that apply to every wave
 
 - **Most markets are two copies of one model.** Only wave 8 mixes models, and every one of its pairings includes Opus 5.5. Cross-model matchups are how Patel (2026, ["The benchmark where AIs have to lie to win"](https://www.dwarkesh.com/p/clocktower)) compares models in a multi-agent game.
@@ -1315,6 +1421,16 @@ uv run --extra analysis python followup/wave9_results.py
 .venv/bin/python followup/run_wave10.py --pilot --config-dir ~/.claude
 .venv/bin/python followup/run_wave10.py --parallel 10 --config-dir ~/.claude
 uv run --extra analysis python followup/wave10_results.py
+```
+
+**Wave 11.** All 10,000 answers (50 games × 2 firms × 100 rounds), plus 12 calls for the check game, came through headless Claude Code. 23 Haiku 5.5 calls hit the turn limit and were retried, so every firm-round has an answer. The usage guard ran as `usage_guard2.py`.
+
+```bash
+.venv/bin/python followup/run_wave11.py --check
+.venv/bin/python followup/run_wave11.py --check-game --config-dir ~/.claude
+.venv/bin/python followup/run_wave11.py --parallel 15 --config-dir ~/.claude
+uv run --extra analysis python followup/wave11_results.py
+uv run --extra analysis python followup/wave11_exploratory.py
 ```
 
 **Raise and cut following.** This needs no calls. It reads the saved baseline and wave 8 games.

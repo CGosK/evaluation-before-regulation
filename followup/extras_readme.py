@@ -25,9 +25,10 @@ def sources() -> dict:
         j("wave9.json"),
         j("wave10.json"),
     )
+    w11, w11x = j("wave11.json"), j("wave11_exploratory.json")
     fol, nb, exp = j("following.json"), j("null_band_scale.json"), j("exploratory.json")
     paper = [j("prevention45.json", THEORY), j("frontier_forced_cut.json", THEORY)]
-    every = [w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, fol, nb, exp, *paper]
+    every = [w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w11x, fol, nb, exp, *paper]
     return {
         "*": [],
         "Follow-up work after the sprint review": every,
@@ -46,6 +47,7 @@ def sources() -> dict:
         "Raise and cut following": [fol, w8],
         "Wave 9": [w9, fol, w4],
         "Wave 10": [w10, w7],
+        "Wave 11": [w11, w11x, w6],
         "Limits that apply": [w3],
         "Running it": [],
     }
@@ -210,7 +212,7 @@ def exact_rows() -> list:
         )
         rows.append((f"W1 deference {arm}", f"| {label} | {cell}"))
     rows += scaling_rows() + w2_rows() + w3_rows() + w4_rows() + w5_rows() + w6_rows() + w7_rows()
-    return rows + w8_rows() + following_rows() + w9_rows() + w10_rows()
+    return rows + w8_rows() + following_rows() + w9_rows() + w10_rows() + w11_rows()
 
 
 def signed_pct(x: float) -> str:
@@ -796,6 +798,53 @@ def w10_rows() -> list:
             (
                 f"W10 seed {seed}",
                 f"| {seed} | {r(i[50:100].mean())} | {r(i[90:100].mean())} | {r(i[100:110].mean())} | {r(i[150:200].mean())} |",
+            )
+        )
+    return rows
+
+
+def w11_rows() -> list:
+    w11, x = j("wave11.json"), j("wave11_exploratory.json")
+    base = {f: w11["baselines"][f]["pooled_index"] for f in ("sonnet55", "haiku55")}
+    names = {"sonnet55": "Sonnet 5.5", "haiku55": "Haiku 5.5"}
+    rules = {"w6-limit-no-threat": "limit, no threat", "w11-cap174": "cap at 1.74"}
+    rows = []
+    for arm, a in w11["arms"].items():
+        rows.append(
+            (
+                f"W11 arm {arm}",
+                (
+                    f"| {arm} | {names[a['family']]} | {rules[a['rule']]} | {a['games']} "
+                    f"| {r(a['index_51_100'])} | {r(base[a['family']])} "
+                    f"| {r(a['difference'], plus=True)} {ci(*a['difference_ci'])} "
+                    f"| {ph(a['p_raw'])} | {ph(a['p_holm'])} |"
+                ),
+            )
+        )
+    lim = x["limit"]
+    for s in sorted(lim["follow_by_game"], key=int):
+        rows.append(
+            (
+                f"W11 A seed {s}",
+                f"| {s} | {r(lim['index_by_game'][s])} | {pct(lim['follow_by_game'][s])} |",
+            )
+        )
+    for label, key, arm in (
+        ("Sonnet 5.5 (C)", "cap_sonnet", "C"),
+        ("Haiku 5.5 (B)", "cap_haiku", "B"),
+    ):
+        c = x[key]
+        vals = c["index_by_game"].values()
+        at = c["at_cap_51_100"]
+        lo = sorted(v for v in vals if v < 0.2)
+        mid = c["between_index"]
+        rows.append(
+            (
+                f"W11 cap groups {arm}",
+                (
+                    f"| {label} | {len(at)}: seeds {', '.join(map(str, at[:-1]))} and {at[-1]} "
+                    f"| {len(lo)}: {r(lo[0])}–{r(lo[-1])} | {len(mid)}: {r(mid[0])}–{r(mid[-1])} |"
+                ),
             )
         )
     return rows

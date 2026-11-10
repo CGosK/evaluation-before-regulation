@@ -612,7 +612,13 @@ mat = [
     ("Hidden prices, best-price trials", "wave 5 search", "–", "–", f(hid["primary_index"])),
     ("Best-response price limit", "wave 5 search", "–", "–", f(lim["primary_index"])),
     ("The limit, lifted after round 50", "wave 6", "–", "–", f(li["primary_index"])),
-    ("The limit, no threat", "wave 6", "–", "–", f(nt["primary_index"])),
+    (
+        "The limit, no threat",
+        "wave 6",
+        "–",
+        f"{f(load('wave11.json')['arms']['A']['index_51_100'])} (wave 11)",
+        f(nt["primary_index"]),
+    ),
     ("The number as an estimate, with the threat", "wave 6", "–", "–", f(et["primary_index"])),
     ("The number as an estimate, no threat", "wave 7", "–", "–", f(r7["primary_index"])),
 ]
@@ -684,7 +690,177 @@ check(
     f"in {pc(S10['follow_101_199'])} of firm-rounds over rounds 101–199 against {pc(S10['follow_11_99'])} over rounds 11–99, but the rise isn't significant (p = {ex.r(S10['p'])})",
 )
 
+# ---------------------------------------------------------------- wave 11 (wave11.json, wave11_exploratory.json)
+w11, x11 = load("wave11.json"), load("wave11_exploratory.json")
+A11, B11, C11 = (w11["arms"][a] for a in "ABC")
+SB, HB = w11["baselines"]["sonnet55"], w11["baselines"]["haiku55"]
+lim11, cs, ch = x11["limit"], x11["cap_sonnet"], x11["cap_haiku"]
+check_true(
+    "W11 readings",
+    A11["reading"] == "lowers, not competitive"
+    and all(
+        r["reading"] == "no detectable effect; rules out the full focal effect" for r in (B11, C11)
+    ),
+)
+check_true(
+    "W11 triggers", w11["triggers"] == {"stage_B": False, "stage_B_because": [], "arm_A2": True}
+)
+check(
+    "W11 new Sonnet baselines",
+    f"which match them ({f(SB['wave11_index'])} against {f(SB['wave2_index'])}, p = {f(SB['new_against_old_p'])})",
+)
+base_high = sum(v > 0.3 for v in SB["wave11_by_game"]) + round(
+    10
+    * next(
+        r["share_above_0.3"]
+        for r in load("wave2.json")["stage_b"]["sonnet55"]
+        if r["arm"] == "baseline"
+    )
+)
+check(
+    "W11 limit table baseline",
+    f"| Baseline (15 games) | {f(SB['pooled_index'])} | {base_high} of 15 | |",
+)
+check(
+    "W11 limit table arm",
+    f"| Limit, no threat | {f(A11['index_51_100'])} | {A11['games_above_0.3']} of 10 | {f(A11['difference'])} [{f(A11['difference_ci'][0])}, {f(A11['difference_ci'][1])}], p = {f(A11['p_holm'], 3)} (Holm) |",
+)
+check("W11 limit level", f"Its index of {f(A11['index_51_100'])} is above the 0.1")
+check(
+    "W11 Opus under the same rule",
+    f"On Opus the same rule reached {f(w6j['rules']['w6-limit-no-threat']['primary_index'])} (§4.2)",
+)
+check(
+    "W11 follow",
+    f"in {pc(w11['secondary']['A_follow_11_99'])} of firm-rounds; Opus set the same line in {pc(w6j['exploratory']['follow_no_threat_11_99']['within_1pct'])}",
+)
+kf, ki, of_, oi = (
+    lim11["kept_follow"],
+    lim11["kept_index"],
+    lim11["other_follow"],
+    lim11["other_index"],
+)
+check(
+    "W11 follow by game",
+    f"In {len(lim11['kept_games'])} games, firms set the limit in {100 * kf[0]:.0f}–{pc(kf[1])} of firm-rounds and ended at {f(ki[0])}–{f(ki[1])}. "
+    f"In the other {10 - len(lim11['kept_games'])}, they set it in {100 * of_[0]:.0f}–{pc(of_[1])} and ended at {f(oi[0])}–{f(oi[1])}.",
+)
+bl = A11["blocks_10"]
+check("W11 limit blocks", f"went from {f(bl[1])} in rounds 11–20 to {f(bl[9])} in rounds 91–100")
+for label, r_, b_ in (("Sonnet 5.5", C11, SB), ("Haiku 5.5", B11, HB)):
+    lo, hi = r_["difference_ci"]
+    check(
+        f"W11 cap table {label}",
+        f"| {label} | {f(b_['pooled_index'])} | {f(r_['index_51_100'])} | {f(r_['difference'], plus=True)} [{f(lo)}, {f(hi)}] | {f(r_['p_holm'])} |",
+    )
+ff = x11["full_focal"]
+check_true("W11 full focal index is the plan's 0.55", ff["index"] == 0.55)
+check(
+    "W11 full focal",
+    f"a rise of {f(ff['sonnet55'])} for Sonnet and {f(ff['haiku55'])} for Haiku 5.5",
+)
+check_true(
+    "W11 both intervals end below the full focal effect",
+    C11["difference_ci"][1] < ff["sonnet55"] and B11["difference_ci"][1] < ff["haiku55"],
+)
+check("W11 Haiku raw p", f"(p = {f(B11['p_raw'])} before correction)")
+check_true(
+    "W11 seven held the cap, after a dip in round 2 or 3",
+    len(cs["held_cap"]) == 7
+    and {h["dip_round"] for h in cs["held_cap"]} <= {2, 3}
+    and cs["at_cap_51_100"] == sorted(h["seed"] for h in cs["held_cap"]),
+)
+check_true(
+    "W11 the other 13 priced below the cap from round 2 or 3, in every round after",
+    set(cs["others_first_below_round"]) <= {2, 3}
+    and not any(cs["others_rounds_below_after_first"]),
+)
+check_true(
+    "W11 ten below 0.2, none of the baseline",
+    cs["below_0.2"] == 10 and cs["baseline_below_0.2"] == 0,
+)
+check_true(
+    "W11 held games level with the top baseline game", f(x11["cap_index"]) == f(cs["baseline_max"])
+)
+check(
+    "W11 the cap's index", f"a fixed cap of 1.74, an index of {f(x11['cap_index'])}, in the limit"
+)
+check(
+    "W11 held games' index",
+    f"Their index, {f(x11['cap_index'])}, is level with the highest baseline game",
+)
+check("W11 baseline minimum", f"whose lowest is {f(cs['baseline_min'])}")
+check(
+    "W11 spread",
+    f"their standard deviation is {f(cs['sd'])} against the baseline's {f(cs['baseline_sd'])} (p < 0.001), and 10 of 20 ended below 0.2 against none of 15 (p = {f(cs['below_0.2_fisher_p'], 3)})",
+)
+check_true("W11 spread p below 0.001", cs["sd_p"] < 0.001)
+op = sorted(cs["opening_model_prices"] + ch["opening_model_prices"])
+check("W11 openings", f"at {op[0]:.2f}–{op[-1]:.2f}")
+check_true(
+    "W11 every opening price replaced",
+    cs["replaced_round_1"] == 40 and ch["replaced_round_1"] == 20,
+)
+fb = x11["sonnet_baseline_opening"]["first_round_below_cap_level"]
+check("W11 baseline passes the cap level", f"between rounds {fb[0]} and {fb[1]}")
+check_true(
+    "W11 two prices above the cap after round 1, one Haiku 5.5 firm",
+    not cs["replaced_after_round_1"]
+    and len(ch["replaced_after_round_1"]) == 2
+    and len({(r["seed"], r["firm"]) for r in ch["replaced_after_round_1"]}) == 1,
+)
+wa = w11["secondary"]["where_against_cap"]
+check(
+    "W11 at the cap",
+    f"{pc(wa['C']['at'])} of Sonnet's firm-rounds and {pc(wa['B']['at'])} of Haiku 5.5's were at the cap",
+)
+check_true(
+    "W11 none above the cap, rounds 51-100",
+    wa["B"]["above_replaced"] == 0 == wa["C"]["above_replaced"],
+)
+near = [v for v in ch["index_by_game"].values() if 0.5 < v < x11["cap_index"] - 1e-3]
+check_true(
+    "W11 Haiku: two at the cap, one just under", len(ch["at_cap_51_100"]) == 2 and len(near) == 1
+)
+check(
+    "W11 Haiku near and spread",
+    f"one just under it, at {f(near[0])}, but its spread didn't change (p = {f(ch['sd_p'])})",
+)
+one = cs["one_firm_at_cap_51_100"]
+check_true(
+    "W11 one firm at the cap in two more games",
+    cs["firms_at_cap_51_100"] == 16 and [o["seed"] for o in one] == [3, 9],
+)
+check("W11 their rivals", f"whose rival sat at {one[0]['rival_mean_price']:.2f}")
+check_true(
+    "W11 both rivals at the same price", len({round(o["rival_mean_price"], 2) for o in one}) == 1
+)
+check("W11 Haiku baseline max", f"above the cap's level, at {f(ch['baseline_max'])}")
+check(
+    "W11 remedy table",
+    f"| The limit, no threat | wave 6 | – | {f(A11['index_51_100'])} (wave 11) | {f(w6j['rules']['w6-limit-no-threat']['primary_index'])} |",
+)
+check(
+    "W11 remedy table cap",
+    f"| A fixed cap at 1.74, enforced | wave 11 | – | {f(C11['index_51_100'])} | – |",
+)
+check(
+    "W11 Haiku 5.5 note",
+    f"under which its index was {f(B11['index_51_100'])} (§4.6). Wave 11's Sonnet arms are compared with 15 baseline games, which average {f(SB['pooled_index'])}",
+)
+
 # ---------------------------------------------------------------- CLAIMS_STATUS.md
+check(
+    "Claims: wave 11",
+    f"the same limit lowered the index to {f(A11['index_51_100'])}, not to competitive prices",
+    "claims",
+)
+check_true(
+    "Claims: wave 11 split counts",
+    len(cs["held_cap"]) == 7
+    and cs["below_0.2"] == 10
+    and "holding 7 of 20 at the cap and sending 10 below every baseline game" in CLAIMS,
+)
 check(
     "Claims: Opus info and forced10",
     f"left the index at {f(sb['opus55']['brinfo']['index_51_100'])} and forced Nash every 10 rounds took it to {f(r3['forced10']['index_51_100'])}, with {round(10 * r3['forced10']['share_above_0.3'])} of 10 games",
@@ -728,7 +904,8 @@ check(
 print(f"\n{sum(results)} of {len(results)} checks pass")
 HAND = {
     "note": "notes counts read by hand: wave 4's 8 of 8 and 7 of 8; wave 5's 59 of 60 and 2 of 20; wave 6's 15 of 20 and "
-    "13 of 20; wave 7's 12 of 20; wave 9's 3 of 8 and 4 of 8; wave 10's 9 of 20 and four",
+    "13 of 20; wave 7's 12 of 20; wave 9's 3 of 8 and 4 of 8; wave 10's 9 of 20 and four; "
+    "wave 11's 7 of 8, 8 of 12, 16 of the 40, All 16, 15 and 24 (coded by a subagent)",
 }
 print(f"Not covered: {HAND['note']}; design constants; numbers quoted from the paper's text.")
 QUOTED = [

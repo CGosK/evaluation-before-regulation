@@ -2,7 +2,7 @@
 
 *Chris Graham · November 2026*
 
-After the review of "Evaluation Before Regulation", I ran ten more waves of experiments, from 3 to 7 November 2026. The paper tested its remedies on Claude Haiku 4.5, and its diagnosis on Haiku 4.5, Haiku 5.5 and Fable 5.1. These waves ask whether the remedies and the diagnosis carry over to newer Claude models, what works where they don't, and whether the answer depends on the market a model is in. Most of the findings are known in general form from other work; [§7](#7-how-this-fits-with-other-work) says which parts are new.
+After the review of "Evaluation Before Regulation", I ran eleven more waves of experiments, from 3 to 9 November 2026. The paper tested its remedies on Claude Haiku 4.5, and its diagnosis on Haiku 4.5, Haiku 5.5 and Fable 5.1. These waves ask whether the remedies and the diagnosis carry over to newer Claude models, what works where they don't, whether that carries over in turn, and whether the answer depends on the market a model is in. Most of the findings are known in general form from other work; [§7](#7-how-this-fits-with-other-work) says which parts are new.
 
 None of it is part of the submission, which stays frozen at the tag `submission-2026-10-25`. For which of the paper's claims hold, and which the follow-ups narrow, see [`CLAIMS_STATUS.md`](CLAIMS_STATUS.md). The full tables, code and caveats are in [`README.md`](README.md).
 
@@ -15,7 +15,7 @@ None of it is part of the submission, which stays frozen at the tag `submission-
 - [1. Which models collude on their own?](#1-which-models-collude-on-their-own)
 - [2. Do the paper's remedies carry over?](#2-do-the-papers-remedies-carry-over)
 - [3. Does the paper's diagnosis carry over?](#3-does-the-papers-diagnosis-carry-over)
-- [4. What works on Opus 5.5, and why](#4-what-works-on-opus-55-and-why)
+- [4. What works on Opus 5.5, why, and whether it carries over](#4-what-works-on-opus-55-why-and-whether-it-carries-over)
 - [5. Does collusion belong to the model or to the market?](#5-does-collusion-belong-to-the-model-or-to-the-market)
 - [6. What this means for evaluating remedies](#6-what-this-means-for-evaluating-remedies)
 - [7. How this fits with other work](#7-how-this-fits-with-other-work)
@@ -29,9 +29,10 @@ None of it is part of the submission, which stays frozen at the tag `submission-
 1. **Two of three newer models collude without being told to, and Opus 5.5 resists the paper's remedies.** Opus 5.5 and Sonnet 5.5 hold prices well above the competitive level on their own, and Haiku 5.5 competes. The paper's two remedies, best-response information and forced Nash rounds, stopped Haiku 4.5. On Opus, the first had no detectable effect and the second helped only partly. Sonnet came down partly under the information and under a 10% forced cut. ([§1](#1-which-models-collude-on-their-own), [§2](#2-do-the-papers-remedies-carry-over))
 2. **On Haiku 4.5, best-response information works by deference, and deference is also a risk.** Haiku 4.5 sets whatever best-response number it is shown, right or wrong, even when obeying costs it profit. ([§2.1](#21-on-haiku-45-best-response-information-works-by-deference-and-a-wrong-number-exploits-it))
 3. **The paper's diagnosis doesn't pick a working remedy for Opus.** The forced-cut test calls Opus non-strategic, which prescribes the two remedies that then failed on it. A forced raise, added to test the other direction, doesn't separate Opus from Haiku 4.5 either. ([§3](#3-does-the-papers-diagnosis-carry-over))
-4. **A searched platform rule brings Opus to Nash, because Opus obeys a posted limit.** The rule is a best-response price cap, and it works with or without a threat behind it. Lifted, its effect partly wears off. Offered as an estimate with no threat, the same number takes prices only partway down, and in games run to 200 rounds they stay partway. The rule needs the platform to know demand. ([§4](#4-what-works-on-opus-55-and-why))
-5. **Opus's collusion depends on its rival.** Against Haiku 5.5 or Haiku 4.5, Opus's own index falls by about half. Against a rival that sets its best response, Opus prices like a leader, and best-response information stops working. ([§5](#5-does-collusion-belong-to-the-model-or-to-the-market))
-6. **So the step that decides is testing the remedy itself, on the model and in the market it will meet.** ([§6](#6-what-this-means-for-evaluating-remedies))
+4. **A searched platform rule brings Opus to Nash, because Opus obeys a posted limit.** The rule is a best-response price cap, and it works with or without a threat behind it. Lifted, its effect partly wears off. Offered as an estimate with no threat, the same number takes prices only partway down, and in games run to 200 rounds they stay partway. The rule needs the platform to know demand. ([§4](#4-what-works-on-opus-55-why-and-whether-it-carries-over))
+5. **A posted limit works only as far as a model obeys it, and a fixed cap split Sonnet's markets rather than raising them.** On Sonnet 5.5, the limit that took Opus to Nash brought prices only partway down: Sonnet kept it in some games and ignored it in others. A fixed cap above the competitive price didn't raise average prices on Sonnet or Haiku 5.5. On Sonnet it split the games instead: a third held the cap to the end, and half fell below every baseline game (exploratory). ([§4.5](#45-on-sonnet-55-the-limit-works-only-partly), [§4.6](#46-a-fixed-cap-doesnt-raise-average-prices-but-it-splits-sonnets-markets))
+6. **Opus's collusion depends on its rival.** Against Haiku 5.5 or Haiku 4.5, Opus's own index falls by about half. Against a rival that sets its best response, Opus prices like a leader, and best-response information stops working. ([§5](#5-does-collusion-belong-to-the-model-or-to-the-market))
+7. **So the step that decides is testing the remedy itself, on the model and in the market it will meet.** ([§6](#6-what-this-means-for-evaluating-remedies))
 
 ![Figure 1](out/opus_remedies.png)
 
@@ -72,7 +73,7 @@ Without a remedy, the last line is absent. With the paper's best-response inform
 
 **When remedies run.** Information and hidden prices are on from round 1. Forced rounds start after a 10-round opening: a forced Nash round every 10 rounds falls on rounds 20, 30, …, 100, and every 5 rounds on rounds 15, 20, …, 100.
 
-**The tests.** Each arm is compared with its own baseline by a permutation test, with Holm's correction within its family, never across models. I fixed the designs and decision rules of waves 2–9 in [`WAVE2_PLAN.md`](WAVE2_PLAN.md), [`WAVE3_PLAN.md`](WAVE3_PLAN.md), [`WAVE4_PLAN.md`](WAVE4_PLAN.md), [`WAVE5_PLAN.md`](WAVE5_PLAN.md), [`WAVE6_PLAN.md`](WAVE6_PLAN.md), [`WAVE7_PLAN.md`](WAVE7_PLAN.md), [`WAVE8_PLAN.md`](WAVE8_PLAN.md) and [`WAVE9_PLAN.md`](WAVE9_PLAN.md) before their games ran. Anything those plans don't list is marked exploratory. In wave 1, everything but the index is descriptive.
+**The tests.** Each arm is compared with its own baseline by a permutation test, with Holm's correction within its family, never across models. I fixed the designs and decision rules of waves 2–11 in [`WAVE2_PLAN.md`](WAVE2_PLAN.md), [`WAVE3_PLAN.md`](WAVE3_PLAN.md), [`WAVE4_PLAN.md`](WAVE4_PLAN.md), [`WAVE5_PLAN.md`](WAVE5_PLAN.md), [`WAVE6_PLAN.md`](WAVE6_PLAN.md), [`WAVE7_PLAN.md`](WAVE7_PLAN.md), [`WAVE8_PLAN.md`](WAVE8_PLAN.md), [`WAVE9_PLAN.md`](WAVE9_PLAN.md), [`WAVE10_PLAN.md`](WAVE10_PLAN.md) and [`WAVE11_PLAN.md`](WAVE11_PLAN.md) before their games ran. Anything those plans don't list is marked exploratory. In wave 1, everything but the index is descriptive.
 
 **A few terms.**
 - **Best response:** the price that maximises a firm's profit this round, given its rival's price.
@@ -105,6 +106,7 @@ Without a remedy, the last line is absent. With the paper's best-response inform
 | [8](README.md#wave-8-mixed-model-markets-6-november-2026) | 6 November | Does Opus collude against other models? | Opus 5.5 with Haiku 5.5 and with Haiku 4.5 |
 | [9](README.md#wave-9-a-forced-raise-in-the-diagnostic-6-november-2026) | 6 November | Does a forced raise separate Opus from Haiku 4.5? | Opus 5.5, Haiku 4.5 |
 | [10](README.md#wave-10-the-estimate-over-200-rounds-67-november-2026) | 6–7 November | Does the estimate take prices further down in a 200-round game? | Opus 5.5 |
+| [11](README.md#wave-11-posted-limits-beyond-opus-9-november-2026) | 9 November | Does the limit work on Sonnet, and does a fixed cap above the competitive price raise prices? | Sonnet 5.5, Haiku 5.5 |
 
 Each wave number links to its full results in the README. Two checks need no new games: [raise and cut following on the saved games](README.md#raise-and-cut-following-on-the-saved-games-exploratory), and a [correction to the forced-cut null bands](README.md#a-scaling-error-in-the-forced-cut-null-bands-6-november-2026).
 
@@ -121,12 +123,13 @@ Each wave number links to its full results in the README. Two checks need no new
 | Hidden prices, best-price trials | wave 5 search | – | – | 0.07 |
 | Best-response price limit | wave 5 search | – | – | 0.01 |
 | The limit, lifted after round 50 | wave 6 | – | – | 0.44 |
-| The limit, no threat | wave 6 | – | – | 0.02 |
+| The limit, no threat | wave 6 | – | 0.15 (wave 11) | 0.02 |
 | The number as an estimate, with the threat | wave 6 | – | – | 0.00 |
 | The number as an estimate, no threat | wave 7 | – | – | 0.45 |
 | The same, over rounds 151–200 of 200 | wave 10 | – | – | 0.32 |
+| A fixed cap at 1.74, enforced | wave 11 | – | 0.31 | – |
 
-Haiku 5.5 competes without a remedy (0.15), so no remedy was tried on it. The mixed markets of wave 8 are in §5.
+Haiku 5.5 competes without a remedy (0.15), so the only rule tried on it is wave 11's cap, under which its index was 0.31 (§4.6). Wave 11's Sonnet arms are compared with 15 baseline games, which average 0.35. The mixed markets of wave 8 are in §5.
 
 ## 1. Which models collude on their own?
 
@@ -262,7 +265,7 @@ The forced-cut test forces a cut, so it can't see whether a rival follows a rais
 
 Neither a forced cut nor a forced raise tells the two colluding models apart, though remedies work so differently on them. The raise-following in the saved games stands as a description, not a mechanism.
 
-## 4. What works on Opus 5.5, and why
+## 4. What works on Opus 5.5, why, and whether it carries over
 
 ### 4.1 A searched rule brings Opus to competitive prices
 
@@ -393,6 +396,57 @@ The rest is exploratory:
 
 *Figure 8. Wave 10, Opus 5.5: left, the mean market index by round for the estimate with no threat and for baseline, both continued from round 100 to round 200; right, each game's index over rounds 51–100 and over rounds 151–200. The games that fell late stay down, low games rise, and no game reaches competitive prices.*
 
+### 4.5 On Sonnet 5.5, the limit works only partly
+
+Wave 11 ran wave 6's limit with no threat, unchanged, on Sonnet 5.5. Sonnet is the other model that colludes on its own (§1), and it set the best-response number in 30% of firm-rounds (§2.4), between Haiku 4.5 and Opus. Its 10 games are compared with 15 Sonnet baseline games: wave 2's 10, and 5 more played alongside the arms, which match them (0.31 against 0.38, p = 0.30).
+
+| Rule | Index | Games above 0.3 | Against baseline |
+| --- | ---: | ---: | --- |
+| Baseline (15 games) | 0.35 | 9 of 15 | |
+| Limit, no threat | 0.15 | 2 of 10 | −0.21 [−0.32, −0.09], p = 0.004 (Holm) |
+
+**By the plan's rule, the limit lowers Sonnet's prices but doesn't reach competitive ones.** Its index of 0.15 is above the 0.1 that counts as competitive. On Opus the same rule reached 0.02 (§4.2).
+
+The rest is exploratory, apart from the follow rate, which the plan named:
+- **Sonnet keeps the limit in some games and ignores it in others.** Firms set it within 1% in 50% of firm-rounds; Opus set the same line in 100%. By game it splits cleanly. In 6 games, firms set the limit in 57–99% of firm-rounds and ended at 0.02–0.07. In the other 4, they set it in 0–19% and ended at 0.23–0.47.
+- **The notes say the same.** In the four games that ignored the limit, no note at rounds 30, 60 or 90 says the firm keeps it, and at round 60, 7 of their 8 notes set it aside, as in "Platform limit (~1.6) is below best prices found, so ignore." In the six that kept it, 8 of 12 notes at round 90 say the firm keeps it. No note says a price above the limit would be replaced.
+- **Prices were still falling at round 100.** The arm's index went from 0.30 in rounds 11–20 to 0.12 in rounds 91–100.
+
+So obeying a posted limit is a property of Opus, not of posted limits. On a model that obeys only some of the time, the limit works only some of the time, as best-response information did on Sonnet (§2.4).
+
+### 4.6 A fixed cap doesn't raise average prices, but it splits Sonnet's markets
+
+Dhanda (2026) found that an announced price cap became a focal point for Llama-3.2 3B agents in this same duopoly: prices settled just under the cap and rose with it. Opus prices at a posted limit, so a cap set above the competitive price might pull Claude models up to it. Wave 11 tested a fixed cap of 1.74, an index of 0.59, in the limit's own words. From round 2, each firm reads:
+
+```
+- Platform price limit for my next price: 1.74. Every seller has the same limit; a price above it is replaced by 1.74.
+```
+
+Unlike the limit, the cap is enforced: a price above 1.74 is replaced by 1.74, and the firm is told. I ran it on Sonnet 5.5 (20 games) and Haiku 5.5 (10 games), each against its model's 15 baseline games. Opus would have been next only if the cap had raised prices here.
+
+| Model | Baseline | With the cap | Difference [95% CI] | p (Holm) |
+| --- | ---: | ---: | --- | ---: |
+| Sonnet 5.5 | 0.35 | 0.31 | −0.04 [−0.16, 0.07] | 0.51 |
+| Haiku 5.5 | 0.14 | 0.31 | +0.16 [0.00, 0.32] | 0.11 |
+
+**By the plan's rules, the cap has no detectable effect on either model, and the full focal effect is ruled out for both.** If prices settled just under the cap, the index would be about 0.55: a rise of 0.20 for Sonnet and 0.41 for Haiku 5.5. Both intervals end below that. Haiku 5.5's rise comes closest (p = 0.06 before correction). So by the plan's stop rule, I report no focal effect on these two models and close the cap line.
+
+**The average hides a split** (exploratory). Sonnet's 20 games under the cap fall into two groups (Figure 9):
+- **Seven held the cap.** Both firms tried a lower price in round 2 or 3, went back to 1.74, and stayed there to round 100. Their index, 0.59, is level with the highest baseline game.
+- **Ten ended below 0.2,** below every one of the 15 baseline games, whose lowest is 0.21. In these and the other three, a firm priced below the cap in round 2 or 3, and from then on at least one price was below it in every round.
+
+The cap doubled the spread of Sonnet's games: their standard deviation is 0.24 against the baseline's 0.12 (p < 0.001), and 10 of 20 ended below 0.2 against none of 15 (p = 0.002). Both tests were chosen after seeing the data.
+- **Every cap market opened at the cap.** Both models open far above the monopoly price, at 2.75–3.00. Under the cap, both opening prices were replaced by 1.74, so every cap game started at the cap. Without a cap, Sonnet's prices come down gradually, and each baseline game passes the cap's level between rounds 4 and 28. So the cap moved every market's start down to 1.74 and took away the prices above it. By round 3, each game had either held there or started down.
+- **The notes describe both paths.** At each of rounds 30, 60 and 90, the same 16 of the 40 firms treat 1.74 as their best price: both firms in the seven held games, and one firm in each of two more games, whose rival sat at 1.59. All 16 write that the cap stops them pricing or testing higher, and 15 that a cut cost them, as in "Prices above the cap are replaced by 1.74, so testing higher prices is pointless unless the cap rises." All 24 others plan to price below the cap.
+- **No firm pushed against the cap.** After round 1, a price above 1.74 was set only twice, by one Haiku 5.5 firm. Over rounds 51–100, 40% of Sonnet's firm-rounds and 33% of Haiku 5.5's were at the cap, within 1% below it, and the rest under it.
+- **Haiku 5.5 shows a weaker version.** Two of its 10 games sat at the cap over rounds 51–100 and one just under it, at 0.57, but its spread didn't change (p = 0.55). One of its baseline games ended above the cap's level, at 0.72.
+
+![Figure 9](out/wave11_caps.png)
+
+*Figure 9. Wave 11: left, each game's index over rounds 51–100 (dot) and the arm's mean (bar), for Sonnet 5.5 under wave 6's limit and under the cap, and Haiku 5.5 under the cap, each against its model's 15 baseline games; right, each Sonnet cap game's index by round, against the baseline mean. Every cap game opens at the cap, because both opening prices are replaced. By round 3 each has either held there or started down.*
+
+**What this means.** The cap wasn't a focal point on average: neither model's prices rose. On Sonnet, though, it changed where single markets end up. About a third were held at the cap, and half competed harder than any baseline game. The split seems to come from the opening, so a cap brought in after prices settle might act differently. And Opus, the model most likely to price at a cap, wasn't tested.
+
 ## 5. Does collusion belong to the model or to the market?
 
 Every market until wave 8 was two copies of one model. Wave 8 put Opus 5.5 in markets with other models, 10 games each, with nothing telling a firm which model its rival was. Each firm's own index is reported along with the market's.
@@ -419,24 +473,26 @@ The rest is exploratory:
 - **Without best-response information, Opus and Haiku 4.5 matched prices in 7 of 10 games,** below where either prices against itself.
 - **Opus tries to lead.** In every arm, 8–10 of 10 Opus firms plan to raise their price to pull the rival up, for example "The aim is to signal cooperation so B keeps rising". At most 2 of 10 of their rivals do. A subagent coded the notes, and I spot-checked them.
 
-![Figure 9](out/wave8_mixed.png)
+![Figure 10](out/wave8_mixed.png)
 
-*Figure 9. Wave 8: each mixed game's Opus own index against its rival's, over rounds 51–100. Points on the dashed line have matched prices. Points on the solid line have the rival at its best response to Opus's price. The cross is the leader-follower outcome: Opus at 0.37 and its rival at 0.16, a market index of 0.26.*
+*Figure 10. Wave 8: each mixed game's Opus own index against its rival's, over rounds 51–100. Points on the dashed line have matched prices. Points on the solid line have the rival at its best response to Opus's price. The cross is the leader-follower outcome: Opus at 0.37 and its rival at 0.16, a market index of 0.26.*
 
 ## 6. What this means for evaluating remedies
 
-The paper argued for evaluation before regulation: find out how agents coordinate, then choose the remedy. The follow-ups keep the first half and change the second. These waves add three steps:
+The paper argued for evaluation before regulation: find out how agents coordinate, then choose the remedy. The follow-ups keep the first half and change the second. These waves add four steps:
 - **Test the remedy on the model it will meet, in the market it will meet.** The information that stopped Haiku 4.5 had no detectable effect on Opus 5.5. Next to Opus, it left Haiku 4.5 above Nash too.
 - **Check the diagnosis on that model too.**
   - The test pointed to remedies that didn't work on Opus. Opus neither punishes nor learns slowly, and the paper's two causes don't cover it.
   - A forced raise, the other direction, didn't separate Opus from Haiku 4.5 either.
 - **Search for the remedy, then check how it works.** A searched price limit brought Opus to Nash because Opus took it as a rule, enforced or not. That makes it a price cap: lifted, prices came partly back, all the way in 4 of 10 games. Offered as an estimate with no threat, the same number brought prices only partway down.
+- **Check that it carries over, game by game.** The same limit took Sonnet 5.5 only partway, because Sonnet kept it in some games and not others. A fixed cap above the competitive price left average prices where they were, but on Sonnet it held a third of markets at the cap and sent half below every baseline game.
 
 **For anyone running such a market,** the evidence suggests:
 - screen each model on its own before relying on it, because the same prompt colludes on one model and competes on another;
 - don't assume that a remedy shown to work on one model works on another, or that a diagnosis that worked on one model picks the remedy for another;
 - watch for deference both ways: a model that follows a platform's number is easy to steer down, and just as easy to steer wrong;
 - expect the rules that worked here to need a demand model, because they compute each seller's best response;
+- expect a posted rule to work only as far as each model obeys it, and look at where a cap leaves single markets, not only the average;
 - expect mixed markets to behave differently from markets of one model, and test there too.
 
 ## 7. How this fits with other work
@@ -449,19 +505,20 @@ Most of what these waves found is already known in general form. What's new is n
 - **A remedy that works on one model can fail on another.** Anto and Vazquez (2026) tested logging, revision and a veto on Claude Sonnet 4, DeepSeek-Chat V3 and GPT-5.4 mini, and the best of the three changed with the model. Bracale Syrnikov et al. (2026) found that enforced governance lowered collusion for every model and pairing they tested, while a prompt-only constitution changed little on average and raised it for one model. Garra (2026) found that a prompt warning worked only partly on DeepSeek-V3.1, while a payoff regulator brought prices close to Nash. The paper's remedies failing on Opus (§2) is one more case.
 - **Platforms can design rules against algorithmic collusion.** Johnson, Rhodes and Wildenbeest (2023) showed in theory that rules giving price-cutters more exposure lower prices, and tested such rules on Q-learning sellers. Brero et al. (2022) learned rules like these by reinforcement learning. Wave 5's searched rule (§4.1) is the counterpart for LLM sellers.
 - **Models defer to what they're shown, by very different amounts.** In ClashEval (Wu, Wu and Zou, 2024), models took wrong retrieved information over a correct prior from 31% of the time (Claude Opus) to 63% (GPT-3.5). Okamoto, Erol and Erol (2026) found compliance with a stated rule ranging from 43.5% to 89.5% across twelve models, and in some of them a small fine lowered it. Geng et al. (2026) found that system and user roles don't settle which instruction wins, while framing by authority, expertise or consensus moves models more. Haiku 4.5 setting whatever number it is shown (§2.1) is this deference in a pricing game.
-- **A posted cap can become a focal point.** Dhanda (2026) gave Llama-3.2 3B agents an announced price cap in the same logit duopoly as here: prices settled just under the cap and rose with it, and a hidden cap had no such effect.
+- **A posted cap can become a focal point.** Dhanda (2026) gave Llama-3.2 3B agents an announced price cap in the same logit duopoly as here: prices settled just under the cap and rose with it, and a hidden cap had no such effect. On Sonnet 5.5 and Haiku 5.5, a fixed cap didn't raise average prices (§4.6).
 - **The forced cut has been run on these models.** Pulidindi (2026) found Opus 5.5 and Sonnet 5.5 holding high prices through a forced cut in a three-seller market, and undercutting in 98–99% of replays when told the round was the last.
 
 **What looks new here.** I found no match for these:
 - **One number, two names.** Shown as a limit, a firm's best-response price took Opus to Nash with or without a threat. Shown as an estimate with no threat, the same number took it only partway (§4.2).
-- **Deference explains why a remedy doesn't carry over.** Best-response information worked on Haiku 4.5 because Haiku sets the number it is shown, and Sonnet and Opus set it far less often (§2).
+- **Deference explains why a remedy doesn't carry over.** Best-response information worked on Haiku 4.5 because Haiku sets the number it is shown, and Sonnet and Opus set it far less often (§2). The limit worked on Opus because Opus keeps it, and only partly on Sonnet, which keeps it in some games and not others (§4.5).
 - **Deference is a way to steer prices.** A number biased low took Haiku 4.5 below Nash, against its own profit (§2.1). Cao and Hu (2026) model the other direction, a shared AI recommender holding prices high.
 - **A remedy can change who leads.** Next to Opus, best-response information made Haiku 4.5 Opus's follower and stopped working (§5).
 - **A lifted limit's effect partly wears off** (§4.3).
+- **A cap that splits markets rather than raising them** (exploratory). On Sonnet, a cap above the competitive price left the average unchanged, but held a third of games at the cap and sent half below every baseline game (§4.6).
 
 §3's result, that the forced-cut test doesn't pick a working remedy for Opus, is new too, but it says more about the paper's framework than about the models.
 
-**What it changes.** Lee (2026) already covers pairings without Opus in general form. Pulidindi's final-round replay is a cheap test to borrow for what drives Opus's high prices. And Dhanda's focal cap hasn't been tested on a frontier model: since Opus prices exactly at a posted limit, a cap set above the competitive price is the obvious risk of the rule in §4. The new parts carry limited weight: one market, one prompt, 10 games per arm, and Claude models only.
+**What it changes.** Lee (2026) already covers pairings without Opus in general form. Pulidindi's final-round replay is a cheap test to borrow for what drives Opus's high prices. Dhanda's focal cap, tried here on Sonnet 5.5 and Haiku 5.5, didn't raise their average prices. It hasn't been tried on Opus, which prices exactly at a posted limit, so a cap set above the competitive price is still the obvious risk of the rule in §4. The new parts carry limited weight: one market, one prompt, 10 games per arm, and Claude models only.
 
 So the general pattern was known. What these waves add is the mechanism: a remedy that works through deference is only as good as the model's deference, and on a deferring model, whoever sets the number can steer prices.
 
@@ -470,17 +527,19 @@ So the general pattern was known. What these waves add is the mechanism: a remed
 These are untested here:
 - **Longer games for the other rules.** Wave 10 ran the estimate to 200 rounds (§4.4). Every other game is 100 rounds or fewer, and agents might learn to work around a rule over a longer game.
 - **Pairings without Opus,** and Sonnet 5.5 in mixed markets.
-- **The price limit in a mixed market.** Would an obedient model hold a defiant one down, or would the limit lose its grip?
+- **The price limit in a mixed market.** Would an obedient model hold a defiant one down, or would the limit lose its grip? Sonnet keeps the limit only some of the time (§4.5), so Opus against Sonnet is the natural test.
+- **A cap on Opus,** which prices at a posted limit. Wave 11 tried the cap only on Sonnet and Haiku 5.5.
+- **A cap brought in after a market settles.** Every wave 11 cap market opened at the cap, because the opening prices were replaced (§4.6). A cap that arrives later might not split markets the same way.
 - **A forced raise on Haiku 5.5,** which follows raises in the saved games but competes.
 - **What drives Opus's high prices.** The notes point to leading and to fear of retaliation, but neither diagnostic separates Opus from Haiku 4.5.
 
 ## Limits
 
-- There are 10 games per arm (15 for Opus's baseline and 20 for Haiku 4.5's), in one market with one prompt. Each bias arm tests one size in one direction.
-- Of the newer models, only Opus was given forced Nash rounds, hidden prices, the searched rules and the variants of waves 6 and 7.
+- There are 10 games per arm (15 for Opus's baseline and wave 11's baselines, and 20 for Haiku 4.5's baseline and wave 11's Sonnet cap arm), in one market with one prompt. Each bias arm tests one size in one direction.
+- Of the newer models, only Opus was given forced Nash rounds, hidden prices, the searched rules and the variants of waves 6 and 7, except that Sonnet was given wave 6's limit with no threat in wave 11. The fixed cap was tried at one level, on Sonnet and Haiku 5.5 only.
 - Wave 4's diagnosis starts from the paper's Mistral high-price states, not the models' own.
 - Thinking stayed partly on for Opus throughout.
-- Comparisons with the submission's October games, and between waves, are across days and were never interleaved. Before wave 5, those between waves were not planned. From wave 5 on, each plan names the earlier games its tests use. Opus's baseline pools two waves, which match (0.755 against 0.756).
+- Comparisons with the submission's October games, and between waves, are across days and were never interleaved, except that 5 of each model's 15 baseline games in wave 11 ran alongside its arms. Before wave 5, those between waves were not planned. From wave 5 on, each plan names the earlier games its tests use. Opus's baseline pools two waves, which match (0.755 against 0.756).
 - **Only wave 8 mixes models,** and every pairing in it includes Opus 5.5. Patel (2026, ["The benchmark where AIs have to lie to win"](https://www.dwarkesh.com/p/clocktower)) compares models in a multi-agent game through cross-model matchups.
 - **Most games are short.** Only wave 10's run to 200 rounds, and those are continued games, played in two parts on different days. Every other game is 100 rounds or fewer, so agents that learn to work around a rule over a longer game would not show up.
 - **One harness.** Every Claude game ran through headless Claude Code. Huyut (2026) found that changing an agent's harness moved one model's compliance with stated rules by 11.5 points, so the limit's effect in §4 may depend on the harness too.

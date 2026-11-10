@@ -49,7 +49,7 @@ CONSTANTS |= {
 }  # top willingness to pay, cost, the forced raise, CI level
 NOT_RESULTS = [
     r"\]\([^)]*\)|`[^`]*`|#[\w-]+",  # links, code, anchors
-    r"\b(?:Haiku|Opus|Sonnet|Fable) \d\.\d\b",  # model versions
+    r"\b(?:Haiku|Opus|Sonnet|Fable) \d\.\d\b|\bLlama-\d\.\d\b",  # model versions
     r"§\s?\d+(?:\.\d+)*",  # section references
     r'"[^"\n]*"',  # agents' notes, quoted verbatim
 ]
@@ -117,7 +117,11 @@ SOURCES = ex.sources()
 COMPUTED = ex.computed()
 
 for title, body in sections():
-    key = next((k for k in SOURCES if title.startswith(k)), None)
+    key = max(
+        (k for k in SOURCES if title.startswith(k) and not title[len(k) : len(k) + 1].isdigit()),
+        key=len,
+        default=None,
+    )
     allowed = (
         CONSTANTS
         | pool(*(SOURCES[key] if key else []), COMPUTED.get(key, []))

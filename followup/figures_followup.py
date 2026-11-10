@@ -14,6 +14,7 @@ wave's out/*.json; the per-round paths and the best-response curve are computed 
     out/wave2_remedies.png  wave 2: best-response information and the 10% cut on Sonnet 5.5 and Opus 5.5
     out/wave4_paths.png     wave 4: Firm A's path after the forced cut against the base-scale null band
     out/wave10_continued.png  wave 10: the estimate and baseline games continued to round 200
+    out/wave11_caps.png     wave 11: Sonnet 5.5 and Haiku 5.5 under the limit and the cap, by game and by round
 
 Usage:  uv run --extra analysis python followup/figures_followup.py
 """
@@ -684,6 +685,56 @@ def wave10_continued():
     plt.close(fig)
 
 
+def wave11_caps():
+    import wave2_results as w2r
+    import wave11_results as w11
+
+    res = load("wave11.json")
+    base = {
+        f: w2r.family_games(f, ("baseline",))["baseline"] + w11.games(f, "none")
+        for f in ("sonnet55", "haiku55")
+    }
+    arms = {a: w11.games(fam, rule) for a, (fam, rule, _) in w11.ARMS.items()}
+    for a, xs in arms.items():
+        assert abs(np.mean([w11.late(x) for x in xs]) - res["arms"][a]["index_51_100"]) < 1e-9
+
+    def late(xs):
+        return [w11.late(x) for x in xs]
+
+    rows = [
+        ("Sonnet 5.5, baseline  (15)", late(base["sonnet55"]), MUTED, None),
+        ("Sonnet 5.5, limit  (10)", late(arms["A"]), SERIES[0], None),
+        ("Sonnet 5.5, cap  (20)", late(arms["C"]), SERIES[1], None),
+        ("Haiku 5.5, baseline  (15)", late(base["haiku55"]), MUTED, None),
+        ("Haiku 5.5, cap  (10)", late(arms["B"]), SERIES[1], None),
+    ]
+    cap = (1.74 - 1.4729) / (1.925 - 1.4729)
+    fig, (ax, bx) = plt.subplots(
+        1, 2, figsize=(8.6, 3.5), layout="constrained", gridspec_kw={"width_ratios": [1.3, 1]}
+    )
+    dot_rows(ax, rows, (-0.12, 0.95), 0.93, refs=((0, "Nash"), (cap, "cap")))
+    n_at = sum(abs(v - cap) < 1e-3 for v in rows[2][1])
+    ax.text(cap + 0.03, 2.28, f"{n_at} games\nat the cap", color=INK2, fontsize=7, va="center")
+    t = np.arange(1, 101)
+    bx.axhline(0, color=AXIS, lw=1, zorder=0)
+    bx.axhline(cap, color=GRID, lw=1, ls=(0, (3, 3)), zorder=0)
+    for x in arms["C"]:
+        bx.plot(t, p.index(x)[:100], color=SERIES[1], lw=0.9, alpha=0.55, zorder=2)
+    y = np.mean([p.index(x)[:100] for x in base["sonnet55"]], axis=0)
+    bx.plot(t, y, color=MUTED, lw=1.8, zorder=3)
+    bx.text(45, float(y[44]) + 0.05, "baseline mean (15 games)", color=INK2, fontsize=7.5)
+    bx.text(35, 0.98, "baseline opens above the scale", color=MUTED, fontsize=7.5, va="top")
+    bx.text(35, 0.73, f"each cap game (20); {n_at} held the cap, 1.74", color=INK2, fontsize=7.5)
+    bx.set_xlim(1, 100)
+    bx.set_ylim(-0.1, 1.0)
+    bx.set_xlabel("Round")
+    bx.set_ylabel("Market index, Sonnet 5.5")
+    bx.yaxis.grid(True, color=GRID, lw=0.6)
+    bx.set_axisbelow(True)
+    fig.savefig(OUT / "wave11_caps.png", dpi=200)
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     forced_cut_schematic()
     models_baseline()
@@ -697,4 +748,5 @@ if __name__ == "__main__":
     wave2_remedies()
     wave4_paths()
     wave10_continued()
-    print("wrote the twelve figures in out/")
+    wave11_caps()
+    print("wrote the thirteen figures in out/")

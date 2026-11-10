@@ -846,13 +846,224 @@ check(
 )
 check(
     "W11 Haiku 5.5 note",
-    f"under which its index was {f(B11['index_51_100'])} (§4.6). Wave 11's Sonnet arms are compared with 15 baseline games, which average {f(SB['pooled_index'])}",
+    f"under which its index was {f(B11['index_51_100'])} (§4.7). Wave 11's Sonnet arms are compared with 15 baseline games, which average {f(SB['pooled_index'])}",
 )
+
+# ---------------------------------------------------------------- wave 12 (wave12.json, wave12_exploratory.json)
+w12, x12 = load("wave12.json"), load("wave12_exploratory.json")
+P1, P2, S12 = w12["part1"], w12["part2"], w12["secondary"]
+M12, CAP12, N12 = x12["mixed"], x12["cap"], x12["notes"]
+own12 = S12["own_index"]
+check_true(
+    "W12 readings",
+    P1["reading"] == "holds: competitive"
+    and P2["readings"]
+    == {
+        "split": "the split replicates",
+        "opening": "the opening drives the split",
+        "late_cap": "lowers prices",
+    }
+    and w12["follows"] == {"own_project": False, "stop": True},
+)
+check(
+    "W12 remedy table limit",
+    f"| The limit, no threat, Opus and Sonnet together | wave 12 | – | {f(own12['A2']['sonnet55'])} | {f(own12['A2']['opus55'])} |",
+)
+check(
+    "W12 remedy table C2",
+    f"| The same cap, repeated on fresh games | wave 12 | – | {f(P2['C2']['index'])} | – |",
+)
+check(
+    "W12 remedy table D",
+    f"| The same cap, from round 31 | wave 12 | – | {f(P2['D']['index'])} | – |",
+)
+check(
+    "W12 table note",
+    f"and wave 12's with {P2['games']['baseline']}, which average {f(P2['baseline_index'])}. In the Opus–Sonnet row, each cell is that model's own index, and the market's was {f(P1['A2_index'])} (§4.6)",
+)
+check(
+    "W12 leader-follower",
+    f"the leader-follower outcome, an index of {f(P1['leader_follower_index'])} (§5)",
+)
+check(
+    "W12 part 1 table",
+    f"| No rule | {f(P1['mixed_index'])} | {f(own12['mixed']['opus55'])} | {f(own12['mixed']['sonnet55'])} |",
+)
+check(
+    "W12 part 1 table A2",
+    f"| Limit, no threat | {f(P1['A2_index'])} | {f(own12['A2']['opus55'])} | {f(own12['A2']['sonnet55'])} |",
+)
+lo, hi = P1["difference_ci"]
+check(
+    "W12 part 1 test",
+    f"The index fell by {f(-P1['difference'])} [{f(lo)}, {f(hi)}] (p < 0.001), and no game ended above 0.05",
+)
+check_true("W12 part 1 p below 0.001", P1["p"] < 0.001)
+check_true("W12 no A2 game above 0.05", max(M12["A2"]["index_by_game"].values()) < 0.05)
+fo = S12["follow_A2_11_99"]
+w11f = w11["secondary"]["A_follow_11_99"]
+check(
+    "W12 follow",
+    f"Opus set it within 1% in {pc(fo['opus55'], 1)} of its firm-rounds, and Sonnet in {pc(fo['sonnet55'])}, against {pc(w11f)} next to another Sonnet (§4.5)",
+)
+so = S12["sonnet_own_A2_vs_wave11_limit"]
+check(
+    "W12 Sonnet own",
+    f"Sonnet's own index fell to {f(so['A2'])},** against {f(so['wave11'])} under the limit in its own markets (p = {f(so['p'], 3)}, across waves)",
+)
+na = N12["A2"]
+check_true(
+    "W12 notes: Opus kept the limit in all 30, set it aside in none",
+    sum(v["limit_kept"] for v in na["opus55"]["by_round"].values()) == 30
+    and na["opus55"]["firms_any_note"]["limit_set_aside"] == 0,
+)
+check_true(
+    "W12 notes: 10 Opus firms lead with no rule, 1 under the limit, 3 say the limit stops them",
+    N12["mixed"]["opus55"]["firms_any_note"]["raise_to_lead"] == 10
+    and na["opus55"]["firms_any_note"]["raise_to_lead"] == 1
+    and na["opus55"]["firms_any_note"]["penalty_inferred"] == 3,
+)
+w11A = [
+    json.loads(line) for line in (HERE / "runs/wave11/notes_coded.jsonl").read_text().splitlines()
+]
+w11A = [r for r in w11A if r["arm"] == "A"]
+sk = sum(v["limit_kept"] for v in na["sonnet55"]["by_round"].values())
+sa = sum(v["limit_set_aside"] for v in na["sonnet55"]["by_round"].values())
+check(
+    "W12 notes: Sonnet keeps",
+    f"{sk} of 30, against {sum(bool(r['limit_kept']) for r in w11A)} of {len(w11A)} in wave 11. Thirteen set it aside",
+)
+check_true("W12 notes: thirteen set aside", sa == 13)
+check_true(
+    "W12 notes: four Sonnet firms plan raises, one Sonnet firm leads with no rule",
+    na["sonnet55"]["firms_any_note"]["raise_to_lead"] == 4
+    and N12["mixed"]["sonnet55"]["firms_any_note"]["raise_to_lead"] == 1,
+)
+mi = M12["A2"]["sonnet_misses"]
+check("W12 misses", f"in {mi['above']} of its {mi['above'] + mi['below']} misses")
+fs = M12["A2"]["follow_by_game"]["sonnet55"]
+hi_f = sorted(v for v in fs.values() if v >= 0.5)
+lo_f = [k for k, v in fs.items() if v < 0.5]
+check(
+    "W12 follow by game",
+    f"In {len(hi_f)} games it set the limit in {100 * hi_f[0]:.0f}–{pc(hi_f[-1])} of its firm-rounds. In the tenth it set it in only {pc(fs[lo_f[0]])}",
+)
+check("W12 that market", f"and that market still ended at {f(M12['A2']['index_by_game'][lo_f[0]])}")
+# §4.8
+check("W12 new baselines", f"which match them (p = {f(S12['new_vs_earlier_baselines_p'])})")
+D12 = CAP12["D"]
+r30 = D12["index_round_30"]
+check_true("W12 round 30 the same", f(r30["D"]) == f(r30["baseline"]))
+check("W12 round 30", f"these games averaged {f(r30['D'])}, the same as the baseline's")
+c2, d2 = P2["C2"], P2["D"]
+check(
+    "W12 T2 row",
+    f"| Does the split replicate? | {c2['held_cap']} of 20 games held the cap and {c2['below_0.2']} ended below 0.2, the same counts as wave 11. Their standard deviation is {f(c2['sd'])} against the baseline's {f(P2['baseline_sd'])}. | < 0.001 | It replicates |",
+)
+check_true(
+    "W12 T2 Holm below 0.001, same counts as wave 11",
+    P2["p_holm"]["spread_C2"] < 0.001
+    and c2["held_cap"] == len(cs["held_cap"])
+    and c2["below_0.2"] == cs["below_0.2"],
+)
+check(
+    "W12 T3 row",
+    f"| Does it need the opening? | No game under the late cap held it, against {c2['held_cap']} of 20 under the cap from round 1 | {f(P2['p_holm']['held_D_vs_C2'], 3)} | The opening drives it |",
+)
+check_true("W12 D held none", d2["held_cap"] == 0)
+dlo, dhi = d2["difference_ci"]
+check(
+    "W12 T4 row",
+    f"| Does a late cap pull prices up? | Index {f(d2['index'])} against the baseline's {f(P2['baseline_index'])}: {f(d2['difference'])} [{f(dlo)}, {f(dhi)}] | {f(P2['p_holm']['index_D'], 3)} | It lowers them |",
+)
+t4 = x12["t4"]
+check(
+    "W12 T4 sensitivity",
+    f"with a million shuffles it is {f(t4['p_1m'], 3)} again, and a rank test gives {f(t4['mann_whitney_p'])}",
+)
+bd = D12["blocks"]
+check(
+    "W12 blocks",
+    f"largest in rounds 41–50, at {f(bd['difference'][4])}, and shrank to {f(bd['difference'][9])} by rounds 91–100, as the baseline came down to {f(bd['baseline'][9])} against {f(bd['D'][9])}",
+)
+check_true("W12 rounds 41-50 the largest gap", min(bd["difference"]) == bd["difference"][4])
+r31 = D12["their_round_31_prices"]
+oth = sorted((v for v in r31 if v != 1.74), reverse=True)
+check(
+    "W12 round 30 and 31",
+    f"At round 30, {D12['firms_above_cap_round_30']} firms in {D12['games_above_cap_round_30']} games priced above 1.74. In round 31, {D12['round_31_at_cap']} of them set exactly 1.74, and the other two set {oth[0]:.2f} and {oth[1]:.2f}",
+)
+check_true("W12 the late cap replaced nothing", not D12["replaced"] and len(oth) == 2)
+check(
+    "W12 both at the cap",
+    f"Both firms sat at 1.74 in the same round in {D12['games_both_at_cap_some_round']} games, never for more than {D12['longest_both_at_cap_run']} rounds in a row",
+)
+wa12 = S12["where_against_cap"]
+check(
+    "W12 at the cap",
+    f"{pc(wa12['D']['at'])} of firm-rounds were at the cap, against {pc(wa12['C2']['at'])} under the cap from round 1",
+)
+op12 = CAP12["C2"]["opening_model_prices"]
+check(
+    "W12 openings",
+    f"All 40 of its replacements were opening prices, of {op12[0]:.2f}–{op12[-1]:.2f}",
+)
+check_true(
+    "W12 C2 replaced only in round 1, 40 times; held games dipped in round 2 or 3",
+    {r["round"] for r in CAP12["C2"]["replaced"]} == {1}
+    and len(CAP12["C2"]["replaced"]) == 40
+    and {h["dip_round"] for h in CAP12["C2"]["held_cap"]} <= {2, 3},
+)
+nc = N12["C2"]["sonnet55"]
+one12 = CAP12["C2"]["one_firm_at_cap_51_100"]
+check_true(
+    "W12 notes: the same 16 firms treat 1.74 as best, are the firms at the cap, all 16 blocked, 24 plan below",
+    N12["C2_cap_best"]["same_firms_each_round"]
+    and N12["C2_cap_best"]["are_the_firms_at_the_cap_51_100"]
+    and N12["C2_cap_best"]["all_others_plan_below_cap"]
+    and all(v["cap_best"] == 16 and v["plans_below_cap"] == 24 for v in nc["by_round"].values())
+    and nc["firms_any_note"]["higher_blocked"] >= 16
+    and len(one12) == 2,
+)
+check("W12 their rivals", f"whose rival sat at {one12[0]['rival_mean_price']:.2f}")
+nd = N12["D"]["sonnet55"]["by_round"]
+check_true(
+    "W12 notes: late cap 0 at round 30, then 12, 3, 2",
+    nd["30"]["cap_mentioned"] == 0
+    and [nd[t]["cap_best"] for t in ("32", "60", "90")] == [12, 3, 2],
+)
+# §5
+o12 = M12["own_against_baseline"]
+check(
+    "W12 §5 row",
+    f"| Opus and Sonnet 5.5 ({f(o12['sonnet55']['baseline'])} against itself), wave 12 | {f(P1['mixed_index'])} | {f(own12['mixed']['opus55'])} | {f(own12['mixed']['sonnet55'])} |",
+)
+check(
+    "W12 §5 own",
+    f"from {f(o12['opus55']['baseline'])} to {f(o12['opus55']['mixed'])} (p = {f(o12['opus55']['p'])}), and Sonnet's didn't change ({f(o12['sonnet55']['mixed'])} against {f(o12['sonnet55']['baseline'])}, p = {f(o12['sonnet55']['p'])})",
+)
+check_true("W12 Opus above Sonnet in all 10", M12["mixed"]["opus_above_sonnet"] == 10)
+br = M12["mixed"]["at_best_response"]
+check(
+    "W12 §5 best response",
+    f"in {pc(br['sonnet55'])} of firm-rounds, against {pc(M12['mixed']['sonnet_at_best_response_against_itself'])} next to another Sonnet. Opus did so in {pc(br['opus55'])}",
+)
+check("W12 §5 market", f"But the market ended at {f(P1['mixed_index'])},** well above")
 
 # ---------------------------------------------------------------- CLAIMS_STATUS.md
 check(
     "Claims: wave 11",
     f"the same limit lowered the index to {f(A11['index_51_100'])}, not to competitive prices",
+    "claims",
+)
+check(
+    "Claims: wave 12",
+    f"In a market of Opus and Sonnet it brought the index to {f(P1['A2_index'])}",
+    "claims",
+)
+check(
+    "Claims: wave 12 late cap",
+    f"lowered the index a little, to {f(P2['D']['index'])} against {f(P2['baseline_index'])}",
     "claims",
 )
 check_true(

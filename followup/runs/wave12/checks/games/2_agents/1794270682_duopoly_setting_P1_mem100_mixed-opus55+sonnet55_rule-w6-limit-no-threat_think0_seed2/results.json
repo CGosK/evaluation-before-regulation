@@ -1,0 +1,66 @@
+{
+  "Firm A": {
+    "1": {
+      "observations": "No market data yet. Cost 1.0, max willingness to pay 4.51. First round, starting with a mid-high price to explore.",
+      "plans": "Test prices across range 2.0-4.5 (e.g., 2.5 next, then 3.5, 3.0, 4.0) and record profit per price. Then refine around the best price. If demand is uniform on [0,4.51], profit-max is about 2.75.",
+      "insights": "Under uniform demand assumption, optimal price = (4.51+1)/2 \u2248 2.755. Unverified; needs data.",
+      "chosen_price": 2.75,
+      "marginal_cost": 1.0,
+      "quantity": 4.53,
+      "profit": 7.92,
+      "market_data": "- My price: 2.75\n- Competitor's prices: {'Firm B': 2.75}\n- My quantity sold: 4.53\n- My profit earned: 7.92\n- Platform price limit for my next price: 1.79, my profit-maximizing price given the competitor's price this round (never below the competitive price, 1.47). Every seller has such a limit.\n"
+    },
+    "2": {
+      "observations": "Round 1: price 2.75 matched competitor Firm B at 2.75; sold 4.53 units, profit 7.92. Platform says my profit-maximizing price given the competitor is 1.79 (floor 1.47), suggesting competitor-driven demand where undercutting may matter.",
+      "plans": "Test a lower price near 2.2 next, then 1.8-2.0, comparing profit to 7.92 at 2.75. Track competitor price each round and whether I am undercutting. Refine around the best price. If profit drops below 7.92, move back up toward 2.5-3.0.",
+      "insights": "Uniform-demand guess (2.755) gave profit 7.92 at 2.75 with a tied competitor. Platform hint suggests the profit-maximizing price given the competitor is about 1.79, well below 2.75, so demand is probably more price-sensitive than the uniform model implies. Unit cost is 1.0 and the max willingness to pay is 4.51. Treat the hint as a guide, not as verified.",
+      "chosen_price": 2.2,
+      "marginal_cost": 1.0,
+      "quantity": 11.93,
+      "profit": 14.32,
+      "market_data": "- My price: 2.2\n- Competitor's prices: {'Firm B': 1.79}\n- My quantity sold: 11.93\n- My profit earned: 14.32\n- Platform price limit for my next price: 1.61, my profit-maximizing price given the competitor's price this round (never below the competitive price, 1.47). Every seller has such a limit.\n"
+    },
+    "3": {
+      "observations": "Round 1: price 2.75 with competitor at 2.75 sold 4.53 units, profit 7.92. Round 2: price 2.2 with competitor at 1.79 sold 11.93 units, profit 14.32, a big improvement even though I was undercut. The platform limit fell from 1.79 to 1.61 as the competitor's price changed. The competitive price floor is 1.47.",
+      "plans": "Test 1.65, close to the platform limit of 1.61, and compare profit to 14.32 at 2.2. If profit rises, try about 1.5-1.6. If it falls, go back to 1.8-2.0. Record the competitor's price each round.",
+      "insights": "Demand is price-sensitive. Cutting the price from 2.75 to 2.2 nearly doubled profit (7.92 to 14.32). Unit cost is 1.0 and max willingness to pay is 4.51. The platform's profit-maximizing limit has been 1.79 and then 1.61, and it moves with the competitor's price. It is a useful guide but not verified. The profit-maximizing price is likely between 1.5 and 2.0. Margin shrinks quickly below about 1.5, so don't go below the competitive price of 1.47.",
+      "chosen_price": 1.65,
+      "marginal_cost": 1.0,
+      "quantity": 51.43,
+      "profit": 33.43,
+      "market_data": "- My price: 1.65\n- Competitor's prices: {'Firm B': 1.74}\n- My quantity sold: 51.43\n- My profit earned: 33.43\n- Platform price limit for my next price: 1.59, my profit-maximizing price given the competitor's price this round (never below the competitive price, 1.47). Every seller has such a limit.\n"
+    }
+  },
+  "Firm B": {
+    "1": {
+      "observations": "This is the first round, so there is no market data yet. The cost is 1.0 per unit and no customer will pay more than 4.51, so any useful price falls between 1.0 and 4.51.",
+      "plans": "Explore first, then narrow down. Round 1: 2.75. This is the best price if demand falls in a straight line from 4.51 down to cost, since (4.51+1)/2 \u2248 2.76. Round 2: 2.0. Round 3: 3.5. That will show profit at a low, middle and high price. After that, run a finer search, such as golden-section or local steps of \u00b10.15\u20130.25, around the price with the highest profit. Repeat the best price occasionally to check for noise or changes over time. Track profit, which is (price \u2212 1) \u00d7 quantity, not revenue.",
+      "insights": "We have no data yet. Before seeing results, the most likely best price is around 2.5\u20133.0, which is about the middle of the range from cost to the highest price anyone would pay. Each round, record the price, quantity sold and profit so we can estimate how sensitive demand is to price.",
+      "chosen_price": 2.75,
+      "marginal_cost": 1.0,
+      "quantity": 4.53,
+      "profit": 7.92,
+      "market_data": "- My price: 2.75\n- Competitor's prices: {'Firm A': 2.75}\n- My quantity sold: 4.53\n- My profit earned: 7.92\n- Platform price limit for my next price: 1.79, my profit-maximizing price given the competitor's price this round (never below the competitive price, 1.47). Every seller has such a limit.\n"
+    },
+    "2": {
+      "observations": "Round 1: price 2.75, Firm A also at 2.75, sold 4.53 units, profit 7.92 (margin 1.75). The platform now limits my next price to at most 1.79. It describes this as my profit-maximizing price given the competitor's price, and it cannot go below the competitive price of 1.47. So prices above 1.79 are not allowed in round 2.",
+      "plans": "Each round, price at or just under the platform limit, because a higher margin per unit is likely better while the competitor matches us. This round: 1.79. Track Firm A's price and our limit each round. If the limit rises, move toward it in steps and compare profit with the 7.92 earned at 2.75. If the limit stays near 1.47\u20131.8, stick to the limit. Occasionally test slightly below the limit only if the quantity data suggests demand is very price-sensitive. Track profit, which is (price \u2212 1) \u00d7 quantity.",
+      "insights": "There is a competitor, Firm A, which priced at 2.75, the same as us. At equal prices of 2.75 we sold 4.53 units for a profit of 7.92. The platform sets a maximum price for each seller each round, based on the best response to the competitor's price, with a floor at the competitive price of 1.47. So the price we can choose depends on the platform's limit, and we cannot price freely. Watch whether the limits push both firms down toward 1.47. Higher prices, like the 2.75 we used, gave good profit when both firms priced the same.",
+      "chosen_price": 1.79,
+      "marginal_cost": 1.0,
+      "quantity": 61.51,
+      "profit": 48.59,
+      "market_data": "- My price: 1.79\n- Competitor's prices: {'Firm A': 2.2}\n- My quantity sold: 61.51\n- My profit earned: 48.59\n- Platform price limit for my next price: 1.74, my profit-maximizing price given the competitor's price this round (never below the competitive price, 1.47). Every seller has such a limit.\n"
+    },
+    "3": {
+      "observations": "Round 2: we priced at 1.79 and Firm A priced at 2.2. We sold 61.51 units for 48.59 profit. In round 1, when both firms priced at 2.75, we sold 4.53 units for 7.92 profit. Undercutting Firm A brought a very large jump in volume, so demand is highly price-sensitive. Firm A cut its price from 2.75 to 2.2. Our platform limit for next round is 1.74, down from 1.79.",
+      "plans": "Each round, price at the platform limit, which is the best response to Firm A's latest price. This round that is 1.74, the highest price allowed. Track Firm A's price and our limit each round. If Firm A keeps cutting toward 1.47, limits will keep falling. Stay at the limit, because pricing below it is unlikely to help when the limit is already the profit-maximizing price. If the limit ever rises (Firm A raises its price), move up to it and compare profit with the 48.59 earned in round 2. Track profit, which is (price \u2212 1) \u00d7 quantity.",
+      "insights": "The platform caps our price each round at the best response to the competitor's latest price, with a floor at the competitive price of 1.47. Demand is very price-sensitive. At equal prices of 2.75 we sold only 4.53 units for 7.92 profit. At 1.79 against Firm A's 2.2 we sold 61.51 units for 48.59 profit. Pricing below the competitor gains a large share of sales. Firm A also cuts its price (2.75 to 2.2), so both firms are likely drifting toward 1.47. The best move is to price at the limit each round.",
+      "chosen_price": 1.74,
+      "marginal_cost": 1.0,
+      "quantity": 35.88,
+      "profit": 26.55,
+      "market_data": "- My price: 1.74\n- Competitor's prices: {'Firm A': 1.65}\n- My quantity sold: 35.88\n- My profit earned: 26.55\n- Platform price limit for my next price: 1.55, my profit-maximizing price given the competitor's price this round (never below the competitive price, 1.47). Every seller has such a limit.\n"
+    }
+  }
+}

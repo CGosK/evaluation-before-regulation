@@ -2,7 +2,7 @@
 
 *Chris Graham · November 2026*
 
-This page checks each claim of "Evaluation Before Regulation" (frozen at the tag `submission-2026-10-25`) against the eleven follow-up waves. The waves are reported in [`FOLLOWUP_NOTE.md`](FOLLOWUP_NOTE.md), with full tables in [`README.md`](README.md).
+This page checks each claim of "Evaluation Before Regulation" (frozen at the tag `submission-2026-10-25`) against the twelve follow-up waves. The waves are reported in [`FOLLOWUP_NOTE.md`](FOLLOWUP_NOTE.md), with full tables in [`README.md`](README.md).
 
 **No claim is contradicted on the models the paper tested.** Three are narrowed: they hold for Mistral and Haiku 4.5 but not for Opus 5.5, and those three carry the paper's main argument. Five hold, three of them extended to newer models. Four haven't been retested.
 
@@ -21,7 +21,7 @@ This page checks each claim of "Evaluation Before Regulation" (frozen at the tag
 | Agents set the best-response number they are shown | §5, step 3 | Holds, with a risk | Haiku 4.5 set a number inflated by 10% in 95% of firm-rounds and never set the true one. Prices settled where obedience predicts (wave 1). A number lowered by 10% was set in 76% of firm-rounds, at a cost of 46% of profit (wave 2). |
 | Hiding rival prices doesn't prevent collusion | Abstract; §4.4, §4.5; §5, step 3 | Holds | From round 1 it lowered the average for both colluding models, Haiku 4.5 to 0.41 (paper) and Opus 5.5 to 0.38 (wave 4), but left half or more of the games high. For Haiku 4.5 the drop isn't significant after correction (p = 0.17). From high-price states it changed nothing on either. |
 | Screen the model before deploying it | §5, step 5 | Holds, extended | Opus 5.5 and Sonnet 5.5 collude on their own (0.76 and 0.38), and Haiku 5.5 competes (0.15), as the paper found (wave 2). |
-| Test any instruction on the deployed model | §5, step 6 | Holds, extended | Remedies need the same test. Best-response information, which stopped Haiku 4.5, had no detectable effect on Opus 5.5, and forced Nash rounds helped it only partly (waves 2–3). Opus's own index fell by about half against a different rival (wave 8). The limit that took Opus to Nash took Sonnet 5.5 only partway (wave 11). |
+| Test any instruction on the deployed model | §5, step 6 | Holds, extended | Remedies need the same test. Best-response information, which stopped Haiku 4.5, had no detectable effect on Opus 5.5, and forced Nash rounds helped it only partly (waves 2–3). Opus's own index fell by about half against a different rival (wave 8). The limit that took Opus to Nash took Sonnet 5.5 only partway (wave 11), but took a market of Opus and Sonnet all the way (wave 12). |
 | The agents' stated reasoning points the wrong way | §4.3; §5, step 1 | Not retested | One consistent sign: wave 5's notes credited the limit's threat, and wave 6 showed the threat wasn't needed. |
 | A memory reset makes collusion worse | Abstract; §4.5; §5, step 3 | Not retested | Haiku 4.5 only. |
 | The Mistral diagnosis: no enforcement, and a model with no strategy that predicts larger markets | §4.1 | Not retested | The follow-ups ran no Mistral games. |
@@ -34,7 +34,7 @@ This page checks each claim of "Evaluation Before Regulation" (frozen at the tag
   - Opus obeyed it with or without the threat behind it (wave 6).
   - Lifted halfway through a game, it lost part of its effect: the index rose to 0.44 (wave 6).
   - The same number called an estimate took prices only partway down, to 0.45 (wave 7). Continued to 200 rounds, those games settled at 0.32 over rounds 151–200, with no significant change (wave 10).
-- **Posted limits carry over only as far as a model obeys them (wave 11).** On Sonnet 5.5 the same limit lowered the index to 0.15, not to competitive prices: Sonnet kept it in some games and ignored it in others. A fixed cap above the competitive price didn't raise average prices on Sonnet or Haiku 5.5. On Sonnet it split the games instead, holding 7 of 20 at the cap and sending 10 below every baseline game (exploratory).
+- **Posted limits carry over only as far as the market obeys them (waves 11 and 12).** On Sonnet 5.5 the same limit lowered the index to 0.15, not to competitive prices: Sonnet kept it in some games and ignored it in others. In a market of Opus and Sonnet it brought the index to 0.01: Opus kept it, and Sonnet matched Opus. A fixed cap above the competitive price didn't raise average prices on Sonnet or Haiku 5.5. On Sonnet it split the games instead, holding 7 of 20 at the cap and sending 10 below every baseline game, and a planned test on fresh games found the same counts. Brought in at round 31, after the opening, the same cap held no game at the cap and lowered the index a little, to 0.27 against 0.36.
 - **Opus follows raises more than cuts, the reverse of Haiku 4.5.** In its own games it follows a rival's raise 37% of the time and a cut 21%; Haiku 4.5 follows 22% and 34%. This is an exploratory check on saved games, and following raises isn't enough on its own: Haiku 5.5 does it too and competes. A forced raise in the diagnostic showed no detectable following from either model (wave 9).
 - **Collusion depends on the pairing.** Opus's own index fell by about half against Haiku 5.5 and against Haiku 4.5 (wave 8). Against a rival that set its best response, Opus held a higher price, like a price leader.
 

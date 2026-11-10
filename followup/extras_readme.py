@@ -26,9 +26,10 @@ def sources() -> dict:
         j("wave10.json"),
     )
     w11, w11x = j("wave11.json"), j("wave11_exploratory.json")
+    w12, w12x = j("wave12.json"), j("wave12_exploratory.json")
     fol, nb, exp = j("following.json"), j("null_band_scale.json"), j("exploratory.json")
     paper = [j("prevention45.json", THEORY), j("frontier_forced_cut.json", THEORY)]
-    every = [w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w11x, fol, nb, exp, *paper]
+    every = [w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w11x, w12, w12x, fol, nb, exp, *paper]
     return {
         "*": [],
         "Follow-up work after the sprint review": every,
@@ -48,6 +49,7 @@ def sources() -> dict:
         "Wave 9": [w9, fol, w4],
         "Wave 10": [w10, w7],
         "Wave 11": [w11, w11x, w6],
+        "Wave 12": [w12, w12x, w11, w6, w8],
         "Limits that apply": [w3],
         "Running it": [],
     }
@@ -212,7 +214,7 @@ def exact_rows() -> list:
         )
         rows.append((f"W1 deference {arm}", f"| {label} | {cell}"))
     rows += scaling_rows() + w2_rows() + w3_rows() + w4_rows() + w5_rows() + w6_rows() + w7_rows()
-    return rows + w8_rows() + following_rows() + w9_rows() + w10_rows() + w11_rows()
+    return rows + w8_rows() + following_rows() + w9_rows() + w10_rows() + w11_rows() + w12_rows()
 
 
 def signed_pct(x: float) -> str:
@@ -847,4 +849,94 @@ def w11_rows() -> list:
                 ),
             )
         )
+    return rows
+
+
+def w12_rows() -> list:
+    w12, x = j("wave12.json"), j("wave12_exploratory.json")
+    p1, p2, own = w12["part1"], w12["part2"], w12["secondary"]["own_index"]
+    assert p1["reading"] == "holds: competitive"
+    rows = []
+    for arm, rule, idx in (
+        ("mixed", "none", "mixed_index"),
+        ("A2", "limit, no threat", "A2_index"),
+    ):
+        rows.append(
+            (
+                f"W12 P1 {arm}",
+                (
+                    f"| {arm} | Opus 5.5 and Sonnet 5.5 | {rule} | {p1['games'][arm]} | {r(p1[idx])} "
+                    f"| {r(own[arm]['opus55'])} | {r(own[arm]['sonnet55'])} |"
+                ),
+            )
+        )
+    pr, ph_ = p2["p_raw"], p2["p_holm"]
+    c, d, rd = p2["C2"], p2["D"], p2["readings"]
+    assert rd == {
+        "split": "the split replicates",
+        "opening": "the opening drives the split",
+        "late_cap": "lowers prices",
+    }
+    rows += [
+        (
+            "W12 P2 T2",
+            (
+                f"| T2: does the split replicate? | C2 against {p2['games']['baseline']} baseline games "
+                f"| standard deviation {r(c['sd'])} against {r(p2['baseline_sd'])}; {c['held_cap']} held the cap, "
+                f"{c['below_0.2']} below 0.2 | {ph(pr['spread_C2'])} | {ph(ph_['spread_C2'])} |"
+            ),
+        ),
+        (
+            "W12 P2 T3",
+            (
+                f"| T3: does it need the opening? | D against C2 | held the cap: {d['held_cap']} of {p2['games']['D']} "
+                f"against {c['held_cap']} of {p2['games']['C2']} | {ph(pr['held_D_vs_C2'])} | {ph(ph_['held_D_vs_C2'])} |"
+            ),
+        ),
+        (
+            "W12 P2 T4",
+            (
+                f"| T4: is a late cap focal? | D against {p2['games']['baseline']} baseline games "
+                f"| {r(d['index'])} against {r(p2['baseline_index'])}: {r(d['difference'])} {ci(*d['difference_ci'])} "
+                f"| {ph(pr['index_D'])} | {ph(ph_['index_D'])} |"
+            ),
+        ),
+    ]
+    m = x["mixed"]["A2"]
+    for s in sorted(m["index_by_game"], key=int):
+        rows.append(
+            (
+                f"W12 A2 seed {s}",
+                (
+                    f"| {s} | {r(m['index_by_game'][s])} | {pct(m['follow_by_game']['opus55'][s])} "
+                    f"| {pct(m['follow_by_game']['sonnet55'][s])} |"
+                ),
+            )
+        )
+    cg, dg = x["cap"]["C2"], x["cap"]["D"]
+    at = cg["at_cap_51_100"]
+    lo = cg["below_0.2"]
+    mid = cg["between"]
+    n_lo = sum(v < 0.2 for v in cg["index_by_game"].values())
+    rows.append(
+        (
+            "W12 cap groups C2",
+            (
+                f"| C2 (cap from round 1) | {len(at)}: seeds {', '.join(map(str, at[:-1]))} and {at[-1]} "
+                f"| {n_lo}: {r(lo[0])}–{r(lo[1])} | {len(mid)}: {r(mid[0])}–{r(mid[-1])} |"
+            ),
+        )
+    )
+    dv = sorted(dg["index_by_game"].values())
+    dlo, dmid = [v for v in dv if v < 0.2], [v for v in dv if v >= 0.2]
+    assert not any(abs(v - x["cap_index"]) < 1e-3 for v in dv)
+    rows.append(
+        (
+            "W12 cap groups D",
+            (
+                f"| D (cap from round 31) | none | {len(dlo)}: {r(dlo[0])}–{r(dlo[-1])} "
+                f"| {len(dmid)}: {r(dmid[0])}–{r(dmid[-1])} |"
+            ),
+        )
+    )
     return rows

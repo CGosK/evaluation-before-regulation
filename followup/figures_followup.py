@@ -735,6 +735,65 @@ def wave11_caps():
     plt.close(fig)
 
 
+def wave12_limit_cap():
+    import wave12_exploratory as w12x
+    import wave12_results as w12
+
+    res = load("wave12.json")
+    mx, a2 = w12.mixed("none"), w12.mixed("w6-limit-no-threat")
+    c2 = w12.single("sonnet55", "w11-cap174")
+    d = w12.single("sonnet55", "w12-cap174-from31")
+    base = w12x.sonnet_baseline()
+    for xs, want in ((a2, res["part1"]["A2_index"]), (d, res["part2"]["D"]["index"])):
+        assert abs(np.mean([w12.late(x) for x in xs]) - want) < 1e-9
+
+    def late(xs):
+        return [w12.late(x) for x in xs]
+
+    rows = [
+        ("Opus and Sonnet, no rule  (10)", late(mx), MUTED, None),
+        ("Opus and Sonnet, limit  (10)", late(a2), SERIES[0], None),
+        ("Sonnet, baseline  (20)", late(base), MUTED, None),
+        ("Sonnet, cap from round 1  (20)", late(c2), SERIES[1], None),
+        ("Sonnet, cap from round 31  (20)", late(d), SERIES[2], None),
+    ]
+    cap = (1.74 - 1.4729) / (1.925 - 1.4729)
+    fig, (ax, bx) = plt.subplots(
+        1, 2, figsize=(8.6, 3.5), layout="constrained", gridspec_kw={"width_ratios": [1.3, 1]}
+    )
+    dot_rows(ax, rows, (-0.12, 1.07), 1.05, refs=((0, "Nash"), (cap, "cap")))
+    n_at = sum(abs(v - cap) < 1e-3 for v in rows[3][1])
+    ax.text(cap + 0.03, 1.28, f"{n_at} games\nat the cap", color=INK2, fontsize=7, va="center")
+    t = np.arange(1, 101)
+    bx.axhline(0, color=AXIS, lw=1, zorder=0)
+    bx.axhline(cap, color=GRID, lw=1, ls=(0, (3, 3)), zorder=0)
+    bx.axvline(31, color=AXIS, lw=1, ls=(0, (2, 2)), zorder=0)
+    for x in d:
+        bx.plot(t, p.index(x)[:100], color=SERIES[2], lw=0.9, alpha=0.5, zorder=2)
+    y = np.mean([p.index(x)[:100] for x in base], axis=0)
+    bx.plot(t, y, color=MUTED, lw=1.8, zorder=3)
+    bx.text(33, -0.08, "cap from round 31", color=INK2, fontsize=7.5, va="bottom")
+    bx.legend(
+        handles=[
+            plt.Line2D([], [], color=SERIES[2], lw=1.2),
+            plt.Line2D([], [], color=MUTED, lw=1.8),
+        ],
+        labels=["each late-cap game (20);\nnone held the cap", "baseline mean (20 games)"],
+        loc="upper right",
+        frameon=False,
+        fontsize=7.5,
+        labelcolor=INK2,
+    )
+    bx.set_xlim(1, 100)
+    bx.set_ylim(-0.1, 1.0)
+    bx.set_xlabel("Round")
+    bx.set_ylabel("Market index, Sonnet 5.5")
+    bx.yaxis.grid(True, color=GRID, lw=0.6)
+    bx.set_axisbelow(True)
+    fig.savefig(OUT / "wave12_limit_cap.png", dpi=200)
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     forced_cut_schematic()
     models_baseline()
@@ -749,4 +808,5 @@ if __name__ == "__main__":
     wave4_paths()
     wave10_continued()
     wave11_caps()
-    print("wrote the thirteen figures in out/")
+    wave12_limit_cap()
+    print("wrote the fourteen figures in out/")

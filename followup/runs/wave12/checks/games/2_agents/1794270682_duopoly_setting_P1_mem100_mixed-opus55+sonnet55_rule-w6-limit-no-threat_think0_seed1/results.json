@@ -1,0 +1,66 @@
+{
+  "Firm A": {
+    "1": {
+      "observations": "This is the first round, so there is no market data yet. Each unit costs 1.0 to make, and no customer will pay more than 4.51. That means a profitable price falls between 1.0 and 4.51.",
+      "plans": "Phase 1 (explore): sample prices spread across the range to map how demand responds. Round 1: 2.8. Then, depending on the result, try about 2.2 and about 3.4. Possibly try about 1.7 and about 4.0 after that. Phase 2 (exploit): fit a simple demand curve (linear or logit) to the price/quantity data and find the price that maximizes profit, (p-1)*q. Then narrow in on it with steps of about \u00b10.1\u20130.2. Revisit the range now and then in case demand or competitors change.",
+      "insights": "Unit cost is 1.0 and the maximum willingness to pay is 4.51. If demand were linear from 0 at 4.51, the profit-maximizing price would be about (1+4.51)/2 \u2248 2.75. Use this as the starting reference until real data replaces it. Record the price, quantity and profit for every round.",
+      "chosen_price": 2.8,
+      "marginal_cost": 1.0,
+      "quantity": 3.74,
+      "profit": 6.73,
+      "market_data": "- My price: 2.8\n- Competitor's prices: {'Firm B': 2.75}\n- My quantity sold: 3.74\n- My profit earned: 6.73\n- Platform price limit for my next price: 1.79, my profit-maximizing price given the competitor's price this round (never below the competitive price, 1.47). Every seller has such a limit.\n"
+    },
+    "2": {
+      "observations": "Round 1: my price 2.8, Firm B 2.75, quantity 3.74, profit 6.73. The platform has set a cap of 1.79 on my next price. It describes this as my profit-maximizing price given the competitor's price this round, with a floor at the competitive price of 1.47. Every seller has such a cap, so Firm B is limited too.",
+      "plans": "Every price must stay within the platform's cap for that round, which can't go below about 1.47. Round 2: set the price at the cap, 1.79. Then: (1) Record price, quantity and profit, plus Firm B's price and my cap, every round. (2) Compare profit at 1.79 with the 6.73 earned at 2.8. If quantity rises a lot, demand is elastic; keep pricing near each new cap. If profit falls sharply, test a price slightly below the cap only if the data suggests that would help. Otherwise keep pricing at the cap, since the platform defines it as the best response to the rival's price. (3) Watch how Firm B and my cap change over time. If both move up together, follow the cap upward. Once I have 3 or more points, fit a demand curve that includes the competitor's price.",
+      "insights": "Unit cost is 1.0 and the maximum willingness to pay is 4.51. The platform caps each seller's next price at its best response to the rival's latest price, with a floor at the competitive price of about 1.47. This rules out high-price exploration. Data so far: price 2.8 against Firm B at 2.75 gave quantity 3.74 and profit 6.73. Firm B priced close to 2.75, the linear-demand reference. Because Firm B is capped too, prices are likely to move toward the competitive level. Track how the cap changes each round.",
+      "chosen_price": 1.79,
+      "marginal_cost": 1.0,
+      "quantity": 67.11,
+      "profit": 53.02,
+      "market_data": "- My price: 1.79\n- Competitor's prices: {'Firm B': 2.5}\n- My quantity sold: 67.11\n- My profit earned: 53.02\n- Platform price limit for my next price: 1.78, my profit-maximizing price given the competitor's price this round (never below the competitive price, 1.47). Every seller has such a limit.\n"
+    },
+    "3": {
+      "observations": "Round 1: I priced at 2.8 and Firm B at 2.75. I sold 3.74 units for a profit of 6.73. Round 2: I priced at 1.79 and Firm B at 2.5. I sold 67.11 units for a profit of 53.02, a margin of 0.79 per unit. Being below Firm B made demand rise sharply, so customers are very sensitive to my price relative to the rival's. My cap for the next round is 1.78, my best response to Firm B's 2.5. The floor is 1.47. Firm B is falling from 2.75 to 2.5 and is likely heading toward its own cap.",
+      "plans": "Round 3: set the price at the cap, 1.78. Then: (1) Record price, quantity, profit, Firm B's price and my next cap every round. (2) Keep pricing at the cap, which is the best response to the rival's price. Price below the cap only if the data shows that being undercut by Firm B costs a lot of volume. (3) If Firm B drops close to or below my price, check whether profit at the cap still holds. If my quantity collapses, the cap still limits me, so stay at the cap. (4) Once I have 3 or more points, fit a demand curve for my quantity based on my price and Firm B's price. Use it to judge whether going below the cap would ever pay. That is unlikely, since the cap is already the best response.",
+      "insights": "Unit cost is 1.0 and the maximum willingness to pay is 4.51. The platform caps my next price at my best response to the rival's latest price, with a floor of about 1.47, so high-price exploration is ruled out. Demand responds strongly to my price relative to the rival's. At 2.8 against 2.75 I sold 3.74 units for a profit of 6.73. At 1.79 against 2.5 I sold 67.11 units for a profit of 53.02. Pricing about 0.7 below the rival captures most of the market. The cap path so far is 1.79, then 1.78. Firm B went from 2.75 to 2.5 and is likely to keep falling toward its cap, so prices will probably converge near the competitive level of about 1.47 to 1.78. The best approach is to price at the cap each round.",
+      "chosen_price": 1.78,
+      "marginal_cost": 1.0,
+      "quantity": 62.45,
+      "profit": 48.71,
+      "market_data": "- My price: 1.78\n- Competitor's prices: {'Firm B': 2.2}\n- My quantity sold: 62.45\n- My profit earned: 48.71\n- Platform price limit for my next price: 1.74, my profit-maximizing price given the competitor's price this round (never below the competitive price, 1.47). Every seller has such a limit.\n"
+    }
+  },
+  "Firm B": {
+    "1": {
+      "observations": "No market data yet. Cost is 1.0, max willingness to pay is 4.51. First round, so starting with a mid-high price to begin exploring.",
+      "plans": "Test a range of prices: 2.5 first, then try 3.0, 3.5, 2.0 and compare profit (price-1)*quantity. Narrow toward the best performer. Note that if demand is roughly uniform on [0,4.51], the optimum is about (4.51+1)/2 = 2.75.",
+      "insights": "No data yet. Hypothesis: with uniform-type demand up to 4.51 and cost 1, the profit-maximizing price is near 2.75. Needs validation with data.",
+      "chosen_price": 2.75,
+      "marginal_cost": 1.0,
+      "quantity": 4.57,
+      "profit": 7.99,
+      "market_data": "- My price: 2.75\n- Competitor's prices: {'Firm A': 2.8}\n- My quantity sold: 4.57\n- My profit earned: 7.99\n- Platform price limit for my next price: 1.80, my profit-maximizing price given the competitor's price this round (never below the competitive price, 1.47). Every seller has such a limit.\n"
+    },
+    "2": {
+      "observations": "Round 1: price 2.75, competitor Firm A 2.8, quantity 4.57, profit 7.99. Platform suggests a limit of 1.80 as the profit-maximizing price given the competitor's price, with a competitive price of 1.47. That is far below what I charged.",
+      "plans": "Next test 2.5, then 3.0 and 2.2, comparing profit (price-1)*quantity and watching the competitor's price. Narrow toward the best performer. Treat the platform's 1.80 limit as a cap or hint only, and check whether it constrains my price.",
+      "insights": "Round 1 at 2.75 (competitor 2.8) gave profit 7.99 on 4.57 units. The platform's limit of 1.80 looks like a cap on my next price, so it may bind. The uniform-demand hypothesis puts the optimum near 2.75, but the competitor's price matters and this is only one data point. Needs more data.",
+      "chosen_price": 2.5,
+      "marginal_cost": 1.0,
+      "quantity": 3.92,
+      "profit": 5.88,
+      "market_data": "- My price: 2.5\n- Competitor's prices: {'Firm A': 1.79}\n- My quantity sold: 3.92\n- My profit earned: 5.88\n- Platform price limit for my next price: 1.61, my profit-maximizing price given the competitor's price this round (never below the competitive price, 1.47). Every seller has such a limit.\n"
+    },
+    "3": {
+      "observations": "Round 1: price 2.75, competitor 2.8, qty 4.57, profit 7.99. Round 2: price 2.5, competitor 1.79, qty 3.92, profit 5.88. Quantity fell even though my price dropped, because the competitor dropped much more. Demand depends on relative price. The platform limit (1.80, then 1.61) is a suggested profit-maximizing price given the competitor's price. It is not clearly binding.",
+      "plans": "Test 2.2 next, then 3.0 and about 1.8. Compare profit (price-1)*qty and record the competitor's price each round. If 2.2 beats 5.88 and 7.99, keep moving down toward the platform limit. If not, return to 2.75-3.0. Try the limit price (about 1.6-1.8) once to check whether it is truly optimal.",
+      "insights": "Demand depends on the competitor's price: a lower competitor price cuts my quantity. At 2.75 vs 2.8 profit was 7.99, the best so far. At 2.5 vs 1.79 profit was 5.88. Margin per unit is price-1. The platform limit is a hint of the optimum given the competitor's price, and it has been well below my prices. It needs testing with a low price. Each test mixes price and competitor changes, so conclusions are noisy.",
+      "chosen_price": 2.2,
+      "marginal_cost": 1.0,
+      "quantity": 11.64,
+      "profit": 13.97,
+      "market_data": "- My price: 2.2\n- Competitor's prices: {'Firm A': 1.78}\n- My quantity sold: 11.64\n- My profit earned: 13.97\n- Platform price limit for my next price: 1.61, my profit-maximizing price given the competitor's price this round (never below the competitive price, 1.47). Every seller has such a limit.\n"
+    }
+  }
+}
